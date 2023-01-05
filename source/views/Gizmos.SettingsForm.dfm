@@ -37,6 +37,7 @@ object wSettingsForm: TwSettingsForm
     TabOrder = 0
     OnChange = cbThemeChange
     Items.Strings = (
+      'system'
       'light'
       'dark')
   end
@@ -58,6 +59,7 @@ object wSettingsForm: TwSettingsForm
     Translatables.Properties = (
       'cbTheme.Items[0]'
       'cbTheme.Items[1]'
+      'cbTheme.Items[2]'
       'txLanguage.Caption'
       'txTheme.Caption')
     Left = 372

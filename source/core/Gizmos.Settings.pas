@@ -4,9 +4,8 @@ interface
 
 uses
   System.SysUtils, System.Classes,
-  Winapi.Windows,
-  Vcl.Forms, Vcl.Themes, Vcl.Styles,
-  i18nCore;
+  Winapi.Windows, Win.Registry,
+  Vcl.Forms, Vcl.Themes;
 
 type
   TApplicationFormPosition = class(TPersistent)
@@ -30,7 +29,7 @@ type
 
   TApplicationSettingValue = (svEditorFont);
 
-  TApplicationTheme = (atLight, atDark);
+  TApplicationTheme = (atSystem, atLight, atDark);
 
   TApplicationSettings = class(TPersistent)
   private
@@ -44,12 +43,14 @@ type
     function GetSettingsFoldername: String;
     procedure SetFormPositon(const Value: TApplicationFormPosition);
     procedure ChangeEvent(const AValue: TApplicationSettingValue);
+    function GetThemeName: String;
   public
     constructor Create;
     destructor Destroy; override;
     procedure LoadSettings;
     procedure SaveSettings;
   published
+    procedure WindowsThemeChanged;
     property Theme: TApplicationTheme read GetTheme write SetTheme;
     property DrawerOpened: Boolean read FDrawerOpened write FDrawerOpened;
     property FormPosition: TApplicationFormPosition read FFormPosition
@@ -67,7 +68,15 @@ uses
   Neon.Core.Persistence, Neon.Core.Persistence.JSON,
   EventBus,
   Qodelib.IOUtils,
-  Gizmos.Events, Gizmos.DataModule;
+  Gizmos.Events;
+
+const
+{$ifdef DEBUG}
+  SSettingsFilename = 'Gizmos-debug.json';
+{$else}
+  SSettingsFilename = 'Gizmos.json';
+{$endif}
+  SAppDataFolder = 'quarkz';
 
 { TApplicationSettings }
 
@@ -79,7 +88,7 @@ end;
 constructor TApplicationSettings.Create;
 begin
   inherited Create;
-  FTheme := atLight;
+  FTheme := atSystem;
   FFormPosition := TApplicationFormPosition.Create;
   FDrawerOpened := true;
   FLanguage := 'en-US';
@@ -93,17 +102,49 @@ end;
 
 function TApplicationSettings.GetSettingsFilename: String;
 begin
-  Result := TPath.Combine(GetSettingsFoldername, 'Gizmos.json');
+  Result := TPath.Combine(GetSettingsFoldername, SSettingsFilename);
 end;
 
 function TApplicationSettings.GetSettingsFoldername: String;
 begin
-  Result := TPath.Combine(TKnownFolders.GetAppDataPath, 'quarkz');
+  Result := TPath.Combine(TKnownFolders.GetAppDataPath, SAppDataFolder);
 end;
 
 function TApplicationSettings.GetTheme: TApplicationTheme;
 begin
   Result := FTheme;
+end;
+
+function TApplicationSettings.GetThemeName: String;
+const
+  SWindowsTheme = 'Windows';
+  SDarkTheme = 'Windows11 Modern Dark';
+  SLightTheme = 'Windows11 Modern Light';
+var
+  Reg: TRegistry;
+begin
+  case FTheme of
+    atSystem:
+      begin
+        Result := SWindowsTheme;
+        Reg := TRegistry.Create(KEY_READ);
+        Reg.RootKey := HKEY_CURRENT_USER;
+        if Reg.OpenKey('SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize', false) then
+          begin
+            if Reg.ReadBool('AppsUseLightTheme') then
+              Result := SLightTheme
+            else
+              Result := SDarkTheme;
+          end;
+        Reg.Free;
+      end;
+    atLight:
+      Result := SLightTheme;
+    atDark:
+      Result := SDarkTheme;
+    else
+      Result := SWindowsTheme;
+  end;
 end;
 
 procedure TApplicationSettings.LoadSettings;
@@ -142,20 +183,15 @@ begin
 end;
 
 procedure TApplicationSettings.SetTheme(const AValue: TApplicationTheme);
-var
-  ThemeName: String;
 begin
   FTheme := AValue;
-  case FTheme of
-    atLight:
-      ThemeName := 'Windows11 Modern Light';
-    atDark:
-      ThemeName := 'Windows11 Modern Dark';
-    else
-      ThemeName := 'Windows';
-  end;
+  TStyleManager.TrySetStyle(GetThemeName);
+end;
 
-  TStyleManager.TrySetStyle(ThemeName);
+procedure TApplicationSettings.WindowsThemeChanged;
+begin
+  if FTheme = atSystem then
+    TStyleManager.TrySetStyle(GetThemeName);
 end;
 
 { TApplicationFormPosition }

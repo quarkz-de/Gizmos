@@ -35,8 +35,9 @@ uses
   Gizmos.Settings;
 
 const
-  iiLightTheme = 0;
-  iiDarkTheme = 1;
+  iiSystemTheme = 0;
+  iiLightTheme = 1;
+  iiDarkTheme = 2;
 
 { TwSettingsForm }
 
@@ -49,6 +50,8 @@ end;
 procedure TwSettingsForm.cbThemeChange(Sender: TObject);
 begin
   case cbTheme.ItemIndex of
+    iiSystemTheme:
+      ApplicationSettings.Theme := atSystem;
     iiLightTheme:
       ApplicationSettings.Theme := atLight;
     iiDarkTheme:
@@ -72,6 +75,8 @@ begin
   FLoadingValues := true;
   try
     case ApplicationSettings.Theme of
+      atSystem:
+        cbTheme.ItemIndex := iiSystemTheme;
       atLight:
         cbTheme.ItemIndex := iiLightTheme;
       atDark:

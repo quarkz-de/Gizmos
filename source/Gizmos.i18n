@@ -20,12 +20,16 @@
       <Translation Locale="de-DE">Thema</Translation>
     </Property>
     <Property ID="cbTheme.Items[0]">
+      <Value>system</Value>
+      <Translation Locale="de-DE">System</Translation>
+    </Property>
+    <Property ID="cbTheme.Items[1]">
       <Value>light</Value>
       <Translation Locale="de-DE">hell</Translation>
     </Property>
-    <Property ID="cbTheme.Items[1]">
+    <Property ID="cbTheme.Items[2]">
       <Value>dark</Value>
-      <Translation Locale="de-DE">dunkel</Translation>
+      <Translation Locale="de-DE" State="Auto">dunkel</Translation>
     </Property>
   </Domain>
 </i18nCatalog>

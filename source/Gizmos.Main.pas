@@ -44,6 +44,7 @@ type
   private
     FForms: TApplicationFormList;
     procedure InitSettings;
+    procedure WMSettingChange(var Message: TWMSettingChange); message WM_SETTINGCHANGE;
   protected
     property Forms: TApplicationFormList read FForms;
   public
@@ -134,6 +135,12 @@ begin
   nvHeader.ButtonOptions := nvHeader.ButtonOptions + [nboShowCaptions];
   nvFooter.ButtonOptions := nvFooter.ButtonOptions + [nboShowCaptions];
   nvModules.ButtonOptions := nvModules.ButtonOptions + [nboShowCaptions];
+end;
+
+procedure TwMainForm.WMSettingChange(var Message: TWMSettingChange);
+begin
+  if SameText('ImmersiveColorSet', String(Message.Section)) then
+    ApplicationSettings.WindowsThemeChanged;
 end;
 
 end.
