@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<i18nCatalog Version="1.0" Locale="en-US">
+  <Domain Name="wMainForm">
+    <Property ID="acSectionSettings.Caption">
+      <Value>Settings</Value>
+      <Translation Locale="de-DE">Einstellungen</Translation>
+    </Property>
+    <Property ID="acSectionWelcome.Caption">
+      <Value>Start</Value>
+      <Translation Locale="de-DE">Startseite</Translation>
+    </Property>
+  </Domain>
+  <Domain Name="wSettingsForm">
+    <Property ID="txLanguage.Caption">
+      <Value>Language</Value>
+      <Translation Locale="de-DE">Sprache</Translation>
+    </Property>
+    <Property ID="txTheme.Caption">
+      <Value>Theme</Value>
+      <Translation Locale="de-DE">Thema</Translation>
+    </Property>
+    <Property ID="cbTheme.Items[0]">
+      <Value>light</Value>
+      <Translation Locale="de-DE">hell</Translation>
+    </Property>
+    <Property ID="cbTheme.Items[1]">
+      <Value>dark</Value>
+      <Translation Locale="de-DE">dunkel</Translation>
+    </Property>
+  </Domain>
+</i18nCatalog>
