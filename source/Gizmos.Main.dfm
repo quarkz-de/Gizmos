@@ -54,12 +54,12 @@ object wMainForm: TwMainForm
         OnClick = imBurgerButtonClick
       end
     end
-    object nvNavigation: TQzNavigationView
+    object nvHeader: TQzNavigationView
       Left = 0
       Top = 45
       Width = 170
-      Height = 475
-      Align = alClient
+      Height = 49
+      Align = alTop
       BorderStyle = bsNone
       ButtonHeight = 48
       ButtonOptions = [nboAllowReorder, nboGroupStyle, nboShowCaptions]
@@ -71,7 +71,7 @@ object wMainForm: TwMainForm
         end>
       ItemIndex = 0
       TabOrder = 1
-      OnButtonClicked = nvNavigationButtonClicked
+      OnButtonClicked = nvHeaderButtonClicked
     end
     object nvFooter: TQzNavigationView
       Left = 0
@@ -89,6 +89,22 @@ object wMainForm: TwMainForm
         end>
       TabOrder = 2
       OnButtonClicked = nvFooterButtonClicked
+    end
+    object nvModules: TQzNavigationView
+      Left = 0
+      Top = 94
+      Width = 170
+      Height = 426
+      Align = alClient
+      BorderStyle = bsNone
+      ButtonHeight = 48
+      ButtonOptions = [nboAllowReorder, nboGroupStyle, nboShowCaptions]
+      Images = viModuleIcons
+      Items = <>
+      TabOrder = 3
+      OnButtonClicked = nvModulesButtonClicked
+      ExplicitTop = 153
+      ExplicitHeight = 49
     end
   end
   object vilLargeIcons: TVirtualImageList
@@ -113,16 +129,6 @@ object wMainForm: TwMainForm
         CollectionIndex = 3
         CollectionName = '003_Menu_Vertical'
         Name = '003_Menu_Vertical'
-      end
-      item
-        CollectionIndex = 4
-        CollectionName = '004_Mail'
-        Name = '004_Mail'
-      end
-      item
-        CollectionIndex = 5
-        CollectionName = '005_Message'
-        Name = '005_Message'
       end>
     ImageCollection = dmCommon.icIcons
     Width = 32
@@ -152,16 +158,6 @@ object wMainForm: TwMainForm
         CollectionIndex = 3
         CollectionName = '003_Menu_Vertical'
         Name = '003_Menu_Vertical'
-      end
-      item
-        CollectionIndex = 4
-        CollectionName = '004_Mail'
-        Name = '004_Mail'
-      end
-      item
-        CollectionIndex = 5
-        CollectionName = '005_Message'
-        Name = '005_Message'
       end>
     ImageCollection = dmCommon.icIcons
     Left = 252
@@ -195,5 +191,29 @@ object wMainForm: TwMainForm
       ImageName = '002_Settings'
       OnExecute = acSectionSettingsExecute
     end
+  end
+  object viModuleIcons: TVirtualImageList
+    AutoFill = True
+    Images = <
+      item
+        CollectionIndex = 0
+        CollectionName = '000_Module'
+        Name = '000_Module'
+      end
+      item
+        CollectionIndex = 1
+        CollectionName = '001_Mail'
+        Name = '001_Mail'
+      end
+      item
+        CollectionIndex = 2
+        CollectionName = '002_Message'
+        Name = '002_Message'
+      end>
+    ImageCollection = dmCommon.icModules
+    Width = 32
+    Height = 32
+    Left = 200
+    Top = 76
   end
 end

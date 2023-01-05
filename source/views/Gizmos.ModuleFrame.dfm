@@ -36,11 +36,11 @@ object frBlackholeModule: TfrBlackholeModule
     Top = 8
     Width = 48
     Height = 48
-    ImageCollection = dmCommon.icIcons
+    ImageCollection = dmCommon.icModules
     ImageWidth = 0
     ImageHeight = 0
-    ImageIndex = 4
-    ImageName = '004_Mail'
+    ImageIndex = 0
+    ImageName = '000_Module'
   end
   object btOptions: TSpeedButton
     Left = 333

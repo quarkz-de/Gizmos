@@ -12,6 +12,7 @@ type
     icLogo: TImageCollection;
     locLocalizer: TLocalizer;
     icIcons: TImageCollection;
+    icModules: TImageCollection;
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
   private

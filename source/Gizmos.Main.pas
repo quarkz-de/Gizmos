@@ -22,12 +22,14 @@ type
     svSplitView: TSplitView;
     pnl1: TPanel;
     imBurgerButton: TVirtualImage;
-    nvNavigation: TQzNavigationView;
+    nvHeader: TQzNavigationView;
     nvFooter: TQzNavigationView;
     trTranslator: TTranslator;
     alActions: TActionList;
     acSectionWelcome: TAction;
     acSectionSettings: TAction;
+    nvModules: TQzNavigationView;
+    viModuleIcons: TVirtualImageList;
     procedure FormCreate(Sender: TObject);
     procedure imBurgerButtonClick(Sender: TObject);
     procedure acSectionWelcomeExecute(Sender: TObject);
@@ -35,7 +37,8 @@ type
     procedure acHelpAboutExecute(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure nvFooterButtonClicked(Sender: TObject; Index: Integer);
-    procedure nvNavigationButtonClicked(Sender: TObject; Index: Integer);
+    procedure nvModulesButtonClicked(Sender: TObject; Index: Integer);
+    procedure nvHeaderButtonClicked(Sender: TObject; Index: Integer);
     procedure svSplitViewClosed(Sender: TObject);
     procedure svSplitViewOpened(Sender: TObject);
   private
@@ -101,26 +104,36 @@ end;
 
 procedure TwMainForm.nvFooterButtonClicked(Sender: TObject; Index: Integer);
 begin
-  nvNavigation.ItemIndex := -1;
+  nvHeader.ItemIndex := -1;
+  nvModules.ItemIndex := -1;
 end;
 
-procedure TwMainForm.nvNavigationButtonClicked(Sender: TObject; Index: Integer);
+procedure TwMainForm.nvModulesButtonClicked(Sender: TObject; Index: Integer);
+begin
+  nvHeader.ItemIndex := -1;
+  nvFooter.ItemIndex := -1;
+end;
+
+procedure TwMainForm.nvHeaderButtonClicked(Sender: TObject; Index: Integer);
 begin
   nvFooter.ItemIndex := -1;
+  nvModules.ItemIndex := -1;
 end;
 
 procedure TwMainForm.svSplitViewClosed(Sender: TObject);
 begin
   ApplicationSettings.DrawerOpened := false;
-  nvNavigation.ButtonOptions := nvNavigation.ButtonOptions - [nboShowCaptions];
+  nvHeader.ButtonOptions := nvHeader.ButtonOptions - [nboShowCaptions];
   nvFooter.ButtonOptions := nvFooter.ButtonOptions - [nboShowCaptions];
+  nvModules.ButtonOptions := nvModules.ButtonOptions - [nboShowCaptions];
 end;
 
 procedure TwMainForm.svSplitViewOpened(Sender: TObject);
 begin
   ApplicationSettings.DrawerOpened := true;
-  nvNavigation.ButtonOptions := nvNavigation.ButtonOptions + [nboShowCaptions];
+  nvHeader.ButtonOptions := nvHeader.ButtonOptions + [nboShowCaptions];
   nvFooter.ButtonOptions := nvFooter.ButtonOptions + [nboShowCaptions];
+  nvModules.ButtonOptions := nvModules.ButtonOptions + [nboShowCaptions];
 end;
 
 end.
