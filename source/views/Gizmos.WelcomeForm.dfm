@@ -63,7 +63,7 @@ object wWelcomeForm: TwWelcomeForm
     Height = 17
     Caption = 
       '<a href="http://www.quarkz.de">Website</a> | <a href="https://gi' +
-      'thub.com/quarkz-de/Blackholes">GitHub</a>'
+      'thub.com/quarkz-de/Gizmos">GitHub</a>'
     TabOrder = 0
     OnLinkClick = txWebsiteLinkClick
   end

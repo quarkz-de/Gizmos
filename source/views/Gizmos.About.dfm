@@ -56,7 +56,7 @@ object wAbout: TwAbout
     ImageName = 'Logo'
   end
   object btOk: TButton
-    Left = 281
+    Left = 277
     Top = 183
     Width = 75
     Height = 25
@@ -64,7 +64,7 @@ object wAbout: TwAbout
     Caption = 'Ok'
     ModalResult = 1
     TabOrder = 0
-    ExplicitLeft = 277
+    ExplicitLeft = 273
     ExplicitTop = 182
   end
   object txHomepage: TLinkLabel
@@ -74,7 +74,7 @@ object wAbout: TwAbout
     Height = 19
     Caption = 
       '<a href="http://www.quarkz.de">Website</a> | <a href="https://gi' +
-      'thub.com/quarkz-de/Blackholes">GitHub</a>'
+      'thub.com/quarkz-de/Gizmos">GitHub</a>'
     TabOrder = 1
     UseVisualStyle = True
     OnLinkClick = txHomepageLinkClick
