@@ -9,9 +9,13 @@ uses
 const
   mfMainSettings = 0;
   mfMainWelcome = 1;
+  mfMainSimulators = 3;
 
   mfSettingsCommon = 0;
   mfSettingsInfo = 1;
+
+  mfSimulatorsSmtp = 0;
+  mfSimulatorsHttp = 1;
 
 type
   TManagedFormId = type Integer;
@@ -20,6 +24,7 @@ type
   private
     FFormId: TManagedFormId;
   public
+    constructor Create(AOwner: TComponent); override;
     property FormId: TManagedFormId read FFormId write FFormId;
   end;
 
@@ -52,11 +57,17 @@ type
     procedure CreateForms; override;
   end;
 
+  TSimulatorsFormList = class(TManagedFormList)
+  private
+    procedure CreateForms; override;
+  end;
+
 implementation
 
 uses
-  Qizmos.WelcomeForm, Qizmos.SettingsForm, Qizmos.SettingsCommonForm,
-  Qizmos.SettingsInfoForm;
+  Qizmos.WelcomeForm,
+  Qizmos.SettingsForm, Qizmos.SettingsCommonForm, Qizmos.SettingsInfoForm,
+  Qizmos.SimulatorsForm, Qizmos.SimulatorsSmtpForm, Qizmos.SimulatorsHttpForm;
 
 { TManagedFormList }
 
@@ -127,6 +138,7 @@ procedure TApplicationFormList.CreateForms;
 begin
   AddForm(mfMainWelcome, TwWelcomeForm);
   AddForm(mfMainSettings, TwSettingsForm);
+  AddForm(mfMainSimulators, TwSimulatorsForm);
 end;
 
 { TSettingsFormList }
@@ -135,6 +147,22 @@ procedure TSettingsFormList.CreateForms;
 begin
   AddForm(mfSettingsCommon, TwSettingsCommonForm);
   AddForm(mfSettingsInfo, TwSettingsInfoForm);
+end;
+
+{ TSimulatorsFormList }
+
+procedure TSimulatorsFormList.CreateForms;
+begin
+  AddForm(mfSimulatorsSmtp, TwSimulatorsSmtpForm);
+  AddForm(mfSimulatorsHttp, TwSimulatorsHttpForm)
+end;
+
+{ TManagedForm }
+
+constructor TManagedForm.Create(AOwner: TComponent);
+begin
+  inherited;
+  BorderStyle := bsNone;
 end;
 
 end.

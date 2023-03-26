@@ -81,9 +81,7 @@ object wMainForm: TwMainForm
           AllowReorder = False
         end
         item
-          Caption = 'Simulatoren'
-          ImageIndex = 6
-          ImageName = '006_Simulator'
+          Action = acSectionSimulators
         end>
       ItemIndex = 0
       TabOrder = 1
@@ -213,6 +211,12 @@ object wMainForm: TwMainForm
       ImageIndex = 2
       ImageName = '002_Settings'
       OnExecute = acSectionSettingsExecute
+    end
+    object acSectionSimulators: TAction
+      Category = 'Section'
+      Caption = 'Simulatoren'
+      ImageIndex = 6
+      OnExecute = acSectionSimulatorsExecute
     end
   end
 end

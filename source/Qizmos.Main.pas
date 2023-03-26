@@ -28,11 +28,13 @@ type
     acSectionWelcome: TAction;
     acSectionSettings: TAction;
     sh1: TShape;
+    acSectionSimulators: TAction;
     procedure FormCreate(Sender: TObject);
     procedure imBurgerButtonClick(Sender: TObject);
     procedure acSectionWelcomeExecute(Sender: TObject);
     procedure acSectionSettingsExecute(Sender: TObject);
     procedure acHelpAboutExecute(Sender: TObject);
+    procedure acSectionSimulatorsExecute(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure nvFooterButtonClicked(Sender: TObject; Index: Integer);
     procedure nvHeaderButtonClicked(Sender: TObject; Index: Integer);
@@ -67,6 +69,11 @@ end;
 procedure TwMainForm.acSectionSettingsExecute(Sender: TObject);
 begin
   FForms.ShowForm(mfMainSettings);
+end;
+
+procedure TwMainForm.acSectionSimulatorsExecute(Sender: TObject);
+begin
+  FForms.ShowForm(mfMainSimulators);
 end;
 
 procedure TwMainForm.acSectionWelcomeExecute(Sender: TObject);

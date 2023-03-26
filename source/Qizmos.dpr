@@ -21,7 +21,10 @@ uses
   Qizmos.SettingsForm in 'views\Qizmos.SettingsForm.pas' {wSettingsForm},
   Qizmos.WelcomeForm in 'views\Qizmos.WelcomeForm.pas' {wWelcomeForm},
   Qizmos.SettingsCommonForm in 'views\Qizmos.SettingsCommonForm.pas' {wSettingsCommonForm},
-  Qizmos.SettingsInfoForm in 'views\Qizmos.SettingsInfoForm.pas' {wSettingsInfoForm};
+  Qizmos.SettingsInfoForm in 'views\Qizmos.SettingsInfoForm.pas' {wSettingsInfoForm},
+  Qizmos.SimulatorsForm in 'views\Qizmos.SimulatorsForm.pas' {wSimulatorsForm},
+  Qizmos.SimulatorsSmtpForm in 'views\Qizmos.SimulatorsSmtpForm.pas' {wSimulatorsSmtpForm},
+  Qizmos.SimulatorsHttpForm in 'views\Qizmos.SimulatorsHttpForm.pas' {wSimulatorsHttpForm};
 
 {$R *.res}
 
@@ -37,7 +40,5 @@ begin
   Application.Title := 'Qizmos';
   Application.CreateForm(TdmCommon, dmCommon);
   Application.CreateForm(TwMainForm, wMainForm);
-  Application.CreateForm(TwSettingsCommonForm, wSettingsCommonForm);
-  Application.CreateForm(TwSettingsInfoForm, wSettingsInfoForm);
   Application.Run;
 end.

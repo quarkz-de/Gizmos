@@ -19,3 +19,6 @@
 [submodule "submodules/Qodelib"]
 	path = submodules/Qodelib
 	url = https://github.com/quarkz-de/Qodelib.git
+[submodule "submodules/loggerpro"]
+	path = submodules/loggerpro
+	url = https://github.com/danieleteti/loggerpro.git
