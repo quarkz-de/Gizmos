@@ -19,6 +19,3 @@
 [submodule "submodules/Qodelib"]
 	path = submodules/Qodelib
 	url = https://github.com/quarkz-de/Qodelib.git
-[submodule "submodules/i18n"]
-	path = submodules/i18n
-	url = https://github.com/Khojasteh/i18n.git
