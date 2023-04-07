@@ -4,53 +4,52 @@ interface
 
 uses
   EventBus,
-  Qizmos.Settings;
+  Qizmos.Forms;
 
 type
-  ISettingChangeEvent = interface
-    ['{E6B7B890-DEFA-4F6B-8A93-91FD1FFE9822}']
-    function GetValue: TApplicationSettingValue;
-    property Value: TApplicationSettingValue read GetValue;
+  IModuleChangeEvent = interface
+    ['{C52EBC6A-D733-44FD-8F0F-F4109D1290B0}']
+    function GetFormId: TManagedFormId;
+    property FormId: TManagedFormId read GetFormId;
   end;
 
   TEventFactory = class
   public
-    class function NewSettingChangeEvent(
-      const AValue: TApplicationSettingValue): ISettingChangeEvent;
+    class function NewModuleChangeEvent(const AFormId: TManagedFormId): IModuleChangeEvent;
   end;
 
 implementation
 
 type
-  TSettingChangeEvent = class(TInterfacedObject, ISettingChangeEvent)
+  TModuleChangeEvent = class(TInterfacedObject, IModuleChangeEvent)
   private
-    FValue: TApplicationSettingValue;
+    FFormId: TManagedFormId;
   protected
-    function GetValue: TApplicationSettingValue;
+    function GetFormId: TManagedFormId;
   public
-    constructor Create(const AValue: TApplicationSettingValue);
-    property Value: TApplicationSettingValue read GetValue;
+    constructor Create(const AFormId: TManagedFormId);
+    property FormId: TManagedFormId read GetFormId;
   end;
-
-{ TSettingChangeEvent }
-
-constructor TSettingChangeEvent.Create(const AValue: TApplicationSettingValue);
-begin
-  inherited Create;
-  FValue := AValue;
-end;
-
-function TSettingChangeEvent.GetValue: TApplicationSettingValue;
-begin
-  Result := FValue;
-end;
 
 { TEventFactory }
 
-class function TEventFactory.NewSettingChangeEvent(
-  const AValue: TApplicationSettingValue): ISettingChangeEvent;
+class function TEventFactory.NewModuleChangeEvent(
+  const AFormId: TManagedFormId): IModuleChangeEvent;
 begin
-  Result := TSettingChangeEvent.Create(AValue);
+  Result := TModuleChangeEvent.Create(AFormId);
+end;
+
+{ TModuleChangeEvent }
+
+constructor TModuleChangeEvent.Create(const AFormId: TManagedFormId);
+begin
+  inherited Create;
+  FFormId := AFormId;
+end;
+
+function TModuleChangeEvent.GetFormId: TManagedFormId;
+begin
+  Result := FFormId;
 end;
 
 end.

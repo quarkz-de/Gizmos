@@ -4,18 +4,16 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages,
-  System.SysUtils, System.Variants, System.Classes,
-  Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
+  System.SysUtils, System.Variants, System.Classes, System.ImageList,
+  System.Actions,
+  Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.VirtualImage,
+  Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.ImgList, Vcl.VirtualImageList,
+  Vcl.ActnList,
   Qodelib.NavigationView,
-  Qizmos.Forms, Qizmos.Events, Vcl.VirtualImage, Vcl.StdCtrls, Vcl.ExtCtrls,
-  System.ImageList, Vcl.ImgList, Vcl.VirtualImageList, System.Actions,
-  Vcl.ActnList;
+  Qizmos.Forms;
 
 type
   TwSimulatorsForm = class(TManagedForm)
-    shHeader: TShape;
-    txCaption: TLabel;
-    imIcon: TVirtualImage;
     alActions: TActionList;
     acSmtpBlackhole: TAction;
     acHttpBlackhole: TAction;

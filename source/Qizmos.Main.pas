@@ -10,8 +10,8 @@ uses
   Vcl.VirtualImageList, Vcl.Buttons, Vcl.StdCtrls, Vcl.VirtualImage,
   Vcl.ExtCtrls, Vcl.WinXCtrls, Vcl.PlatformDefaultStyleActnCtrls,
   Vcl.ActnMan, Vcl.ToolWin, Vcl.ActnCtrls, Vcl.ActnMenus, Vcl.TitleBarCtrls,
-  Vcl.ActnList, Vcl.StdActns,
-  Eventbus,
+  Vcl.ActnList, Vcl.StdActns, Vcl.AppEvnts,
+  EventBus,
   Qodelib.NavigationView,
   Qizmos.Events, Qizmos.Forms;
 
@@ -20,26 +20,33 @@ type
     vilLargeIcons: TVirtualImageList;
     vilIcons: TVirtualImageList;
     svSplitView: TSplitView;
-    pnl1: TPanel;
-    imBurgerButton: TVirtualImage;
     nvHeader: TQzNavigationView;
     nvFooter: TQzNavigationView;
     alActions: TActionList;
     acSectionWelcome: TAction;
     acSectionSettings: TAction;
-    sh1: TShape;
     acSectionSimulators: TAction;
+    tiTrayIcon: TTrayIcon;
+    aeAppEvents: TApplicationEvents;
+    pnHeader: TPanel;
+    shHeader: TShape;
+    imBurgerButton: TVirtualImage;
+    txCaption: TLabel;
+    imIcon: TVirtualImage;
+    sh2: TShape;
     procedure FormCreate(Sender: TObject);
     procedure imBurgerButtonClick(Sender: TObject);
     procedure acSectionWelcomeExecute(Sender: TObject);
     procedure acSectionSettingsExecute(Sender: TObject);
     procedure acHelpAboutExecute(Sender: TObject);
     procedure acSectionSimulatorsExecute(Sender: TObject);
+    procedure aeAppEventsMinimize(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure nvFooterButtonClicked(Sender: TObject; Index: Integer);
     procedure nvHeaderButtonClicked(Sender: TObject; Index: Integer);
     procedure svSplitViewClosed(Sender: TObject);
     procedure svSplitViewOpened(Sender: TObject);
+    procedure tiTrayIconDblClick(Sender: TObject);
   private
     FForms: TManagedFormList;
     procedure InitSettings;
@@ -47,6 +54,8 @@ type
   protected
     property Forms: TManagedFormList read FForms;
   public
+    [Subscribe]
+    procedure OnModuleChange(AEvent: IModuleChangeEvent);
   end;
 
 var
@@ -81,11 +90,18 @@ begin
   FForms.ShowForm(mfMainWelcome);
 end;
 
+procedure TwMainForm.aeAppEventsMinimize(Sender: TObject);
+begin
+  Hide;
+  WindowState := wsMinimized;
+  tiTrayIcon.Visible := true;
+end;
+
 procedure TwMainForm.FormCreate(Sender: TObject);
 begin
   FForms := TApplicationFormList.Create(self);
   acSectionWelcome.Execute;
-//  GlobalEventBus.RegisterSubscriberForEvents(Self);
+  GlobalEventBus.RegisterSubscriberForEvents(Self);
   dmCommon.MainFormCreated;
   InitSettings;
 end;
@@ -117,6 +133,16 @@ begin
   nvFooter.ItemIndex := -1;
 end;
 
+procedure TwMainForm.OnModuleChange(AEvent: IModuleChangeEvent);
+begin
+  if AEvent.FormId.IsMainModule then
+    begin
+      txCaption.Caption := AEvent.FormId.ToString;
+      imIcon.ImageIndex := AEvent.FormId.ToImageIndex;
+      Caption := 'Qizmos - ' + AEvent.FormId.ToString;
+    end;
+end;
+
 procedure TwMainForm.svSplitViewClosed(Sender: TObject);
 begin
   ApplicationSettings.DrawerOpened := false;
@@ -129,6 +155,14 @@ begin
   ApplicationSettings.DrawerOpened := true;
   nvHeader.ButtonOptions := nvHeader.ButtonOptions + [nboShowCaptions];
   nvFooter.ButtonOptions := nvFooter.ButtonOptions + [nboShowCaptions];
+end;
+
+procedure TwMainForm.tiTrayIconDblClick(Sender: TObject);
+begin
+  tiTrayIcon.Visible := false;
+  Show;
+  WindowState := wsNormal;
+  Application.BringToFront;
 end;
 
 procedure TwMainForm.WMSettingChange(var Message: TWMSettingChange);

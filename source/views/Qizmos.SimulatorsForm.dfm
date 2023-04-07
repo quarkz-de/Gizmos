@@ -2,8 +2,8 @@ object wSimulatorsForm: TwSimulatorsForm
   Left = 0
   Top = 0
   Caption = 'Simulatoren'
-  ClientHeight = 442
-  ClientWidth = 628
+  ClientHeight = 441
+  ClientWidth = 624
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -13,46 +13,11 @@ object wSimulatorsForm: TwSimulatorsForm
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   TextHeight = 15
-  object shHeader: TShape
-    Left = 0
-    Top = 0
-    Width = 628
-    Height = 49
-    Align = alTop
-    Brush.Color = clWindow
-    Pen.Style = psClear
-    ExplicitLeft = -149
-    ExplicitWidth = 777
-  end
-  object txCaption: TLabel
-    Left = 64
-    Top = 8
-    Width = 125
-    Height = 29
-    Caption = 'Simulatoren'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -24
-    Font.Name = 'Tahoma'
-    Font.Style = []
-    ParentFont = False
-  end
-  object imIcon: TVirtualImage
-    Left = 12
-    Top = 8
-    Width = 32
-    Height = 32
-    ImageCollection = dmCommon.icIcons
-    ImageWidth = 0
-    ImageHeight = 0
-    ImageIndex = 6
-    ImageName = '006_Simulator'
-  end
   object shBorder: TShape
     Left = 170
-    Top = 49
+    Top = 0
     Width = 1
-    Height = 393
+    Height = 441
     Align = alLeft
     Brush.Style = bsClear
     Pen.Color = clWindowFrame
@@ -61,9 +26,9 @@ object wSimulatorsForm: TwSimulatorsForm
   end
   object nvSettings: TQzNavigationView
     Left = 0
-    Top = 49
+    Top = 0
     Width = 170
-    Height = 393
+    Height = 441
     Align = alLeft
     BorderStyle = bsNone
     ButtonHeight = 40
@@ -80,7 +45,8 @@ object wSimulatorsForm: TwSimulatorsForm
       end>
     ItemIndex = 0
     TabOrder = 0
-    ExplicitTop = 46
+    ExplicitTop = 49
+    ExplicitHeight = 391
   end
   object alActions: TActionList
     Images = viImages

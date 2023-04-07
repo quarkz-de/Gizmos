@@ -8,10 +8,11 @@ uses
   System.Generics.Collections,
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls,
   Vcl.ExtCtrls, Vcl.WinXCtrls, Vcl.StdCtrls, Vcl.VirtualImage, Vcl.ActnList,
-  IdBaseComponent, IdComponent, IdCustomTCPServer, IdTCPServer,
-  IdCmdTCPServer, IdExplicitTLSClientServerBase, IdSMTPServer, IdMessage,
+  IdBaseComponent, IdComponent, IdCustomTCPServer, IdTCPServer, IdCmdTCPServer,
+  IdExplicitTLSClientServerBase, IdSMTPServer, IdMessage, IdContext,
+  VirtualTrees,
   LoggerPro,
-  Qizmos.Forms, IdContext;
+  Qizmos.Forms;
 
 type
   TwSimulatorsSmtpForm = class(TManagedForm)
@@ -26,6 +27,8 @@ type
     lvLog: TListView;
     alActions: TActionList;
     acServerActivate: TAction;
+    vtMessages: TVirtualStringTree;
+    pnMessages: TPanel;
     procedure FormDestroy(Sender: TObject);
     procedure acServerActivateExecute(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -126,6 +129,7 @@ procedure TwSimulatorsSmtpForm.smtpServerRcptTo(ASender: TIdSMTPServerContext;
   var VForward: string);
 begin
   Log.InfoFmt('Recipient: %s', [AAddress], tagMessage);
+  VAction := rAddressOk;
 end;
 
 procedure TwSimulatorsSmtpForm.smtpServerReceived(

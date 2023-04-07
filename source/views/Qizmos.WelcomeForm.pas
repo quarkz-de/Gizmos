@@ -11,9 +11,6 @@ uses
 
 type
   TwWelcomeForm = class(TManagedForm)
-    shHeader: TShape;
-    imIcon: TVirtualImage;
-    txCaption: TLabel;
   private
   public
   end;

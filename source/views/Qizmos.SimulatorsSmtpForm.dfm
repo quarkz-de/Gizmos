@@ -26,12 +26,48 @@ object wSimulatorsSmtpForm: TwSimulatorsSmtpForm
     ActivePage = tsMessages
     Align = alClient
     TabOrder = 0
-    ExplicitLeft = 3
-    ExplicitTop = 56
-    ExplicitWidth = 622
-    ExplicitHeight = 383
     object tsMessages: TTabSheet
       Caption = 'Nachrichten'
+      object vtMessages: TVirtualStringTree
+        Left = 0
+        Top = 41
+        Width = 604
+        Height = 314
+        Align = alClient
+        BorderStyle = bsNone
+        Colors.BorderColor = 15987699
+        Colors.DisabledColor = clGray
+        Colors.DropMarkColor = 15385233
+        Colors.DropTargetColor = 15385233
+        Colors.DropTargetBorderColor = 15385233
+        Colors.FocusedSelectionColor = 15385233
+        Colors.FocusedSelectionBorderColor = 15385233
+        Colors.GridLineColor = 15987699
+        Colors.HeaderHotColor = clBlack
+        Colors.HotColor = clBlack
+        Colors.SelectionRectangleBlendColor = 15385233
+        Colors.SelectionRectangleBorderColor = 15385233
+        Colors.SelectionTextColor = clBlack
+        Colors.TreeLineColor = 9471874
+        Colors.UnfocusedColor = clGray
+        Colors.UnfocusedSelectionColor = clWhite
+        Colors.UnfocusedSelectionBorderColor = clWhite
+        Header.AutoSizeIndex = 0
+        Header.MainColumn = -1
+        TabOrder = 0
+        Touch.InteractiveGestures = [igPan, igPressAndTap]
+        Touch.InteractiveGestureOptions = [igoPanSingleFingerHorizontal, igoPanSingleFingerVertical, igoPanInertia, igoPanGutter, igoParentPassthrough]
+        Columns = <>
+      end
+      object pnMessages: TPanel
+        Left = 0
+        Top = 0
+        Width = 604
+        Height = 41
+        Align = alTop
+        BevelOuter = bvNone
+        TabOrder = 1
+      end
     end
     object tsLog: TTabSheet
       Caption = 'Protokoll'
@@ -73,22 +109,20 @@ object wSimulatorsSmtpForm: TwSimulatorsSmtpForm
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 1
-    ExplicitLeft = 396
-    ExplicitTop = 24
-    ExplicitWidth = 185
+    ExplicitTop = -3
     DesignSize = (
       628
       41)
     object txCaption: TLabel
       Left = 64
       Top = 8
-      Width = 166
-      Height = 29
+      Width = 170
+      Height = 32
       Caption = 'SMTP Blackhole'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -24
-      Font.Name = 'Tahoma'
+      Font.Name = 'Segoe UI'
       Font.Style = []
       ParentFont = False
     end
@@ -112,6 +146,7 @@ object wSimulatorsSmtpForm: TwSimulatorsSmtpForm
       Anchors = [akTop, akRight]
       TabOrder = 0
       ThumbWidth = 20
+      ExplicitLeft = 540
     end
   end
   object smtpServer: TIdSMTPServer
@@ -124,7 +159,7 @@ object wSimulatorsSmtpForm: TwSimulatorsSmtpForm
       'Unknown Internal Error')
     Greeting.Code = '220'
     Greeting.Text.Strings = (
-      'Welcome to the INDY SMTP Server')
+      'Welcome to the Qizmos SMTP Blackhole Server')
     HelpReply.Code = ''
     MaxConnectionReply.Code = '300'
     MaxConnectionReply.Text.Strings = (

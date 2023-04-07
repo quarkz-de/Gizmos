@@ -15,44 +15,11 @@ object wSettingsForm: TwSettingsForm
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   TextHeight = 13
-  object shHeader: TShape
-    Left = 0
-    Top = 0
-    Width = 777
-    Height = 49
-    Align = alTop
-    Brush.Color = clWindow
-    Pen.Style = psClear
-  end
-  object imIcon: TVirtualImage
-    Left = 12
-    Top = 8
-    Width = 32
-    Height = 32
-    ImageCollection = dmCommon.icIcons
-    ImageWidth = 0
-    ImageHeight = 0
-    ImageIndex = 2
-    ImageName = '002_Settings'
-  end
-  object txCaption: TLabel
-    Left = 64
-    Top = 8
-    Width = 138
-    Height = 29
-    Caption = 'Einstellungen'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -24
-    Font.Name = 'Tahoma'
-    Font.Style = []
-    ParentFont = False
-  end
   object shBorder: TShape
     Left = 170
-    Top = 49
+    Top = 0
     Width = 1
-    Height = 419
+    Height = 468
     Align = alLeft
     Brush.Style = bsClear
     Pen.Color = clWindowFrame
@@ -61,9 +28,9 @@ object wSettingsForm: TwSettingsForm
   end
   object nvSettings: TQzNavigationView
     Left = 0
-    Top = 49
+    Top = 0
     Width = 170
-    Height = 419
+    Height = 468
     Align = alLeft
     BorderStyle = bsNone
     ButtonHeight = 40
@@ -78,6 +45,8 @@ object wSettingsForm: TwSettingsForm
       end>
     ItemIndex = 0
     TabOrder = 0
+    ExplicitTop = 49
+    ExplicitHeight = 419
   end
   object viImages: TVirtualImageList
     Images = <

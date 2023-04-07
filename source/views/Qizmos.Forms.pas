@@ -4,28 +4,45 @@ interface
 
 uses
   System.Classes, System.Generics.Collections, System.Generics.Defaults,
-  Vcl.Forms, Vcl.Controls;
+  Vcl.Forms, Vcl.Controls,
+  EventBus;
 
 const
-  mfMainSettings = 0;
-  mfMainWelcome = 1;
-  mfMainSimulators = 3;
+  mfMaxItemsPerGroup = 100;
 
-  mfSettingsCommon = 0;
-  mfSettingsInfo = 1;
+  mfMainBase = 100;
+  mfMainSettings = mfMainBase + 1;
+  mfMainWelcome = mfMainBase + 2;
+  mfMainSimulators = mfMainBase + 3;
 
-  mfSimulatorsSmtp = 0;
-  mfSimulatorsHttp = 1;
+  mfSettingsBase = 200;
+  mfSettingsCommon = mfSettingsBase + 1;
+  mfSettingsInfo = mfSettingsBase + 2;
+
+  mfSimulatorsBase = 300;
+  mfSimulatorsSmtp = mfSimulatorsBase + 1;
+  mfSimulatorsHttp = mfSimulatorsBase + 2;
 
 type
   TManagedFormId = type Integer;
 
+  TManagedFormIdHelper = record helper for TManagedFormId
+  public
+    function ToString: String; inline;
+    function ToImageIndex: Integer; inline;
+    function IsMainModule: Boolean; inline;
+    function IsSubModule(const AMainModule: TManagedFormId): Boolean; inline;
+    function BaseOf: TManagedFormId; inline;
+  end;
+
   TManagedForm = class(TForm)
   private
     FFormId: TManagedFormId;
+    FImageIndex: Integer;
   public
     constructor Create(AOwner: TComponent); override;
     property FormId: TManagedFormId read FFormId write FFormId;
+    property ImageIndex: Integer read FImageIndex write FImageIndex;
   end;
 
   TManagedFormClass = class of TManagedForm;
@@ -65,6 +82,7 @@ type
 implementation
 
 uses
+  Qizmos.Events,
   Qizmos.WelcomeForm,
   Qizmos.SettingsForm, Qizmos.SettingsCommonForm, Qizmos.SettingsInfoForm,
   Qizmos.SimulatorsForm, Qizmos.SimulatorsSmtpForm, Qizmos.SimulatorsHttpForm;
@@ -122,6 +140,7 @@ begin
           Form.Align := alClient;
           Form.Visible := true;
           Form.Activate;
+          GlobalEventBus.Post(TEventFactory.NewModuleChangeEvent(AForm));
         end
       else
         begin
@@ -163,6 +182,71 @@ constructor TManagedForm.Create(AOwner: TComponent);
 begin
   inherited;
   BorderStyle := bsNone;
+end;
+
+{ TManagedFormIdHelper }
+
+function TManagedFormIdHelper.BaseOf: TManagedFormId;
+begin
+  Result := (self mod 100) * 100;
+end;
+
+function TManagedFormIdHelper.IsMainModule: Boolean;
+begin
+  Result := (self > mfMainBase) and (self < mfMainBase + mfMaxItemsPerGroup);
+end;
+
+function TManagedFormIdHelper.IsSubModule(
+  const AMainModule: TManagedFormId): Boolean;
+var
+  Base: TManagedFormId;
+begin
+  Base := self.BaseOf;
+  Result := (self > Base) and (self < Base + mfMaxItemsPerGroup);
+end;
+
+function TManagedFormIdHelper.ToImageIndex: Integer;
+begin
+  case self of
+    mfMainSettings:
+      Result := 2;
+    mfMainWelcome:
+      Result := 5;
+    mfMainSimulators:
+      Result := 6;
+    mfSettingsCommon:
+      Result := -1;
+    mfSettingsInfo:
+      Result := -1;
+    mfSimulatorsSmtp:
+      Result := -1;
+    mfSimulatorsHttp:
+      Result := -1;
+    else
+      Result := -1;
+  end;
+end;
+
+function TManagedFormIdHelper.ToString: String;
+begin
+  case self of
+    mfMainSettings:
+      Result := 'Einstellungen';
+    mfMainWelcome:
+      Result := 'Start';
+    mfMainSimulators:
+      Result := 'Simulatoren';
+    mfSettingsCommon:
+      Result := 'Allgemein';
+    mfSettingsInfo:
+      Result := 'Info';
+    mfSimulatorsSmtp:
+      Result := 'SMTP Blackhole';
+    mfSimulatorsHttp:
+      Result := 'HTTP Blackhole';
+    else
+      Result := '';
+  end;
 end;
 
 end.

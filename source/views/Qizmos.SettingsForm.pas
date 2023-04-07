@@ -11,13 +11,10 @@ uses
   Vcl.VirtualImageList, Vcl.ComCtrls, Vcl.ActnList,
   Eventbus,
   Qodelib.NavigationView,
-  Qizmos.Forms, Qizmos.Events;
+  Qizmos.Forms;
 
 type
   TwSettingsForm = class(TManagedForm)
-    imIcon: TVirtualImage;
-    txCaption: TLabel;
-    shHeader: TShape;
     viImages: TVirtualImageList;
     nvSettings: TQzNavigationView;
     alActions: TActionList;

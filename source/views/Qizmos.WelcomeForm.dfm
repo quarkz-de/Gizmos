@@ -12,39 +12,4 @@ object wWelcomeForm: TwWelcomeForm
   Font.Name = 'Tahoma'
   Font.Style = []
   TextHeight = 13
-  object shHeader: TShape
-    Left = 0
-    Top = 0
-    Width = 761
-    Height = 49
-    Align = alTop
-    Brush.Color = clWindow
-    Pen.Style = psClear
-    ExplicitLeft = -16
-    ExplicitWidth = 777
-  end
-  object imIcon: TVirtualImage
-    Left = 12
-    Top = 8
-    Width = 32
-    Height = 32
-    ImageCollection = dmCommon.icIcons
-    ImageWidth = 0
-    ImageHeight = 0
-    ImageIndex = 5
-    ImageName = '005_Start'
-  end
-  object txCaption: TLabel
-    Left = 64
-    Top = 8
-    Width = 51
-    Height = 29
-    Caption = 'Start'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -24
-    Font.Name = 'Tahoma'
-    Font.Style = []
-    ParentFont = False
-  end
 end

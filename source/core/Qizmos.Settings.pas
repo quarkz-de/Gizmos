@@ -27,8 +27,6 @@ type
     property Width: Integer read FWidth write FWidth;
   end;
 
-  TApplicationSettingValue = (svEditorFont);
-
   TApplicationTheme = (atSystem, atLight, atDark);
 
   TApplicationSettings = class(TPersistent)
@@ -41,7 +39,6 @@ type
     function GetSettingsFilename: String;
     function GetSettingsFoldername: String;
     procedure SetFormPositon(const Value: TApplicationFormPosition);
-    procedure ChangeEvent(const AValue: TApplicationSettingValue);
     function GetThemeName: String;
   public
     constructor Create;
@@ -64,9 +61,7 @@ implementation
 uses
   System.IOUtils, System.JSON,
   Neon.Core.Persistence, Neon.Core.Persistence.JSON,
-  EventBus,
-  Qodelib.IOUtils,
-  Qizmos.Events;
+  Qodelib.IOUtils;
 
 const
 {$ifdef DEBUG}
@@ -77,11 +72,6 @@ const
   SAppDataFolder = 'quarkz';
 
 { TApplicationSettings }
-
-procedure TApplicationSettings.ChangeEvent(const AValue: TApplicationSettingValue);
-begin
-  GlobalEventBus.Post(TEventFactory.NewSettingChangeEvent(AValue));
-end;
 
 constructor TApplicationSettings.Create;
 begin
