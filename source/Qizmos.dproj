@@ -143,6 +143,7 @@
             <Form>wSimulatorsHttpForm</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="core\Qizmos.Types.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

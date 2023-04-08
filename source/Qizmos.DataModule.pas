@@ -9,11 +9,15 @@ uses
 type
   TdmCommon = class(TDataModule)
     icLogo: TImageCollection;
-    icIcons: TImageCollection;
+    icLightIcons: TImageCollection;
+    icDarkIcons: TImageCollection;
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
+  private
+    procedure ThemeChanged;
   public
     procedure MainFormCreated;
+    function GetImageCollection: TImageCollection;
   end;
 
 var
@@ -23,7 +27,8 @@ implementation
 
 uses
   Spring.Container,
-  Qizmos.Settings;
+  EventBus,
+  Qizmos.Settings, Qizmos.Events;
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
@@ -32,6 +37,7 @@ uses
 procedure TdmCommon.DataModuleCreate(Sender: TObject);
 begin
   ApplicationSettings.LoadSettings;
+  ThemeChanged;
 end;
 
 procedure TdmCommon.DataModuleDestroy(Sender: TObject);
@@ -39,9 +45,22 @@ begin
   ApplicationSettings.SaveSettings;
 end;
 
+function TdmCommon.GetImageCollection: TImageCollection;
+begin
+  if ApplicationSettings.IsDarkTheme then
+    Result := icLightIcons
+  else
+    Result := icDarkIcons;
+end;
+
 procedure TdmCommon.MainFormCreated;
 begin
-  //
+  ThemeChanged;
+end;
+
+procedure TdmCommon.ThemeChanged;
+begin
+  GlobalEventBus.Post(TEventFactory.NewThemeChangeEvent);
 end;
 
 end.

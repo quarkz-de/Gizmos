@@ -12,7 +12,7 @@ uses
   IdExplicitTLSClientServerBase, IdSMTPServer, IdMessage, IdContext,
   VirtualTrees,
   LoggerPro,
-  Qizmos.Forms;
+  Qizmos.Forms, Qizmos.Events;
 
 type
   TwSimulatorsSmtpForm = class(TManagedForm)
@@ -50,6 +50,7 @@ type
     FMessages: TObjectList<TIdMessage>;
   public
     property Log: ILogWriter read FLog;
+    procedure ThemeChanged; override;
   end;
 
 var
@@ -60,7 +61,8 @@ implementation
 {$R *.dfm}
 
 uses
-  LoggerPro.VCLListViewAppender;
+  LoggerPro.VCLListViewAppender,
+  Qizmos.DataModule;
 
 const
   tagServer = 'SERVER';
@@ -78,7 +80,7 @@ const
 begin
   smtpServer.Active := not smtpServer.Active;
   tsActive.State := SwitchStates[smtpServer.Active];
-  Log.InfoFmt('Serverstatus: %s', [ServerStates[smtpServer.Active]], tagServer);
+  Log.Info('Serverstatus: %s', [ServerStates[smtpServer.Active]], tagServer);
 end;
 
 procedure TwSimulatorsSmtpForm.FormCreate(Sender: TObject);
@@ -108,7 +110,7 @@ procedure TwSimulatorsSmtpForm.smtpServerMailFrom(
   ASender: TIdSMTPServerContext; const AAddress: string; AParams: TStrings;
   var VAction: TIdMailFromReply);
 begin
-  Log.InfoFmt('Sender: %s', [AAddress], tagMessage);
+  Log.Info('Sender: %s', [AAddress], tagMessage);
   VAction := mAccept;
 end;
 
@@ -128,7 +130,7 @@ procedure TwSimulatorsSmtpForm.smtpServerRcptTo(ASender: TIdSMTPServerContext;
   const AAddress: string; AParams: TStrings; var VAction: TIdRCPToReply;
   var VForward: string);
 begin
-  Log.InfoFmt('Recipient: %s', [AAddress], tagMessage);
+  Log.Info('Recipient: %s', [AAddress], tagMessage);
   VAction := rAddressOk;
 end;
 
@@ -142,8 +144,14 @@ procedure TwSimulatorsSmtpForm.smtpServerUserLogin(
   ASender: TIdSMTPServerContext; const AUsername, APassword: string;
   var VAuthenticated: Boolean);
 begin
-  Log.InfoFmt('Username: %s; Password: %s', [AUsername, APassword], tagServer);
+  Log.Info('Username: %s; Password: %s', [AUsername, APassword], tagServer);
   VAuthenticated := true;
+end;
+
+procedure TwSimulatorsSmtpForm.ThemeChanged;
+begin
+  inherited;
+  imIcon.ImageCollection := dmCommon.GetImageCollection;
 end;
 
 end.

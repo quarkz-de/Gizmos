@@ -26,6 +26,8 @@ object wSimulatorsSmtpForm: TwSimulatorsSmtpForm
     ActivePage = tsMessages
     Align = alClient
     TabOrder = 0
+    ExplicitWidth = 608
+    ExplicitHeight = 384
     object tsMessages: TTabSheet
       Caption = 'Nachrichten'
       object vtMessages: TVirtualStringTree
@@ -57,6 +59,8 @@ object wSimulatorsSmtpForm: TwSimulatorsSmtpForm
         TabOrder = 0
         Touch.InteractiveGestures = [igPan, igPressAndTap]
         Touch.InteractiveGestureOptions = [igoPanSingleFingerHorizontal, igoPanSingleFingerVertical, igoPanInertia, igoPanGutter, igoParentPassthrough]
+        ExplicitWidth = 600
+        ExplicitHeight = 313
         Columns = <>
       end
       object pnMessages: TPanel
@@ -67,6 +71,7 @@ object wSimulatorsSmtpForm: TwSimulatorsSmtpForm
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 1
+        ExplicitWidth = 600
       end
     end
     object tsLog: TTabSheet
@@ -109,7 +114,7 @@ object wSimulatorsSmtpForm: TwSimulatorsSmtpForm
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 1
-    ExplicitTop = -3
+    ExplicitWidth = 624
     DesignSize = (
       628
       41)
@@ -131,7 +136,7 @@ object wSimulatorsSmtpForm: TwSimulatorsSmtpForm
       Top = 8
       Width = 32
       Height = 32
-      ImageCollection = dmCommon.icIcons
+      ImageCollection = dmCommon.icDarkIcons
       ImageWidth = 0
       ImageHeight = 0
       ImageIndex = 7

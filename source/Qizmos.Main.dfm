@@ -59,9 +59,6 @@ object wMainForm: TwMainForm
       ItemIndex = 0
       TabOrder = 0
       OnButtonClicked = nvHeaderButtonClicked
-      ExplicitLeft = 2
-      ExplicitTop = 3
-      ExplicitHeight = 458
     end
     object nvFooter: TQzNavigationView
       Left = 0
@@ -80,8 +77,6 @@ object wMainForm: TwMainForm
         end>
       TabOrder = 1
       OnButtonClicked = nvFooterButtonClicked
-      ExplicitTop = 521
-      ExplicitWidth = 170
     end
   end
   object pnHeader: TPanel
@@ -118,7 +113,7 @@ object wMainForm: TwMainForm
       Top = 7
       Width = 32
       Height = 32
-      ImageCollection = dmCommon.icIcons
+      ImageCollection = dmCommon.icDarkIcons
       ImageWidth = 0
       ImageHeight = 0
       ImageIndex = 0
@@ -143,7 +138,7 @@ object wMainForm: TwMainForm
       Top = 7
       Width = 32
       Height = 32
-      ImageCollection = dmCommon.icIcons
+      ImageCollection = dmCommon.icDarkIcons
       ImageWidth = 0
       ImageHeight = 0
       ImageIndex = 5
@@ -206,7 +201,7 @@ object wMainForm: TwMainForm
         CollectionName = '008_Message'
         Name = '008_Message'
       end>
-    ImageCollection = dmCommon.icIcons
+    ImageCollection = dmCommon.icDarkIcons
     Width = 32
     Height = 32
     Left = 308
@@ -260,7 +255,7 @@ object wMainForm: TwMainForm
         CollectionName = '008_Message'
         Name = '008_Message'
       end>
-    ImageCollection = dmCommon.icIcons
+    ImageCollection = dmCommon.icDarkIcons
     Left = 256
     Top = 76
   end

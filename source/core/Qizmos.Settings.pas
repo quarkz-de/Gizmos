@@ -32,6 +32,8 @@ type
   TApplicationSettings = class(TPersistent)
   private
     FTheme: TApplicationTheme;
+    FThemeName: String;
+    FIsDarkTheme: Boolean;
     FDrawerOpened: Boolean;
     FFormPosition: TApplicationFormPosition;
     procedure SetTheme(const AValue: TApplicationTheme);
@@ -39,7 +41,7 @@ type
     function GetSettingsFilename: String;
     function GetSettingsFoldername: String;
     procedure SetFormPositon(const Value: TApplicationFormPosition);
-    function GetThemeName: String;
+    procedure InitTheme;
   public
     constructor Create;
     destructor Destroy; override;
@@ -48,6 +50,7 @@ type
   published
     procedure WindowsThemeChanged;
     property Theme: TApplicationTheme read GetTheme write SetTheme;
+    property IsDarkTheme: Boolean read FIsDarkTheme;
     property DrawerOpened: Boolean read FDrawerOpened write FDrawerOpened;
     property FormPosition: TApplicationFormPosition read FFormPosition
       write SetFormPositon;
@@ -61,7 +64,9 @@ implementation
 uses
   System.IOUtils, System.JSON,
   Neon.Core.Persistence, Neon.Core.Persistence.JSON,
-  Qodelib.IOUtils;
+  EventBus,
+  Qodelib.IOUtils,
+  Qizmos.Events;
 
 const
 {$ifdef DEBUG}
@@ -102,7 +107,7 @@ begin
   Result := FTheme;
 end;
 
-function TApplicationSettings.GetThemeName: String;
+procedure TApplicationSettings.InitTheme;
 const
   SWindowsTheme = 'Windows';
   SDarkTheme = 'Windows11 Modern Dark';
@@ -113,24 +118,43 @@ begin
   case FTheme of
     atSystem:
       begin
-        Result := SWindowsTheme;
         Reg := TRegistry.Create(KEY_READ);
         Reg.RootKey := HKEY_CURRENT_USER;
         if Reg.OpenKey('SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize', false) then
           begin
             if Reg.ReadBool('AppsUseLightTheme') then
-              Result := SLightTheme
+              begin
+                FThemeName := SLightTheme;
+                FIsDarkTheme := false;
+              end
             else
-              Result := SDarkTheme;
+              begin
+                FThemeName := SDarkTheme;
+                FIsDarkTheme := true;
+              end;
+          end
+        else
+          begin
+            FThemeName := SWindowsTheme;
+            FIsDarkTheme := false;
           end;
         Reg.Free;
       end;
     atLight:
-      Result := SLightTheme;
+      begin
+        FThemeName := SLightTheme;
+        FIsDarkTheme := false;
+      end;
     atDark:
-      Result := SDarkTheme;
+      begin
+        FThemeName := SDarkTheme;
+        FIsDarkTheme := true;
+      end;
     else
-      Result := SWindowsTheme;
+      begin
+        FThemeName := SWindowsTheme;
+        FIsDarkTheme := false;
+      end;
   end;
 end;
 
@@ -172,13 +196,15 @@ end;
 procedure TApplicationSettings.SetTheme(const AValue: TApplicationTheme);
 begin
   FTheme := AValue;
-  TStyleManager.TrySetStyle(GetThemeName);
+  InitTheme;
+  TStyleManager.TrySetStyle(FThemeName);
+  GlobalEventBus.Post(TEventFactory.NewThemeChangeEvent);
 end;
 
 procedure TApplicationSettings.WindowsThemeChanged;
 begin
   if FTheme = atSystem then
-    TStyleManager.TrySetStyle(GetThemeName);
+    TStyleManager.TrySetStyle(FThemeName);
 end;
 
 { TApplicationFormPosition }

@@ -56,6 +56,8 @@ type
   public
     [Subscribe]
     procedure OnModuleChange(AEvent: IModuleChangeEvent);
+    [Subscribe]
+    procedure OnThemeChange(AEvent: IThemeChangeEvent);
   end;
 
 var
@@ -66,7 +68,7 @@ implementation
 {$R *.dfm}
 
 uses
-  Qizmos.DataModule, Qizmos.Settings, Qizmos.About;
+  Qizmos.DataModule, Qizmos.Settings, Qizmos.About, Qizmos.Types;
 
 { TwMain }
 
@@ -141,6 +143,15 @@ begin
       imIcon.ImageIndex := AEvent.FormId.ToImageIndex;
       Caption := 'Qizmos - ' + AEvent.FormId.ToString;
     end;
+end;
+
+procedure TwMainForm.OnThemeChange(AEvent: IThemeChangeEvent);
+begin
+  imBurgerButton.ImageCollection := dmCommon.GetImageCollection;
+  imIcon.ImageCollection := dmCommon.GetImageCollection;
+  vilIcons.ImageCollection := dmCommon.GetImageCollection;
+  vilLargeIcons.ImageCollection := dmCommon.GetImageCollection;
+  FForms.ThemeChanged;
 end;
 
 procedure TwMainForm.svSplitViewClosed(Sender: TObject);

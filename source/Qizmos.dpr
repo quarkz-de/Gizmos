@@ -24,7 +24,8 @@ uses
   Qizmos.SettingsInfoForm in 'views\Qizmos.SettingsInfoForm.pas' {wSettingsInfoForm},
   Qizmos.SimulatorsForm in 'views\Qizmos.SimulatorsForm.pas' {wSimulatorsForm},
   Qizmos.SimulatorsSmtpForm in 'views\Qizmos.SimulatorsSmtpForm.pas' {wSimulatorsSmtpForm},
-  Qizmos.SimulatorsHttpForm in 'views\Qizmos.SimulatorsHttpForm.pas' {wSimulatorsHttpForm};
+  Qizmos.SimulatorsHttpForm in 'views\Qizmos.SimulatorsHttpForm.pas' {wSimulatorsHttpForm},
+  Qizmos.Types in 'core\Qizmos.Types.pas';
 
 {$R *.res}
 

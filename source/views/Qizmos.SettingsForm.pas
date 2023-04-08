@@ -9,9 +9,8 @@ uses
   Vcl.Imaging.pngimage, Vcl.ExtCtrls, Vcl.StdCtrls,
   Vcl.VirtualImage, System.ImageList, Vcl.ImgList,
   Vcl.VirtualImageList, Vcl.ComCtrls, Vcl.ActnList,
-  Eventbus,
   Qodelib.NavigationView,
-  Qizmos.Forms;
+  Qizmos.Forms, Qizmos.Events;
 
 type
   TwSettingsForm = class(TManagedForm)
@@ -30,6 +29,7 @@ type
   protected
     property Forms: TManagedFormList read FForms;
   public
+    procedure ThemeChanged; override;
   end;
 
 implementation
@@ -38,7 +38,7 @@ implementation
 
 uses
   Qodelib.IOUtils,
-  Qizmos.Settings;
+  Qizmos.Settings, Qizmos.DataModule, Qizmos.Types;
 
 const
   iiSystemTheme = 0;
@@ -66,6 +66,14 @@ end;
 procedure TwSettingsForm.FormDestroy(Sender: TObject);
 begin
   FForms.Free;
+end;
+
+procedure TwSettingsForm.ThemeChanged;
+begin
+  inherited;
+  viImages.ImageCollection := dmCommon.GetImageCollection;
+  if FForms <> nil then
+    FForms.ThemeChanged;
 end;
 
 end.

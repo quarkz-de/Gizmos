@@ -10,7 +10,7 @@ uses
   Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.ImgList, Vcl.VirtualImageList,
   Vcl.ActnList,
   Qodelib.NavigationView,
-  Qizmos.Forms;
+  Qizmos.Forms, Qizmos.Events;
 
 type
   TwSimulatorsForm = class(TManagedForm)
@@ -27,6 +27,7 @@ type
   private
     FForms: TManagedFormList;
   public
+    procedure ThemeChanged; override;
   end;
 
 var
@@ -35,6 +36,9 @@ var
 implementation
 
 {$R *.dfm}
+
+uses
+  Qizmos.DataModule, Qizmos.Types;
 
 { TwSimulatorsForm }
 
@@ -57,6 +61,14 @@ end;
 procedure TwSimulatorsForm.FormDestroy(Sender: TObject);
 begin
   FForms.Free;
+end;
+
+procedure TwSimulatorsForm.ThemeChanged;
+begin
+  inherited;
+  viImages.ImageCollection := dmCommon.GetImageCollection;
+  if FForms <> nil then
+    FForms.ThemeChanged;
 end;
 
 end.

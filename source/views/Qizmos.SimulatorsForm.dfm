@@ -37,16 +37,13 @@ object wSimulatorsForm: TwSimulatorsForm
     Items = <
       item
         Action = acSmtpBlackhole
-        ImageName = '002_Settings'
       end
       item
         Action = acHttpBlackhole
-        ImageName = '001_Help'
       end>
     ItemIndex = 0
     TabOrder = 0
-    ExplicitTop = 49
-    ExplicitHeight = 391
+    ExplicitHeight = 440
   end
   object alActions: TActionList
     Images = viImages
@@ -56,20 +53,56 @@ object wSimulatorsForm: TwSimulatorsForm
       Caption = 'SMTP Blackhole'
       Checked = True
       GroupIndex = 1
-      ImageIndex = 0
+      ImageIndex = 7
       ImageName = '007_Mail'
       OnExecute = acSmtpBlackholeExecute
     end
     object acHttpBlackhole: TAction
       Caption = 'HTTP Blackhole'
       GroupIndex = 1
-      ImageIndex = 1
+      ImageIndex = 8
       ImageName = '008_Message'
       OnExecute = acHttpBlackholeExecute
     end
   end
   object viImages: TVirtualImageList
+    AutoFill = True
     Images = <
+      item
+        CollectionIndex = 0
+        CollectionName = '000_Menu'
+        Name = '000_Menu'
+      end
+      item
+        CollectionIndex = 1
+        CollectionName = '001_Help'
+        Name = '001_Help'
+      end
+      item
+        CollectionIndex = 2
+        CollectionName = '002_Settings'
+        Name = '002_Settings'
+      end
+      item
+        CollectionIndex = 3
+        CollectionName = '003_Menu_Vertical'
+        Name = '003_Menu_Vertical'
+      end
+      item
+        CollectionIndex = 4
+        CollectionName = '004_Servers'
+        Name = '004_Servers'
+      end
+      item
+        CollectionIndex = 5
+        CollectionName = '005_Start'
+        Name = '005_Start'
+      end
+      item
+        CollectionIndex = 6
+        CollectionName = '006_Simulator'
+        Name = '006_Simulator'
+      end
       item
         CollectionIndex = 7
         CollectionName = '007_Mail'
@@ -80,7 +113,7 @@ object wSimulatorsForm: TwSimulatorsForm
         CollectionName = '008_Message'
         Name = '008_Message'
       end>
-    ImageCollection = dmCommon.icIcons
+    ImageCollection = dmCommon.icDarkIcons
     Width = 24
     Height = 24
     Left = 576

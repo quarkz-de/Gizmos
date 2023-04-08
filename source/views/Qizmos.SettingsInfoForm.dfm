@@ -17,10 +17,10 @@ object wSettingsInfoForm: TwSettingsInfoForm
     480)
   TextHeight = 15
   object imLogo: TVirtualImage
-    Left = 12
-    Top = 16
-    Width = 48
-    Height = 48
+    Left = 8
+    Top = 17
+    Width = 96
+    Height = 96
     ImageCollection = dmCommon.icLogo
     ImageWidth = 0
     ImageHeight = 0
@@ -28,42 +28,42 @@ object wSettingsInfoForm: TwSettingsInfoForm
     ImageName = 'Logo'
   end
   object txHeaderText: TLabel
-    Left = 74
-    Top = 8
-    Width = 151
+    Left = 118
+    Top = 42
+    Width = 150
     Height = 59
     Caption = 'Qizmos'
     Font.Charset = ANSI_CHARSET
     Font.Color = clWindowText
     Font.Height = -43
     Font.Name = 'Segoe UI'
-    Font.Style = [fsBold, fsItalic]
+    Font.Style = [fsBold]
     ParentFont = False
   end
   object txCopyright: TLabel
-    Left = 236
-    Top = 28
+    Left = 294
+    Top = 61
     Width = 176
     Height = 15
     Caption = 'Copyright '#169' 2023 Reiner L'#228'mmle'
   end
   object txVersion: TLabel
-    Left = 236
-    Top = 9
+    Left = 294
+    Top = 42
     Width = 56
     Height = 15
     Caption = 'Version 1.0'
   end
   object txLicenses: TLabel
     Left = 12
-    Top = 100
+    Top = 135
     Width = 116
     Height = 15
     Caption = 'Drittanbieter-Lizenzen'
   end
   object txWebsite: TLinkLabel
-    Left = 236
-    Top = 47
+    Left = 294
+    Top = 80
     Width = 93
     Height = 19
     Caption = 
@@ -74,9 +74,9 @@ object wSettingsInfoForm: TwSettingsInfoForm
   end
   object edLicenses: TMemo
     Left = 12
-    Top = 124
+    Top = 156
     Width = 620
-    Height = 345
+    Height = 313
     Anchors = [akLeft, akTop, akRight, akBottom]
     Font.Charset = ANSI_CHARSET
     Font.Color = clWindowText
