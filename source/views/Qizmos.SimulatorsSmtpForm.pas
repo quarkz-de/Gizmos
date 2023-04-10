@@ -9,10 +9,10 @@ uses
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls,
   Vcl.ExtCtrls, Vcl.WinXCtrls, Vcl.StdCtrls, Vcl.VirtualImage, Vcl.ActnList,
   IdBaseComponent, IdComponent, IdCustomTCPServer, IdTCPServer, IdCmdTCPServer,
-  IdExplicitTLSClientServerBase, IdSMTPServer, IdMessage, IdContext,
+  IdExplicitTLSClientServerBase, IdSMTPServer, IdMessage, IdContext, IdSync,
   VirtualTrees,
   LoggerPro,
-  Qizmos.Forms, Qizmos.Events;
+  Qizmos.Forms, Qizmos.Events, Qizmos.SimulatorsSmtpVisualizers;
 
 type
   TwSimulatorsSmtpForm = class(TManagedForm)
@@ -29,25 +29,30 @@ type
     acServerActivate: TAction;
     vtMessages: TVirtualStringTree;
     pnMessages: TPanel;
+    acClearMessages: TAction;
+    btClear: TButton;
+    procedure acClearMessagesExecute(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure acServerActivateExecute(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure smtpServerConnect(AContext: TIdContext);
     procedure smtpServerDisconnect(AContext: TIdContext);
-    procedure smtpServerMailFrom(ASender: TIdSMTPServerContext; const AAddress:
-        string; AParams: TStrings; var VAction: TIdMailFromReply);
+    procedure smtpServerMailFrom(ASender: TIdSMTPServerContext;
+      const AAddress: string; AParams: TStrings; var VAction: TIdMailFromReply);
     procedure smtpServerMsgReceive(ASender: TIdSMTPServerContext; AMsg: TStream;
-        var VAction: TIdDataReply);
-    procedure smtpServerRcptTo(ASender: TIdSMTPServerContext; const AAddress:
-        string; AParams: TStrings; var VAction: TIdRCPToReply; var VForward:
-        string);
-    procedure smtpServerReceived(ASender: TIdSMTPServerContext; var AReceived:
-        string);
-    procedure smtpServerUserLogin(ASender: TIdSMTPServerContext; const AUsername,
-        APassword: string; var VAuthenticated: Boolean);
+      var VAction: TIdDataReply);
+    procedure smtpServerRcptTo(ASender: TIdSMTPServerContext;
+      const AAddress: string; AParams: TStrings; var VAction: TIdRCPToReply;
+      var VForward: string);
+    procedure smtpServerReceived(ASender: TIdSMTPServerContext;
+      var AReceived: string);
+    procedure smtpServerUserLogin(ASender: TIdSMTPServerContext;
+      const AUsername, APassword: string; var VAuthenticated: Boolean);
   private
     FLog: ILogWriter;
     FMessages: TObjectList<TIdMessage>;
+    FMessagesVisualizer: IMessageListVisualizer;
+    procedure AddLastMessageToList;
   public
     property Log: ILogWriter read FLog;
     procedure ThemeChanged; override;
@@ -61,6 +66,7 @@ implementation
 {$R *.dfm}
 
 uses
+  Spring.Container, Spring.Collections,
   LoggerPro.VCLListViewAppender,
   Qizmos.DataModule;
 
@@ -73,6 +79,12 @@ const
 
 { TwSimulatorsSmtpForm }
 
+procedure TwSimulatorsSmtpForm.acClearMessagesExecute(Sender: TObject);
+begin
+  vtMessages.Clear;
+  FMessages.Clear;
+end;
+
 procedure TwSimulatorsSmtpForm.acServerActivateExecute(Sender: TObject);
 const
   SwitchStates: array[Boolean] of TToggleSwitchState = (tssOff, tssOn);
@@ -83,12 +95,21 @@ begin
   Log.Info('Serverstatus: %s', [ServerStates[smtpServer.Active]], tagServer);
 end;
 
+procedure TwSimulatorsSmtpForm.AddLastMessageToList;
+begin
+  FMessagesVisualizer.AddMessage(FMessages.Count - 1);
+end;
+
 procedure TwSimulatorsSmtpForm.FormCreate(Sender: TObject);
 begin
   FLog := BuildLogWriter([TVCLListViewAppender.Create(lvLog, MaxLogLines, LogLineFormat)]);
   FMessages := TObjectList<TIdMessage>.Create;
   pcSmtpBlackhole.ActivePage := tsMessages;
   Log.Info('Initialisierung', tagServer);
+
+  FMessagesVisualizer := GlobalContainer.Resolve<IMessageListVisualizer>;
+  FMessagesVisualizer.SetVirtualTree(vtMessages);
+  FMessagesVisualizer.SetMessages(FMessages);
 end;
 
 procedure TwSimulatorsSmtpForm.FormDestroy(Sender: TObject);
@@ -122,7 +143,7 @@ begin
   Msg := TIdMessage.Create;
   Msg.LoadFromStream(AMsg);
   FMessages.Add(Msg);
-
+  TIdSync.SynchronizeMethod(AddLastMessageToList);
   VAction := dOk;
 end;
 

@@ -108,18 +108,6 @@ object wMainForm: TwMainForm
       ExplicitWidth = 901
       ExplicitHeight = 49
     end
-    object imBurgerButton: TVirtualImage
-      Left = 7
-      Top = 7
-      Width = 32
-      Height = 32
-      ImageCollection = dmCommon.icDarkIcons
-      ImageWidth = 0
-      ImageHeight = 0
-      ImageIndex = 0
-      ImageName = '000_Menu'
-      OnClick = imBurgerButtonClick
-    end
     object txCaption: TLabel
       Left = 240
       Top = 7
@@ -151,6 +139,16 @@ object wMainForm: TwMainForm
       Height = 37
       Brush.Style = bsClear
       Pen.Color = clWindowFrame
+    end
+    object btBurgerButton: TSpeedButton
+      Left = 7
+      Top = 7
+      Width = 32
+      Height = 32
+      ImageIndex = 0
+      ImageName = '000_Menu'
+      Images = vilLargeIcons
+      OnClick = btBurgerButtonClick
     end
   end
   object vilLargeIcons: TVirtualImageList

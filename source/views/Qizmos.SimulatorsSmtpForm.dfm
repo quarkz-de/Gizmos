@@ -59,8 +59,7 @@ object wSimulatorsSmtpForm: TwSimulatorsSmtpForm
         TabOrder = 0
         Touch.InteractiveGestures = [igPan, igPressAndTap]
         Touch.InteractiveGestureOptions = [igoPanSingleFingerHorizontal, igoPanSingleFingerVertical, igoPanInertia, igoPanGutter, igoParentPassthrough]
-        ExplicitWidth = 600
-        ExplicitHeight = 313
+        ExplicitTop = 39
         Columns = <>
       end
       object pnMessages: TPanel
@@ -72,6 +71,14 @@ object wSimulatorsSmtpForm: TwSimulatorsSmtpForm
         BevelOuter = bvNone
         TabOrder = 1
         ExplicitWidth = 600
+        object btClear: TButton
+          Left = 4
+          Top = 8
+          Width = 169
+          Height = 25
+          Action = acClearMessages
+          TabOrder = 0
+        end
       end
     end
     object tsLog: TTabSheet
@@ -143,7 +150,7 @@ object wSimulatorsSmtpForm: TwSimulatorsSmtpForm
       ImageName = '007_Mail'
     end
     object tsActive: TToggleSwitch
-      Left = 544
+      Left = 532
       Top = 12
       Width = 76
       Height = 20
@@ -151,7 +158,6 @@ object wSimulatorsSmtpForm: TwSimulatorsSmtpForm
       Anchors = [akTop, akRight]
       TabOrder = 0
       ThumbWidth = 20
-      ExplicitLeft = 540
     end
   end
   object smtpServer: TIdSMTPServer
@@ -191,8 +197,14 @@ object wSimulatorsSmtpForm: TwSimulatorsSmtpForm
     Left = 568
     Top = 52
     object acServerActivate: TAction
+      Category = 'Server'
       Caption = 'acServerActivate'
       OnExecute = acServerActivateExecute
+    end
+    object acClearMessages: TAction
+      Category = 'Messages'
+      Caption = 'Nachrichten l'#246'schen'
+      OnExecute = acClearMessagesExecute
     end
   end
 end

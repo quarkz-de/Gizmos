@@ -30,17 +30,17 @@ type
     aeAppEvents: TApplicationEvents;
     pnHeader: TPanel;
     shHeader: TShape;
-    imBurgerButton: TVirtualImage;
     txCaption: TLabel;
     imIcon: TVirtualImage;
     sh2: TShape;
+    btBurgerButton: TSpeedButton;
     procedure FormCreate(Sender: TObject);
-    procedure imBurgerButtonClick(Sender: TObject);
     procedure acSectionWelcomeExecute(Sender: TObject);
     procedure acSectionSettingsExecute(Sender: TObject);
     procedure acHelpAboutExecute(Sender: TObject);
     procedure acSectionSimulatorsExecute(Sender: TObject);
     procedure aeAppEventsMinimize(Sender: TObject);
+    procedure btBurgerButtonClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure nvFooterButtonClicked(Sender: TObject; Index: Integer);
     procedure nvHeaderButtonClicked(Sender: TObject; Index: Integer);
@@ -99,6 +99,11 @@ begin
   tiTrayIcon.Visible := true;
 end;
 
+procedure TwMainForm.btBurgerButtonClick(Sender: TObject);
+begin
+  svSplitView.Opened := not svSplitView.Opened;
+end;
+
 procedure TwMainForm.FormCreate(Sender: TObject);
 begin
   FForms := TApplicationFormList.Create(self);
@@ -112,11 +117,6 @@ procedure TwMainForm.FormDestroy(Sender: TObject);
 begin
   ApplicationSettings.FormPosition.SavePosition(self);
   FForms.Free;
-end;
-
-procedure TwMainForm.imBurgerButtonClick(Sender: TObject);
-begin
-  svSplitView.Opened := not svSplitView.Opened;
 end;
 
 procedure TwMainForm.InitSettings;
@@ -147,7 +147,6 @@ end;
 
 procedure TwMainForm.OnThemeChange(AEvent: IThemeChangeEvent);
 begin
-  imBurgerButton.ImageCollection := dmCommon.GetImageCollection;
   imIcon.ImageCollection := dmCommon.GetImageCollection;
   vilIcons.ImageCollection := dmCommon.GetImageCollection;
   vilLargeIcons.ImageCollection := dmCommon.GetImageCollection;

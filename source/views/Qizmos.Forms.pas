@@ -81,7 +81,11 @@ begin
   FParent := AParent;
   CreateForms;
   for Form in FForms.Values do
-    Form.Font := FParent.Font;
+    begin
+      //Form.Font := FParent.Font;
+      Form.Font.Name := 'Segoe UI';
+      Form.Font.Size := 9;
+    end;
 end;
 
 destructor TManagedFormList.Destroy;
