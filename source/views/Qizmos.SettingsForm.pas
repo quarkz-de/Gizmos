@@ -10,7 +10,7 @@ uses
   Vcl.VirtualImage, System.ImageList, Vcl.ImgList,
   Vcl.VirtualImageList, Vcl.ComCtrls, Vcl.ActnList,
   Qodelib.NavigationView,
-  Qizmos.Forms, Qizmos.Events;
+  Qizmos.Forms, Qizmos.Events, Qodelib.Panels;
 
 type
   TwSettingsForm = class(TManagedForm)
@@ -19,7 +19,7 @@ type
     alActions: TActionList;
     acSettings: TAction;
     acInfo: TAction;
-    shBorder: TShape;
+    pnFormContainer: TQzPanel;
     procedure FormDestroy(Sender: TObject);
     procedure acInfoExecute(Sender: TObject);
     procedure acSettingsExecute(Sender: TObject);
@@ -59,7 +59,7 @@ end;
 
 procedure TwSettingsForm.FormCreate(Sender: TObject);
 begin
-  FForms := TSettingsFormList.Create(self);
+  FForms := TSettingsFormList.Create(pnFormContainer);
   acSettings.Execute;
 end;
 

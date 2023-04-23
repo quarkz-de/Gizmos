@@ -10,7 +10,7 @@ uses
   Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.ImgList, Vcl.VirtualImageList,
   Vcl.ActnList,
   Qodelib.NavigationView,
-  Qizmos.Forms, Qizmos.Events;
+  Qizmos.Forms, Qizmos.Events, Qodelib.Panels;
 
 type
   TwSimulatorsForm = class(TManagedForm)
@@ -19,7 +19,7 @@ type
     acHttpBlackhole: TAction;
     viImages: TVirtualImageList;
     nvSettings: TQzNavigationView;
-    shBorder: TShape;
+    pnFormContainer: TQzPanel;
     procedure acHttpBlackholeExecute(Sender: TObject);
     procedure acSmtpBlackholeExecute(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -54,7 +54,7 @@ end;
 
 procedure TwSimulatorsForm.FormCreate(Sender: TObject);
 begin
-  FForms := TSimulatorsFormList.Create(self);
+  FForms := TSimulatorsFormList.Create(pnFormContainer);
   acSmtpBlackhole.Execute;
 end;
 

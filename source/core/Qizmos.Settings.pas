@@ -29,6 +29,8 @@ type
 
   TApplicationTheme = (atSystem, atLight, atDark);
 
+  TApplicationSettingValue = (svFont);
+
   TApplicationSettings = class(TPersistent)
   private
     FTheme: TApplicationTheme;
@@ -36,12 +38,15 @@ type
     FIsDarkTheme: Boolean;
     FDrawerOpened: Boolean;
     FFormPosition: TApplicationFormPosition;
+    FFontSize: Integer;
     procedure SetTheme(const AValue: TApplicationTheme);
+    procedure SetFontSize(const AValue: Integer);
     function GetTheme: TApplicationTheme;
     function GetSettingsFilename: String;
     function GetSettingsFoldername: String;
     procedure SetFormPositon(const Value: TApplicationFormPosition);
     procedure InitTheme;
+    procedure ChangeEvent(const AValue: TApplicationSettingValue);
   public
     constructor Create;
     destructor Destroy; override;
@@ -54,6 +59,8 @@ type
     property DrawerOpened: Boolean read FDrawerOpened write FDrawerOpened;
     property FormPosition: TApplicationFormPosition read FFormPosition
       write SetFormPositon;
+    property SettingsFoldername: String read GetSettingsFoldername;
+    property FontSize: Integer read FFontSize write SetFontSize;
   end;
 
 var
@@ -74,9 +81,15 @@ const
 {$else}
   SSettingsFilename = 'Qizmos.json';
 {$endif}
-  SAppDataFolder = 'quarkz';
+  SAppDataFolder = 'quarkz\Qizmos';
 
 { TApplicationSettings }
+
+procedure TApplicationSettings.ChangeEvent(
+  const AValue: TApplicationSettingValue);
+begin
+  GlobalEventBus.Post(TEventFactory.NewSettingChangeEvent(AValue));
+end;
 
 constructor TApplicationSettings.Create;
 begin
@@ -84,6 +97,7 @@ begin
   FTheme := atSystem;
   FFormPosition := TApplicationFormPosition.Create;
   FDrawerOpened := true;
+  FFontSize := 9;
 end;
 
 destructor TApplicationSettings.Destroy;
@@ -185,6 +199,15 @@ begin
   TNeon.PrintToStream(JSON, Stream, true);
   Stream.Free;
   JSON.Free;
+end;
+
+procedure TApplicationSettings.SetFontSize(const AValue: Integer);
+begin
+  if FFontSize <> AValue then
+    begin
+      FFontSize := AValue;
+      ChangeEvent(svFont);
+    end;
 end;
 
 procedure TApplicationSettings.SetFormPositon(

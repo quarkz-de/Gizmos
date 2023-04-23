@@ -14,6 +14,7 @@ type
     procedure SetVirtualTree(const ATree: TVirtualStringTree);
     procedure SetMessages(const AMessages: TObjectList<TIdMessage>);
     procedure AddMessage(const AIndex: Integer);
+    function GetSelectedMessage: TIdMessage;
   end;
 
 implementation
@@ -46,6 +47,7 @@ type
     procedure SetVirtualTree(const ATree: TVirtualStringTree);
     procedure SetMessages(const AMessages: TObjectList<TIdMessage>);
     procedure AddMessage(const AIndex: Integer);
+    function GetSelectedMessage: TIdMessage;
   end;
 
 { TMessageListVisualizer }
@@ -112,6 +114,19 @@ procedure TMessageListVisualizer.GetNodeDataSize(Sender: TBaseVirtualTree;
   var NodeDataSize: Integer);
 begin
 
+end;
+
+function TMessageListVisualizer.GetSelectedMessage: TIdMessage;
+var
+  Data: PInteger;
+begin
+  if FTree.FocusedNode <> nil then
+    begin
+      Data := FTree.GetNodeData(FTree.FocusedNode);
+      Result := FMessages[Data^];
+    end
+  else
+    Result := nil;
 end;
 
 procedure TMessageListVisualizer.GetText(Sender: TBaseVirtualTree;

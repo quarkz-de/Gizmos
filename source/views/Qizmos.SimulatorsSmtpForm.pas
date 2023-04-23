@@ -9,7 +9,8 @@ uses
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls,
   Vcl.ExtCtrls, Vcl.WinXCtrls, Vcl.StdCtrls, Vcl.VirtualImage, Vcl.ActnList,
   IdBaseComponent, IdComponent, IdCustomTCPServer, IdTCPServer, IdCmdTCPServer,
-  IdExplicitTLSClientServerBase, IdSMTPServer, IdMessage, IdContext, IdSync,
+  IdExplicitTLSClientServerBase, IdSMTPServer, IdMessage, IdContext,
+  IdServerIOHandler, IdSSL, IdSSLOpenSSL,
   VirtualTrees,
   LoggerPro,
   Qizmos.Forms, Qizmos.Events, Qizmos.SimulatorsSmtpVisualizers;
@@ -31,6 +32,7 @@ type
     pnMessages: TPanel;
     acClearMessages: TAction;
     btClear: TButton;
+    ioSSL: TIdServerIOHandlerSSLOpenSSL;
     procedure acClearMessagesExecute(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure acServerActivateExecute(Sender: TObject);
@@ -48,6 +50,7 @@ type
       var AReceived: string);
     procedure smtpServerUserLogin(ASender: TIdSMTPServerContext;
       const AUsername, APassword: string; var VAuthenticated: Boolean);
+    procedure vtMessagesDblClick(Sender: TObject);
   private
     FLog: ILogWriter;
     FMessages: TObjectList<TIdMessage>;
@@ -68,7 +71,7 @@ implementation
 uses
   Spring.Container, Spring.Collections,
   LoggerPro.VCLListViewAppender,
-  Qizmos.DataModule;
+  Qizmos.DataModule, Qizmos.EMailViewer;
 
 const
   tagServer = 'SERVER';
@@ -83,6 +86,7 @@ procedure TwSimulatorsSmtpForm.acClearMessagesExecute(Sender: TObject);
 begin
   vtMessages.Clear;
   FMessages.Clear;
+  acClearMessages.Enabled := false;
 end;
 
 procedure TwSimulatorsSmtpForm.acServerActivateExecute(Sender: TObject);
@@ -98,6 +102,7 @@ end;
 procedure TwSimulatorsSmtpForm.AddLastMessageToList;
 begin
   FMessagesVisualizer.AddMessage(FMessages.Count - 1);
+  acClearMessages.Enabled := true;
 end;
 
 procedure TwSimulatorsSmtpForm.FormCreate(Sender: TObject);
@@ -110,6 +115,8 @@ begin
   FMessagesVisualizer := GlobalContainer.Resolve<IMessageListVisualizer>;
   FMessagesVisualizer.SetVirtualTree(vtMessages);
   FMessagesVisualizer.SetMessages(FMessages);
+
+  acClearMessages.Enabled := false;
 end;
 
 procedure TwSimulatorsSmtpForm.FormDestroy(Sender: TObject);
@@ -119,7 +126,7 @@ end;
 
 procedure TwSimulatorsSmtpForm.smtpServerConnect(AContext: TIdContext);
 begin
-  Log.Info('Connected', tagServer);
+  Log.Info(Format('Connected (Port %d)', [AContext.Binding.Port]), tagServer);
 end;
 
 procedure TwSimulatorsSmtpForm.smtpServerDisconnect(AContext: TIdContext);
@@ -143,7 +150,7 @@ begin
   Msg := TIdMessage.Create;
   Msg.LoadFromStream(AMsg);
   FMessages.Add(Msg);
-  TIdSync.SynchronizeMethod(AddLastMessageToList);
+  TThread.Synchronize(nil, AddLastMessageToList);
   VAction := dOk;
 end;
 
@@ -173,6 +180,15 @@ procedure TwSimulatorsSmtpForm.ThemeChanged;
 begin
   inherited;
   imIcon.ImageCollection := dmCommon.GetImageCollection;
+end;
+
+procedure TwSimulatorsSmtpForm.vtMessagesDblClick(Sender: TObject);
+var
+  Msg: TIdMessage;
+begin
+  Msg := FMessagesVisualizer.GetSelectedMessage;
+  if Msg <> nil then
+    TwEMailViewer.Execute(Msg);
 end;
 
 end.

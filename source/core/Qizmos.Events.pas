@@ -17,11 +17,19 @@ type
     property FormId: TManagedFormId read GetFormId;
   end;
 
+  ISettingChangeEvent = interface
+    ['{74A71D00-110F-46DE-8724-F5DBBF078FF2}']
+    function GetValue: TApplicationSettingValue;
+    property Value: TApplicationSettingValue read GetValue;
+  end;
+
   TEventFactory = class
   public
     class function NewThemeChangeEvent: IThemeChangeEvent;
     class function NewModuleChangeEvent(
       const AFormId: TManagedFormId): IModuleChangeEvent;
+    class function NewSettingChangeEvent(
+      const AValue: TApplicationSettingValue): ISettingChangeEvent;
   end;
 
 implementation
@@ -39,12 +47,28 @@ type
     property FormId: TManagedFormId read GetFormId;
   end;
 
+  TSettingChangeEvent = class(TInterfacedObject, ISettingChangeEvent)
+  private
+    FValue: TApplicationSettingValue;
+  protected
+    function GetValue: TApplicationSettingValue;
+  public
+    constructor Create(const AValue: TApplicationSettingValue);
+    property Value: TApplicationSettingValue read GetValue;
+  end;
+
 { TEventFactory }
 
 class function TEventFactory.NewModuleChangeEvent(
   const AFormId: TManagedFormId): IModuleChangeEvent;
 begin
   Result := TModuleChangeEvent.Create(AFormId);
+end;
+
+class function TEventFactory.NewSettingChangeEvent(
+  const AValue: TApplicationSettingValue): ISettingChangeEvent;
+begin
+  Result := TSettingChangeEvent.Create(AValue);
 end;
 
 class function TEventFactory.NewThemeChangeEvent;
@@ -63,6 +87,19 @@ end;
 function TModuleChangeEvent.GetFormId: TManagedFormId;
 begin
   Result := FFormId;
+end;
+
+{ TSettingChangeEvent }
+
+constructor TSettingChangeEvent.Create(const AValue: TApplicationSettingValue);
+begin
+  inherited Create;
+  FValue := AValue;
+end;
+
+function TSettingChangeEvent.GetValue: TApplicationSettingValue;
+begin
+  Result := FValue;
 end;
 
 end.

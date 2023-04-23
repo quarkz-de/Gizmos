@@ -146,6 +146,10 @@
         </DCCReference>
         <DCCReference Include="core\Qizmos.Types.pas"/>
         <DCCReference Include="views\Qizmos.SimulatorsSmtpVisualizers.pas"/>
+        <DCCReference Include="views\Qizmos.EMailViewer.pas">
+            <Form>wEMailViewer</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

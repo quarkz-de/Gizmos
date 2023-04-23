@@ -1,6 +1,7 @@
 object wMainForm: TwMainForm
   Left = 0
   Top = 0
+  Margins.Top = 6
   BiDiMode = bdLeftToRight
   Caption = 'Qizmos'
   ClientHeight = 569
@@ -21,64 +22,6 @@ object wMainForm: TwMainForm
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   TextHeight = 21
-  object svSplitView: TSplitView
-    Left = 0
-    Top = 61
-    Width = 170
-    Height = 508
-    BevelEdges = [beRight]
-    BevelKind = bkFlat
-    CloseStyle = svcCompact
-    CompactWidth = 60
-    OpenedWidth = 170
-    Placement = svpLeft
-    TabOrder = 0
-    OnClosed = svSplitViewClosed
-    OnOpened = svSplitViewOpened
-    object nvHeader: TQzNavigationView
-      Left = 0
-      Top = 0
-      Width = 168
-      Height = 460
-      Align = alClient
-      BorderStyle = bsNone
-      ButtonHeight = 48
-      ButtonOptions = [nboGroupStyle, nboShowCaptions]
-      Images = vilLargeIcons
-      Items = <
-        item
-          Action = acSectionWelcome
-          ImageIndex = 5
-          ImageName = '005_Start'
-          AllowReorder = False
-        end
-        item
-          Action = acSectionSimulators
-          ImageName = '006_Simulator'
-        end>
-      ItemIndex = 0
-      TabOrder = 0
-      OnButtonClicked = nvHeaderButtonClicked
-    end
-    object nvFooter: TQzNavigationView
-      Left = 0
-      Top = 460
-      Width = 168
-      Height = 48
-      Align = alBottom
-      BorderStyle = bsNone
-      ButtonHeight = 48
-      ButtonOptions = [nboGroupStyle, nboShowCaptions]
-      Images = vilLargeIcons
-      Items = <
-        item
-          Action = acSectionSettings
-          Caption = 'Einstellungen'
-        end>
-      TabOrder = 1
-      OnButtonClicked = nvFooterButtonClicked
-    end
-  end
   object pnHeader: TPanel
     AlignWithMargins = True
     Left = 8
@@ -93,7 +36,7 @@ object wMainForm: TwMainForm
     BevelOuter = bvNone
     Color = clWindow
     ParentBackground = False
-    TabOrder = 1
+    TabOrder = 0
     object shHeader: TShape
       Left = 0
       Top = 0
@@ -109,7 +52,7 @@ object wMainForm: TwMainForm
       ExplicitHeight = 49
     end
     object txCaption: TLabel
-      Left = 240
+      Left = 114
       Top = 7
       Width = 48
       Height = 32
@@ -122,7 +65,7 @@ object wMainForm: TwMainForm
       ParentFont = False
     end
     object imIcon: TVirtualImage
-      Left = 192
+      Left = 66
       Top = 7
       Width = 32
       Height = 32
@@ -131,14 +74,6 @@ object wMainForm: TwMainForm
       ImageHeight = 0
       ImageIndex = 5
       ImageName = '005_Start'
-    end
-    object sh2: TShape
-      Left = 162
-      Top = 4
-      Width = 1
-      Height = 37
-      Brush.Style = bsClear
-      Pen.Color = clWindowFrame
     end
     object btBurgerButton: TSpeedButton
       Left = 7
@@ -149,6 +84,71 @@ object wMainForm: TwMainForm
       ImageName = '000_Menu'
       Images = vilLargeIcons
       OnClick = btBurgerButtonClick
+    end
+  end
+  object pnFormContainer: TQzPanel
+    Left = 176
+    Top = 61
+    Width = 733
+    Height = 508
+    Edges = [qeLeft]
+    Align = alClient
+    BorderWidth = 1
+    TabOrder = 1
+  end
+  object svSplitView: TSplitView
+    AlignWithMargins = True
+    Left = 3
+    Top = 64
+    Width = 170
+    Height = 502
+    BevelEdges = []
+    BevelKind = bkFlat
+    CloseStyle = svcCompact
+    CompactWidth = 60
+    OpenedWidth = 170
+    Placement = svpLeft
+    TabOrder = 2
+    OnClosed = svSplitViewClosed
+    OnOpened = svSplitViewOpened
+    object nvHeader: TQzNavigationView
+      Left = 0
+      Top = 0
+      Width = 170
+      Height = 454
+      Align = alClient
+      BorderStyle = bsNone
+      ButtonHeight = 48
+      ButtonOptions = [nboGroupStyle, nboShowCaptions]
+      Images = vilLargeIcons
+      Items = <
+        item
+          Action = acSectionWelcome
+          AllowReorder = False
+        end
+        item
+          Action = acSectionSimulators
+        end>
+      ItemIndex = 0
+      TabOrder = 0
+      OnButtonClicked = nvHeaderButtonClicked
+    end
+    object nvFooter: TQzNavigationView
+      Left = 0
+      Top = 454
+      Width = 170
+      Height = 48
+      Align = alBottom
+      BorderStyle = bsNone
+      ButtonHeight = 48
+      ButtonOptions = [nboGroupStyle, nboShowCaptions]
+      Images = vilLargeIcons
+      Items = <
+        item
+          Action = acSectionSettings
+        end>
+      TabOrder = 1
+      OnButtonClicked = nvFooterButtonClicked
     end
   end
   object vilLargeIcons: TVirtualImageList
@@ -258,6 +258,7 @@ object wMainForm: TwMainForm
     Top = 76
   end
   object alActions: TActionList
+    Images = vilLargeIcons
     Left = 204
     Top = 76
     object acSectionWelcome: TAction
@@ -265,13 +266,13 @@ object wMainForm: TwMainForm
       AutoCheck = True
       Caption = 'Start'
       GroupIndex = 1
-      ImageIndex = 1
-      ImageName = '001_Home'
+      ImageIndex = 5
+      ImageName = '005_Start'
       OnExecute = acSectionWelcomeExecute
     end
     object acSectionSettings: TAction
       Category = 'Section'
-      Caption = 'Settings'
+      Caption = 'Einstellungen'
       GroupIndex = 1
       ImageIndex = 2
       ImageName = '002_Settings'
@@ -281,10 +282,12 @@ object wMainForm: TwMainForm
       Category = 'Section'
       Caption = 'Simulatoren'
       ImageIndex = 6
+      ImageName = '006_Simulator'
       OnExecute = acSectionSimulatorsExecute
     end
   end
   object tiTrayIcon: TTrayIcon
+    OnClick = tiTrayIconClick
     OnDblClick = tiTrayIconDblClick
     Left = 376
     Top = 76

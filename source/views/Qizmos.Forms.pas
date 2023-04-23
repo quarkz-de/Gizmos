@@ -6,16 +6,23 @@ uses
   System.Classes, System.Generics.Collections, System.Generics.Defaults,
   Vcl.Forms, Vcl.Controls,
   EventBus,
-  Qizmos.Types, Qizmos.Events;
+  Qizmos.Types, Qizmos.Events, Qizmos.Settings;
 
 type
-  TManagedForm = class(TForm)
+  TAppForm = class(TForm)
+  protected
+    procedure FontChanged; virtual;
+    procedure ThemeChanged; virtual;
+  public
+    procedure AfterConstruction; override;
+  end;
+
+  TManagedForm = class(TAppForm)
   private
     FFormId: TManagedFormId;
     FImageIndex: Integer;
   public
     constructor Create(AOwner: TComponent); override;
-    procedure ThemeChanged; virtual;
     property FormId: TManagedFormId read FFormId write FFormId;
     property ImageIndex: Integer read FImageIndex write FImageIndex;
   end;
@@ -24,16 +31,16 @@ type
 
   TManagedFormList = class(TObject)
   private
-    FParent: TForm;
+    FContainer: TWinControl;
     FForms: TDictionary<TManagedFormId, TManagedForm>;
     function GetActiveForm: TManagedForm;
   protected
     function AddForm(const AFormId: TManagedFormId;
       const AClass: TManagedFormClass): TManagedForm;
     procedure CreateForms; virtual; abstract;
-    property ParentForm: TForm read FParent;
+    property Container: TWinControl read FContainer;
   public
-    constructor Create(const AParent: TForm);
+    constructor Create(const AContainer: TWinControl);
     destructor Destroy; override;
     procedure ShowForm(const AForm: TManagedFormId);
     procedure ThemeChanged; virtual;
@@ -55,6 +62,9 @@ type
     procedure CreateForms; override;
   end;
 
+  TDialogForm = class(TAppForm)
+  end;
+
 implementation
 
 uses
@@ -62,29 +72,33 @@ uses
   Qizmos.SettingsForm, Qizmos.SettingsCommonForm, Qizmos.SettingsInfoForm,
   Qizmos.SimulatorsForm, Qizmos.SimulatorsSmtpForm, Qizmos.SimulatorsHttpForm;
 
+const
+  DefaultFontName = 'Segoe UI';
+  DefaultFontSize = 9;
+
 { TManagedFormList }
 
 function TManagedFormList.AddForm(const AFormId: TManagedFormId;
   const AClass: TManagedFormClass): TManagedForm;
 begin
-  Result := AClass.Create(ParentForm);
+  Result := AClass.Create(Container);
   Result.FormId := AFormId;
   FForms.Add(AFormId, Result);
 end;
 
-constructor TManagedFormList.Create(const AParent: TForm);
+constructor TManagedFormList.Create(const AContainer: TWinControl);
 var
   Form: TManagedForm;
 begin
   inherited Create;
   FForms := TDictionary<TManagedFormId, TManagedForm>.Create;
-  FParent := AParent;
+  FContainer := AContainer;
   CreateForms;
   for Form in FForms.Values do
     begin
-      //Form.Font := FParent.Font;
-      Form.Font.Name := 'Segoe UI';
-      Form.Font.Size := 9;
+//      Form.FontChanged;
+//      Form.Font.Name := DefaultFontName;
+//      Form.Font.Size := ApplicationSettings.FontSize; //DefaultFontSize;
     end;
 end;
 
@@ -115,7 +129,7 @@ begin
     begin
       if Form.FormId = AForm then
         begin
-          Form.Parent := FParent;
+          Form.Parent := Container;
           Form.Align := alClient;
           Form.Visible := true;
           Form.Activate;
@@ -169,10 +183,26 @@ constructor TManagedForm.Create(AOwner: TComponent);
 begin
   inherited;
   BorderStyle := bsNone;
+end;
+
+{ TAppForm }
+
+procedure TAppForm.AfterConstruction;
+begin
+  inherited;
+  Font.Name := DefaultFontName;
+  Font.Size := ApplicationSettings.FontSize; //DefaultFontSize;
+
+  FontChanged;
   ThemeChanged;
 end;
 
-procedure TManagedForm.ThemeChanged;
+procedure TAppForm.FontChanged;
+begin
+
+end;
+
+procedure TAppForm.ThemeChanged;
 begin
 
 end;

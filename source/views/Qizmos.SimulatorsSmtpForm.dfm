@@ -57,9 +57,9 @@ object wSimulatorsSmtpForm: TwSimulatorsSmtpForm
         Header.AutoSizeIndex = 0
         Header.MainColumn = -1
         TabOrder = 0
+        OnDblClick = vtMessagesDblClick
         Touch.InteractiveGestures = [igPan, igPressAndTap]
         Touch.InteractiveGestureOptions = [igoPanSingleFingerHorizontal, igoPanSingleFingerVertical, igoPanInertia, igoPanGutter, igoParentPassthrough]
-        ExplicitTop = 39
         Columns = <>
       end
       object pnMessages: TPanel
@@ -158,10 +158,20 @@ object wSimulatorsSmtpForm: TwSimulatorsSmtpForm
       Anchors = [akTop, akRight]
       TabOrder = 0
       ThumbWidth = 20
+      ExplicitLeft = 528
     end
   end
   object smtpServer: TIdSMTPServer
-    Bindings = <>
+    Bindings = <
+      item
+        IP = '0.0.0.0'
+        Port = 25
+      end
+      item
+        IP = '0.0.0.0'
+        Port = 465
+      end>
+    IOHandler = ioSSL
     OnConnect = smtpServerConnect
     OnDisconnect = smtpServerDisconnect
     CommandHandlers = <>
@@ -206,5 +216,12 @@ object wSimulatorsSmtpForm: TwSimulatorsSmtpForm
       Caption = 'Nachrichten l'#246'schen'
       OnExecute = acClearMessagesExecute
     end
+  end
+  object ioSSL: TIdServerIOHandlerSSLOpenSSL
+    SSLOptions.Mode = sslmUnassigned
+    SSLOptions.VerifyMode = []
+    SSLOptions.VerifyDepth = 0
+    Left = 516
+    Top = 115
   end
 end

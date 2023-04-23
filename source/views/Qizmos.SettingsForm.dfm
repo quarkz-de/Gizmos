@@ -15,22 +15,12 @@ object wSettingsForm: TwSettingsForm
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   TextHeight = 13
-  object shBorder: TShape
-    Left = 170
-    Top = 0
-    Width = 1
-    Height = 468
-    Align = alLeft
-    Brush.Style = bsClear
-    Pen.Color = clWindowFrame
-    ExplicitTop = -101
-    ExplicitHeight = 569
-  end
   object nvSettings: TQzNavigationView
-    Left = 0
-    Top = 0
+    AlignWithMargins = True
+    Left = 3
+    Top = 3
     Width = 170
-    Height = 468
+    Height = 462
     Align = alLeft
     BorderStyle = bsNone
     ButtonHeight = 40
@@ -45,6 +35,21 @@ object wSettingsForm: TwSettingsForm
       end>
     ItemIndex = 0
     TabOrder = 0
+    ExplicitLeft = 0
+    ExplicitTop = 0
+    ExplicitHeight = 468
+  end
+  object pnFormContainer: TQzPanel
+    Left = 176
+    Top = 0
+    Width = 601
+    Height = 468
+    Edges = [qeLeft]
+    Align = alClient
+    BorderWidth = 1
+    TabOrder = 1
+    ExplicitLeft = 170
+    ExplicitWidth = 607
   end
   object viImages: TVirtualImageList
     AutoFill = True

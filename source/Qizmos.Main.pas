@@ -13,15 +13,12 @@ uses
   Vcl.ActnList, Vcl.StdActns, Vcl.AppEvnts,
   EventBus,
   Qodelib.NavigationView,
-  Qizmos.Events, Qizmos.Forms;
+  Qizmos.Events, Qizmos.Forms, Qodelib.Panels;
 
 type
-  TwMainForm = class(TForm)
+  TwMainForm = class(TAppForm)
     vilLargeIcons: TVirtualImageList;
     vilIcons: TVirtualImageList;
-    svSplitView: TSplitView;
-    nvHeader: TQzNavigationView;
-    nvFooter: TQzNavigationView;
     alActions: TActionList;
     acSectionWelcome: TAction;
     acSectionSettings: TAction;
@@ -32,8 +29,11 @@ type
     shHeader: TShape;
     txCaption: TLabel;
     imIcon: TVirtualImage;
-    sh2: TShape;
     btBurgerButton: TSpeedButton;
+    pnFormContainer: TQzPanel;
+    svSplitView: TSplitView;
+    nvHeader: TQzNavigationView;
+    nvFooter: TQzNavigationView;
     procedure FormCreate(Sender: TObject);
     procedure acSectionWelcomeExecute(Sender: TObject);
     procedure acSectionSettingsExecute(Sender: TObject);
@@ -46,13 +46,16 @@ type
     procedure nvHeaderButtonClicked(Sender: TObject; Index: Integer);
     procedure svSplitViewClosed(Sender: TObject);
     procedure svSplitViewOpened(Sender: TObject);
+    procedure tiTrayIconClick(Sender: TObject);
     procedure tiTrayIconDblClick(Sender: TObject);
   private
     FForms: TManagedFormList;
     procedure InitSettings;
     procedure WMSettingChange(var Message: TWMSettingChange); message WM_SETTINGCHANGE;
+    procedure RestoreFromTray;
   protected
     property Forms: TManagedFormList read FForms;
+    procedure FontChanged; override;
   public
     [Subscribe]
     procedure OnModuleChange(AEvent: IModuleChangeEvent);
@@ -104,9 +107,16 @@ begin
   svSplitView.Opened := not svSplitView.Opened;
 end;
 
+procedure TwMainForm.FontChanged;
+begin
+  inherited;
+  nvHeader.Font.Size := Font.Size + 2;
+  nvFooter.Font.Size := Font.Size + 2;
+end;
+
 procedure TwMainForm.FormCreate(Sender: TObject);
 begin
-  FForms := TApplicationFormList.Create(self);
+  FForms := TApplicationFormList.Create(pnFormContainer);
   acSectionWelcome.Execute;
   GlobalEventBus.RegisterSubscriberForEvents(Self);
   dmCommon.MainFormCreated;
@@ -153,6 +163,14 @@ begin
   FForms.ThemeChanged;
 end;
 
+procedure TwMainForm.RestoreFromTray;
+begin
+  tiTrayIcon.Visible := false;
+  Show;
+  WindowState := wsNormal;
+  Application.BringToFront;
+end;
+
 procedure TwMainForm.svSplitViewClosed(Sender: TObject);
 begin
   ApplicationSettings.DrawerOpened := false;
@@ -167,12 +185,14 @@ begin
   nvFooter.ButtonOptions := nvFooter.ButtonOptions + [nboShowCaptions];
 end;
 
+procedure TwMainForm.tiTrayIconClick(Sender: TObject);
+begin
+  RestoreFromTray;
+end;
+
 procedure TwMainForm.tiTrayIconDblClick(Sender: TObject);
 begin
-  tiTrayIcon.Visible := false;
-  Show;
-  WindowState := wsNormal;
-  Application.BringToFront;
+  RestoreFromTray;
 end;
 
 procedure TwMainForm.WMSettingChange(var Message: TWMSettingChange);
