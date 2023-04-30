@@ -29,15 +29,16 @@ object wSettingsForm: TwSettingsForm
     Items = <
       item
         Action = acSettings
+        Caption = 'Allgemein'
+      end
+      item
+        Action = acSimulators
       end
       item
         Action = acInfo
       end>
     ItemIndex = 0
     TabOrder = 0
-    ExplicitLeft = 0
-    ExplicitTop = 0
-    ExplicitHeight = 468
   end
   object pnFormContainer: TQzPanel
     Left = 176
@@ -48,8 +49,6 @@ object wSettingsForm: TwSettingsForm
     Align = alClient
     BorderWidth = 1
     TabOrder = 1
-    ExplicitLeft = 170
-    ExplicitWidth = 607
   end
   object viImages: TVirtualImageList
     AutoFill = True
@@ -123,6 +122,12 @@ object wSettingsForm: TwSettingsForm
       ImageIndex = 1
       ImageName = '001_Help'
       OnExecute = acInfoExecute
+    end
+    object acSimulators: TAction
+      Caption = 'Simulatoren'
+      ImageIndex = 6
+      ImageName = '006_Simulator'
+      OnExecute = acSimulatorsExecute
     end
   end
 end

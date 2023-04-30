@@ -8,6 +8,18 @@ uses
   Vcl.Forms, Vcl.Themes;
 
 type
+  TApplicationSettingValue = (svFont);
+
+  TSmtpServerSettings = class(TPersistent)
+  private
+    FActiveOnStartup: Boolean;
+  public
+    constructor Create(const ASettingsFolder: String);
+    procedure Assign(Source: TPersistent); override;
+  published
+    property ActiveOnStartup: Boolean read FActiveOnStartup write FActiveOnStartup;
+  end;
+
   TApplicationFormPosition = class(TPersistent)
   private
     FWindowState: TWindowState;
@@ -29,22 +41,24 @@ type
 
   TApplicationTheme = (atSystem, atLight, atDark);
 
-  TApplicationSettingValue = (svFont);
-
   TApplicationSettings = class(TPersistent)
   private
+    FFormPosition: TApplicationFormPosition;
+    FSmtpServer: TSmtpServerSettings;
     FTheme: TApplicationTheme;
     FThemeName: String;
     FIsDarkTheme: Boolean;
     FDrawerOpened: Boolean;
-    FFormPosition: TApplicationFormPosition;
     FFontSize: Integer;
+    FStartMinimized: Boolean;
+    FMinimizeToTray: Boolean;
     procedure SetTheme(const AValue: TApplicationTheme);
     procedure SetFontSize(const AValue: Integer);
     function GetTheme: TApplicationTheme;
     function GetSettingsFilename: String;
     function GetSettingsFoldername: String;
     procedure SetFormPositon(const Value: TApplicationFormPosition);
+    procedure SetSmtpServer(const Value: TSmtpServerSettings);
     procedure InitTheme;
     procedure ChangeEvent(const AValue: TApplicationSettingValue);
   public
@@ -59,8 +73,11 @@ type
     property DrawerOpened: Boolean read FDrawerOpened write FDrawerOpened;
     property FormPosition: TApplicationFormPosition read FFormPosition
       write SetFormPositon;
+    property SmtpServer: TSmtpServerSettings read FSmtpServer write SetSmtpServer;
     property SettingsFoldername: String read GetSettingsFoldername;
     property FontSize: Integer read FFontSize write SetFontSize;
+    property StartMinimized: Boolean read FStartMinimized write FStartMinimized;
+    property MinimizeToTray: Boolean read FMinimizeToTray write FMinimizeToTray;
   end;
 
 var
@@ -96,12 +113,16 @@ begin
   inherited Create;
   FTheme := atSystem;
   FFormPosition := TApplicationFormPosition.Create;
+  FSmtpServer := TSmtpServerSettings.Create(GetSettingsFoldername);
   FDrawerOpened := true;
   FFontSize := 9;
+  FStartMinimized := false;
+  FMinimizeToTray := false;
 end;
 
 destructor TApplicationSettings.Destroy;
 begin
+  FSmtpServer.Free;
   FormPosition.Free;
   inherited;
 end;
@@ -216,6 +237,11 @@ begin
   FFormPosition.Assign(Value);
 end;
 
+procedure TApplicationSettings.SetSmtpServer(const Value: TSmtpServerSettings);
+begin
+  FSmtpServer.Assign(Value);
+end;
+
 procedure TApplicationSettings.SetTheme(const AValue: TApplicationTheme);
 begin
   FTheme := AValue;
@@ -258,13 +284,31 @@ end;
 procedure TApplicationFormPosition.LoadPosition(const AForm: TForm);
 begin
   if (Width > 0) and (Height > 0) then
-  begin
-    AForm.WindowState := WindowState;
-    AForm.Top := Top;
-    AForm.Left := Left;
-    AForm.Height := Height;
-    AForm.Width := Width;
-  end;
+    begin
+      AForm.WindowState := WindowState;
+      AForm.Top := Top;
+      AForm.Left := Left;
+      AForm.Height := Height;
+      AForm.Width := Width;
+    end;
+end;
+
+{ TSmtpServerSettings }
+
+procedure TSmtpServerSettings.Assign(Source: TPersistent);
+begin
+  if Source is TSmtpServerSettings then
+    begin
+      ActiveOnStartup := TSmtpServerSettings(Source).ActiveOnStartup;
+    end
+  else
+    inherited Assign(Source);
+end;
+
+constructor TSmtpServerSettings.Create(const ASettingsFolder: String);
+begin
+  inherited Create;
+  FActiveOnStartup := false;
 end;
 
 initialization

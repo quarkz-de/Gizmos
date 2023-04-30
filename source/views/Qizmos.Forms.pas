@@ -70,6 +70,7 @@ implementation
 uses
   Qizmos.WelcomeForm,
   Qizmos.SettingsForm, Qizmos.SettingsCommonForm, Qizmos.SettingsInfoForm,
+  Qizmos.SettingsSimulatorsForm,
   Qizmos.SimulatorsForm, Qizmos.SimulatorsSmtpForm, Qizmos.SimulatorsHttpForm;
 
 const
@@ -166,6 +167,7 @@ end;
 procedure TSettingsFormList.CreateForms;
 begin
   AddForm(mfSettingsCommon, TwSettingsCommonForm);
+  AddForm(mfSettingsSimulators, TwSettingsSimulatorsForm);
   AddForm(mfSettingsInfo, TwSettingsInfoForm);
 end;
 

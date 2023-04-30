@@ -7,7 +7,7 @@ uses
   System.SysUtils, System.Variants, System.Classes,
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls,
   Vcl.ExtCtrls, Vcl.ComCtrls,
-  IdMessage,
+  IdMessage, IdMessageParts, IdText, IdAttachment,
   Qodelib.Panels,
   Qizmos.Forms;
 
@@ -68,10 +68,27 @@ end;
 procedure TwEMailViewer.LoadMessage(AMessage: TIdMessage);
 begin
   edSender.Text := AMessage.Sender.Address;
+  if edSender.Text = '' then
+    edSender.Text := AMessage.From.Address;
   edRecipient.Text := AMessage.Recipients.EMailAddresses;
   edSubject.Text := AMessage.Subject;
   edBody.Lines.Assign(AMessage.Body);
   edHeader.Lines.Assign(AMessage.Headers);
+(*
+  for var I := 0 to AMessage.MessageParts.Count - 1 do
+    begin
+      case AMessage.MessageParts[I].PartType of
+        mptText:
+          begin
+            //TIdText(AMessage.MessageParts[I]).Body
+          end;
+        mptAttachment:
+          begin
+
+          end;
+      end;
+    end;
+*)
 end;
 
 end.

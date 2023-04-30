@@ -58,8 +58,10 @@ object wSimulatorsSmtpForm: TwSimulatorsSmtpForm
         Header.MainColumn = -1
         TabOrder = 0
         OnDblClick = vtMessagesDblClick
+        OnFocusChanged = vtMessagesFocusChanged
         Touch.InteractiveGestures = [igPan, igPressAndTap]
         Touch.InteractiveGestureOptions = [igoPanSingleFingerHorizontal, igoPanSingleFingerVertical, igoPanInertia, igoPanGutter, igoParentPassthrough]
+        ExplicitTop = 39
         Columns = <>
       end
       object pnMessages: TPanel
@@ -72,12 +74,21 @@ object wSimulatorsSmtpForm: TwSimulatorsSmtpForm
         TabOrder = 1
         ExplicitWidth = 600
         object btClear: TButton
-          Left = 4
+          Left = 8
+          Top = 8
+          Width = 109
+          Height = 25
+          Action = acClearMessages
+          Caption = 'Alles l'#246'schen'
+          TabOrder = 0
+        end
+        object btSaveMessage: TButton
+          Left = 127
           Top = 8
           Width = 169
           Height = 25
-          Action = acClearMessages
-          TabOrder = 0
+          Action = acSaveMessage
+          TabOrder = 1
         end
       end
     end
@@ -166,12 +177,7 @@ object wSimulatorsSmtpForm: TwSimulatorsSmtpForm
       item
         IP = '0.0.0.0'
         Port = 25
-      end
-      item
-        IP = '0.0.0.0'
-        Port = 465
       end>
-    IOHandler = ioSSL
     OnConnect = smtpServerConnect
     OnDisconnect = smtpServerDisconnect
     CommandHandlers = <>
@@ -199,7 +205,7 @@ object wSimulatorsSmtpForm: TwSimulatorsSmtpForm
     OnRcptTo = smtpServerRcptTo
     OnReceived = smtpServerReceived
     OnUserLogin = smtpServerUserLogin
-    ServerName = 'Indy SMTP Server'
+    ServerName = 'Qizmos SMTP Blackhole'
     Left = 516
     Top = 52
   end
@@ -216,12 +222,22 @@ object wSimulatorsSmtpForm: TwSimulatorsSmtpForm
       Caption = 'Nachrichten l'#246'schen'
       OnExecute = acClearMessagesExecute
     end
+    object acSaveMessage: TAction
+      Category = 'Messages'
+      Caption = 'Nachricht speichern'
+      OnExecute = acSaveMessageExecute
+    end
+    object acShowMessage: TAction
+      Category = 'Messages'
+      Caption = 'Nachricht '#246'ffnen'
+      OnExecute = acShowMessageExecute
+    end
   end
-  object ioSSL: TIdServerIOHandlerSSLOpenSSL
-    SSLOptions.Mode = sslmUnassigned
-    SSLOptions.VerifyMode = []
-    SSLOptions.VerifyDepth = 0
-    Left = 516
+  object dSave: TSaveDialog
+    DefaultExt = 'eml'
+    Filter = 'E-Mail-Nachrichten (*.eml)|*.eml'
+    Options = [ofHideReadOnly, ofPathMustExist, ofEnableSizing]
+    Left = 568
     Top = 115
   end
 end

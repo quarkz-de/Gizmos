@@ -27,7 +27,8 @@ uses
   Qizmos.SimulatorsHttpForm in 'views\Qizmos.SimulatorsHttpForm.pas' {wSimulatorsHttpForm},
   Qizmos.Types in 'core\Qizmos.Types.pas',
   Qizmos.SimulatorsSmtpVisualizers in 'views\Qizmos.SimulatorsSmtpVisualizers.pas',
-  Qizmos.EMailViewer in 'views\Qizmos.EMailViewer.pas' {wEMailViewer};
+  Qizmos.EMailViewer in 'views\Qizmos.EMailViewer.pas' {wEMailViewer},
+  Qizmos.SettingsSimulatorsForm in 'views\Qizmos.SettingsSimulatorsForm.pas' {wSettingsSimulatorsForm};
 
 {$R *.res}
 
@@ -43,5 +44,6 @@ begin
   Application.Title := 'Qizmos';
   Application.CreateForm(TdmCommon, dmCommon);
   Application.CreateForm(TwMainForm, wMainForm);
+  Application.ShowMainForm := not (ApplicationSettings.StartMinimized and ApplicationSettings.MinimizeToTray);
   Application.Run;
 end.

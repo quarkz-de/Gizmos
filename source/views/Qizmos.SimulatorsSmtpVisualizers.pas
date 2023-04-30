@@ -15,6 +15,7 @@ type
     procedure SetMessages(const AMessages: TObjectList<TIdMessage>);
     procedure AddMessage(const AIndex: Integer);
     function GetSelectedMessage: TIdMessage;
+    function IsSelected: Boolean;
   end;
 
 implementation
@@ -48,6 +49,7 @@ type
     procedure SetMessages(const AMessages: TObjectList<TIdMessage>);
     procedure AddMessage(const AIndex: Integer);
     function GetSelectedMessage: TIdMessage;
+    function IsSelected: Boolean;
   end;
 
 { TMessageListVisualizer }
@@ -141,10 +143,19 @@ begin
     colMessageListReceived:
       CellText := FormatDateTime('dd.mm.yyyy hh:nn:ss', FMessages[Data^].Date);
     colMessageListSender:
-      CellText := FMessages[Data^].Sender.Text;
+      begin
+        CellText := FMessages[Data^].Sender.Text;
+        if CellText = '' then
+          CellText := FMessages[Data^].From.Text;
+      end;
     colMessageListSubject:
       CellText := FMessages[Data^].Subject;
   end;
+end;
+
+function TMessageListVisualizer.IsSelected: Boolean;
+begin
+  Result := FTree.FocusedNode <> nil;
 end;
 
 procedure TMessageListVisualizer.SetMessages(

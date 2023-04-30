@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages,
   System.SysUtils, System.Variants, System.Classes, System.Actions,
-  System.Generics.Collections,
+  System.Generics.Collections, System.IOUtils,
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls,
   Vcl.ExtCtrls, Vcl.WinXCtrls, Vcl.StdCtrls, Vcl.VirtualImage, Vcl.ActnList,
   IdBaseComponent, IdComponent, IdCustomTCPServer, IdTCPServer, IdCmdTCPServer,
@@ -13,7 +13,8 @@ uses
   IdServerIOHandler, IdSSL, IdSSLOpenSSL,
   VirtualTrees,
   LoggerPro,
-  Qizmos.Forms, Qizmos.Events, Qizmos.SimulatorsSmtpVisualizers;
+  Qizmos.Forms, Qizmos.Events, Qizmos.SimulatorsSmtpVisualizers,
+  IdSSLOpenSSLHeaders;
 
 type
   TwSimulatorsSmtpForm = class(TManagedForm)
@@ -32,10 +33,15 @@ type
     pnMessages: TPanel;
     acClearMessages: TAction;
     btClear: TButton;
-    ioSSL: TIdServerIOHandlerSSLOpenSSL;
+    btSaveMessage: TButton;
+    dSave: TSaveDialog;
+    acSaveMessage: TAction;
+    acShowMessage: TAction;
     procedure acClearMessagesExecute(Sender: TObject);
+    procedure acSaveMessageExecute(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure acServerActivateExecute(Sender: TObject);
+    procedure acShowMessageExecute(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure smtpServerConnect(AContext: TIdContext);
     procedure smtpServerDisconnect(AContext: TIdContext);
@@ -51,11 +57,14 @@ type
     procedure smtpServerUserLogin(ASender: TIdSMTPServerContext;
       const AUsername, APassword: string; var VAuthenticated: Boolean);
     procedure vtMessagesDblClick(Sender: TObject);
+    procedure vtMessagesFocusChanged(Sender: TBaseVirtualTree; Node: PVirtualNode;
+        Column: TColumnIndex);
   private
     FLog: ILogWriter;
     FMessages: TObjectList<TIdMessage>;
     FMessagesVisualizer: IMessageListVisualizer;
     procedure AddLastMessageToList;
+    procedure LoadSettings;
   public
     property Log: ILogWriter read FLog;
     procedure ThemeChanged; override;
@@ -71,7 +80,7 @@ implementation
 uses
   Spring.Container, Spring.Collections,
   LoggerPro.VCLListViewAppender,
-  Qizmos.DataModule, Qizmos.EMailViewer;
+  Qizmos.DataModule, Qizmos.EMailViewer, Qizmos.Settings;
 
 const
   tagServer = 'SERVER';
@@ -87,6 +96,19 @@ begin
   vtMessages.Clear;
   FMessages.Clear;
   acClearMessages.Enabled := false;
+  acSaveMessage.Enabled := false;
+end;
+
+procedure TwSimulatorsSmtpForm.acSaveMessageExecute(Sender: TObject);
+var
+  Msg: TIdMessage;
+begin
+  Msg := FMessagesVisualizer.GetSelectedMessage;
+  if Msg <> nil then
+    begin
+      if dSave.Execute then
+        Msg.SaveToFile(dSave.FileName);
+    end;
 end;
 
 procedure TwSimulatorsSmtpForm.acServerActivateExecute(Sender: TObject);
@@ -97,6 +119,15 @@ begin
   smtpServer.Active := not smtpServer.Active;
   tsActive.State := SwitchStates[smtpServer.Active];
   Log.Info('Serverstatus: %s', [ServerStates[smtpServer.Active]], tagServer);
+end;
+
+procedure TwSimulatorsSmtpForm.acShowMessageExecute(Sender: TObject);
+var
+  Msg: TIdMessage;
+begin
+  Msg := FMessagesVisualizer.GetSelectedMessage;
+  if Msg <> nil then
+    TwEMailViewer.Execute(Msg);
 end;
 
 procedure TwSimulatorsSmtpForm.AddLastMessageToList;
@@ -117,11 +148,21 @@ begin
   FMessagesVisualizer.SetMessages(FMessages);
 
   acClearMessages.Enabled := false;
+  acSaveMessage.Enabled := false;
+
+  LoadSettings;
 end;
 
 procedure TwSimulatorsSmtpForm.FormDestroy(Sender: TObject);
 begin
+  smtpServer.Active := false;
   FMessages.Free;
+end;
+
+procedure TwSimulatorsSmtpForm.LoadSettings;
+begin
+  if ApplicationSettings.SmtpServer.ActiveOnStartup then
+    tsActive.State := tssOn;
 end;
 
 procedure TwSimulatorsSmtpForm.smtpServerConnect(AContext: TIdContext);
@@ -183,12 +224,14 @@ begin
 end;
 
 procedure TwSimulatorsSmtpForm.vtMessagesDblClick(Sender: TObject);
-var
-  Msg: TIdMessage;
 begin
-  Msg := FMessagesVisualizer.GetSelectedMessage;
-  if Msg <> nil then
-    TwEMailViewer.Execute(Msg);
+  acShowMessage.Execute;
+end;
+
+procedure TwSimulatorsSmtpForm.vtMessagesFocusChanged(Sender: TBaseVirtualTree;
+  Node: PVirtualNode; Column: TColumnIndex);
+begin
+  acSaveMessage.Enabled := FMessagesVisualizer.IsSelected;
 end;
 
 end.

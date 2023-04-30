@@ -13,6 +13,7 @@ const
   mfSettingsBase = 200;
   mfSettingsCommon = mfSettingsBase + 1;
   mfSettingsInfo = mfSettingsBase + 2;
+  mfSettingsSimulators = mfSettingsBase + 3;
 
   mfSimulatorsBase = 300;
   mfSimulatorsSmtp = mfSimulatorsBase + 1;

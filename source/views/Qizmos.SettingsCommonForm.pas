@@ -7,7 +7,9 @@ uses
   System.SysUtils, System.Variants, System.Classes,
   System.Win.Registry,
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls,
-  Qizmos.Forms, Vcl.ExtCtrls, Qodelib.Panels, Vcl.ComCtrls, Vcl.WinXCtrls;
+  Vcl.ComCtrls, Vcl.WinXCtrls, Vcl.ExtCtrls,
+  Qodelib.Panels,
+  Qizmos.Forms;
 
 type
   TwSettingsCommonForm = class(TManagedForm)
@@ -22,11 +24,19 @@ type
     pnFontSize: TQzPanel;
     txFontSize: TLabel;
     tbFontSize: TTrackBar;
+    pnMinimizeToTray: TQzPanel;
+    txMinimizeToTray: TLabel;
+    tsMinimizeToTray: TToggleSwitch;
+    pnStartMinimized: TQzPanel;
+    txStartMinimized: TLabel;
+    tsStartMinimized: TToggleSwitch;
     procedure cbAutoRunClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure cbThemeChange(Sender: TObject);
     procedure tbFontSizeChange(Sender: TObject);
     procedure tsAutoRunClick(Sender: TObject);
+    procedure tsMinimizeToTrayClick(Sender: TObject);
+    procedure tsStartMinimizedClick(Sender: TObject);
   private
     { Private-Deklarationen }
     procedure LoadValues;
@@ -123,6 +133,8 @@ begin
 
   tbFontSize.Position := ApplicationSettings.FontSize;
   tsAutoRun.State := ToggleSwitcheStates[IsAutoRun];
+  tsMinimizeToTray.State := ToggleSwitcheStates[ApplicationSettings.MinimizeToTray];
+  tsStartMinimized.State := ToggleSwitcheStates[ApplicationSettings.StartMinimized];
 end;
 
 procedure TwSettingsCommonForm.tbFontSizeChange(Sender: TObject);
@@ -133,6 +145,16 @@ end;
 procedure TwSettingsCommonForm.tsAutoRunClick(Sender: TObject);
 begin
   UpdateAutoRun;
+end;
+
+procedure TwSettingsCommonForm.tsMinimizeToTrayClick(Sender: TObject);
+begin
+  ApplicationSettings.MinimizeToTray := tsMinimizeToTray.State = tssOn;
+end;
+
+procedure TwSettingsCommonForm.tsStartMinimizedClick(Sender: TObject);
+begin
+  ApplicationSettings.StartMinimized := tsStartMinimized.State = tssOn;
 end;
 
 procedure TwSettingsCommonForm.UpdateAutoRun;

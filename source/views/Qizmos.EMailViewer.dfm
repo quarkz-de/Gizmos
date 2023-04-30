@@ -2,8 +2,8 @@ object wEMailViewer: TwEMailViewer
   Left = 0
   Top = 0
   Caption = 'Qizmos - E-Mail-Viewer'
-  ClientHeight = 440
-  ClientWidth = 620
+  ClientHeight = 439
+  ClientWidth = 616
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -566,14 +566,15 @@ object wEMailViewer: TwEMailViewer
   object pnHeader: TQzPanel
     Left = 0
     Top = 0
-    Width = 620
+    Width = 616
     Height = 101
     Edges = [qeBottom]
     Align = alTop
     BorderWidth = 1
     TabOrder = 0
+    ExplicitWidth = 612
     DesignSize = (
-      620
+      616
       101)
     object txSender: TLabel
       Left = 12
@@ -599,60 +600,64 @@ object wEMailViewer: TwEMailViewer
     object edSender: TEdit
       Left = 108
       Top = 9
-      Width = 505
+      Width = 501
       Height = 23
       Anchors = [akLeft, akTop, akRight]
       ReadOnly = True
       TabOrder = 0
       Text = 'edSender'
-      ExplicitWidth = 509
+      ExplicitWidth = 497
     end
     object edRecipient: TEdit
       Left = 108
       Top = 38
-      Width = 505
+      Width = 501
       Height = 23
       Anchors = [akLeft, akTop, akRight]
       ReadOnly = True
       TabOrder = 1
       Text = 'edRecipient'
-      ExplicitWidth = 509
+      ExplicitWidth = 497
     end
     object edSubject: TEdit
       Left = 108
       Top = 67
-      Width = 505
+      Width = 501
       Height = 23
       Anchors = [akLeft, akTop, akRight]
       ReadOnly = True
       TabOrder = 2
       Text = 'edSubject'
-      ExplicitWidth = 509
+      ExplicitWidth = 497
     end
   end
   object pcMail: TPageControl
     AlignWithMargins = True
     Left = 3
     Top = 107
-    Width = 614
-    Height = 330
+    Width = 610
+    Height = 329
     Margins.Top = 6
-    ActivePage = tsHeader
+    ActivePage = tsBody
     Align = alClient
     TabOrder = 1
+    ExplicitWidth = 606
+    ExplicitHeight = 328
     object tsBody: TTabSheet
       Caption = 'Nachricht'
       object edBody: TMemo
         Left = 0
         Top = 0
-        Width = 606
-        Height = 300
+        Width = 602
+        Height = 299
         Align = alClient
         BorderStyle = bsNone
         Lines.Strings = (
           'edBody')
         ReadOnly = True
         TabOrder = 0
+        ExplicitWidth = 598
+        ExplicitHeight = 298
       end
     end
     object tsHeader: TTabSheet
@@ -661,8 +666,8 @@ object wEMailViewer: TwEMailViewer
       object edHeader: TMemo
         Left = 0
         Top = 0
-        Width = 606
-        Height = 300
+        Width = 602
+        Height = 299
         Align = alClient
         BorderStyle = bsNone
         Lines.Strings = (

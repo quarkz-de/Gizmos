@@ -34,8 +34,6 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 
 [Files]
 Source: "..\source\Win32\Release\Qizmos.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "bin\libeay32.dll"; DestDir: "{app}"
-Source: "bin\ssleay32.dll"; DestDir: "{app}"
 
 [Icons]
 Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"

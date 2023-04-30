@@ -97,9 +97,12 @@ end;
 
 procedure TwMainForm.aeAppEventsMinimize(Sender: TObject);
 begin
-  Hide;
-  WindowState := wsMinimized;
-  tiTrayIcon.Visible := true;
+  if ApplicationSettings.MinimizeToTray then
+    begin
+      Hide;
+      WindowState := wsMinimized;
+      tiTrayIcon.Visible := true;
+    end;
 end;
 
 procedure TwMainForm.btBurgerButtonClick(Sender: TObject);
@@ -133,6 +136,13 @@ procedure TwMainForm.InitSettings;
 begin
   svSplitView.Opened := ApplicationSettings.DrawerOpened;
   ApplicationSettings.FormPosition.LoadPosition(self);
+  if ApplicationSettings.StartMinimized then
+    begin
+      if ApplicationSettings.MinimizeToTray then
+        tiTrayIcon.Visible := true
+      else
+        WindowState := wsMinimized;
+    end;
 end;
 
 procedure TwMainForm.nvFooterButtonClicked(Sender: TObject; Index: Integer);

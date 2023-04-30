@@ -77,7 +77,7 @@ object wSettingsCommonForm: TwSettingsCommonForm
   object pnAutoRun: TQzPanel
     AlignWithMargins = True
     Left = 12
-    Top = 96
+    Top = 138
     Width = 616
     Height = 36
     Margins.Left = 12
@@ -87,7 +87,8 @@ object wSettingsCommonForm: TwSettingsCommonForm
     Edges = [qeBottom]
     Align = alTop
     BorderWidth = 1
-    TabOrder = 2
+    TabOrder = 3
+    ExplicitTop = 96
     DesignSize = (
       616
       36)
@@ -113,7 +114,7 @@ object wSettingsCommonForm: TwSettingsCommonForm
   object pnFontSize: TQzPanel
     AlignWithMargins = True
     Left = 12
-    Top = 138
+    Top = 96
     Width = 616
     Height = 36
     Margins.Left = 12
@@ -123,7 +124,9 @@ object wSettingsCommonForm: TwSettingsCommonForm
     Edges = [qeBottom]
     Align = alTop
     BorderWidth = 1
-    TabOrder = 3
+    TabOrder = 2
+    ExplicitLeft = 17
+    ExplicitTop = 93
     DesignSize = (
       616
       36)
@@ -146,6 +149,82 @@ object wSettingsCommonForm: TwSettingsCommonForm
       Position = 9
       TabOrder = 0
       OnChange = tbFontSizeChange
+    end
+  end
+  object pnMinimizeToTray: TQzPanel
+    AlignWithMargins = True
+    Left = 12
+    Top = 222
+    Width = 616
+    Height = 36
+    Margins.Left = 12
+    Margins.Top = 6
+    Margins.Right = 12
+    Margins.Bottom = 0
+    Edges = [qeBottom]
+    Align = alTop
+    BorderWidth = 1
+    TabOrder = 5
+    ExplicitLeft = 16
+    ExplicitTop = 100
+    DesignSize = (
+      616
+      36)
+    object txMinimizeToTray: TLabel
+      Left = 28
+      Top = 9
+      Width = 192
+      Height = 15
+      Caption = 'In den Infobereich (Tray) minimieren'
+    end
+    object tsMinimizeToTray: TToggleSwitch
+      Left = 552
+      Top = 8
+      Width = 50
+      Height = 20
+      Anchors = [akTop, akRight]
+      ShowStateCaption = False
+      TabOrder = 0
+      ThumbWidth = 20
+      OnClick = tsMinimizeToTrayClick
+    end
+  end
+  object pnStartMinimized: TQzPanel
+    AlignWithMargins = True
+    Left = 12
+    Top = 180
+    Width = 616
+    Height = 36
+    Margins.Left = 12
+    Margins.Top = 6
+    Margins.Right = 12
+    Margins.Bottom = 0
+    Edges = [qeBottom]
+    Align = alTop
+    BorderWidth = 1
+    TabOrder = 4
+    ExplicitLeft = 7
+    ExplicitTop = 175
+    DesignSize = (
+      616
+      36)
+    object txStartMinimized: TLabel
+      Left = 28
+      Top = 9
+      Width = 91
+      Height = 15
+      Caption = 'Minimiert starten'
+    end
+    object tsStartMinimized: TToggleSwitch
+      Left = 552
+      Top = 8
+      Width = 50
+      Height = 20
+      Anchors = [akTop, akRight]
+      ShowStateCaption = False
+      TabOrder = 0
+      ThumbWidth = 20
+      OnClick = tsStartMinimizedClick
     end
   end
 end

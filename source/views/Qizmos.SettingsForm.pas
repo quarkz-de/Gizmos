@@ -20,9 +20,11 @@ type
     acSettings: TAction;
     acInfo: TAction;
     pnFormContainer: TQzPanel;
+    acSimulators: TAction;
     procedure FormDestroy(Sender: TObject);
     procedure acInfoExecute(Sender: TObject);
     procedure acSettingsExecute(Sender: TObject);
+    procedure acSimulatorsExecute(Sender: TObject);
     procedure FormCreate(Sender: TObject);
   private
     FForms: TManagedFormList;
@@ -55,6 +57,11 @@ end;
 procedure TwSettingsForm.acSettingsExecute(Sender: TObject);
 begin
   FForms.ShowForm(mfSettingsCommon);
+end;
+
+procedure TwSettingsForm.acSimulatorsExecute(Sender: TObject);
+begin
+  FForms.ShowForm(mfSettingsSimulators);
 end;
 
 procedure TwSettingsForm.FormCreate(Sender: TObject);
