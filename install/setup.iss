@@ -19,10 +19,10 @@ AppPublisher={#MyAppPublisher}
 AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
-DefaultDirName={pf}\quarkz\Qizmos
+DefaultDirName={commonpf}\quarkz\Qizmos
 DefaultGroupName={#MyAppName}
 LicenseFile=D:\Entw\quarkz.dx\Qizmos\LICENSE
-OutputBaseFilename=setup
+OutputBaseFilename=SetupQizmos
 Compression=lzma
 SolidCompression=yes
 

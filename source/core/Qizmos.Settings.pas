@@ -8,16 +8,33 @@ uses
   Vcl.Forms, Vcl.Themes;
 
 type
-  TApplicationSettingValue = (svFont);
+  TApplicationSettingValue = (svFont, svHttpPort);
 
   TSmtpServerSettings = class(TPersistent)
   private
     FActiveOnStartup: Boolean;
   public
-    constructor Create(const ASettingsFolder: String);
+    constructor Create;
     procedure Assign(Source: TPersistent); override;
   published
     property ActiveOnStartup: Boolean read FActiveOnStartup write FActiveOnStartup;
+  end;
+
+  THttpServerSettings = class(TPersistent)
+  private
+    FActiveOnStartup: Boolean;
+    FPort: Integer;
+    FResultCode: Integer;
+    FResultText: String;
+    procedure SetPort(AValue: Integer);
+  public
+    constructor Create;
+    procedure Assign(Source: TPersistent); override;
+  published
+    property ActiveOnStartup: Boolean read FActiveOnStartup write FActiveOnStartup;
+    property Port: Integer read FPort write SetPort;
+    property ResultCode: Integer read FResultCode write FResultCode;
+    property ResultText: String read FResultText write FResultText;
   end;
 
   TApplicationFormPosition = class(TPersistent)
@@ -45,6 +62,7 @@ type
   private
     FFormPosition: TApplicationFormPosition;
     FSmtpServer: TSmtpServerSettings;
+    FHttpServer: THttpServerSettings;
     FTheme: TApplicationTheme;
     FThemeName: String;
     FIsDarkTheme: Boolean;
@@ -59,8 +77,8 @@ type
     function GetSettingsFoldername: String;
     procedure SetFormPositon(const Value: TApplicationFormPosition);
     procedure SetSmtpServer(const Value: TSmtpServerSettings);
+    procedure SetHttpServer(const Value: THttpServerSettings);
     procedure InitTheme;
-    procedure ChangeEvent(const AValue: TApplicationSettingValue);
   public
     constructor Create;
     destructor Destroy; override;
@@ -74,6 +92,7 @@ type
     property FormPosition: TApplicationFormPosition read FFormPosition
       write SetFormPositon;
     property SmtpServer: TSmtpServerSettings read FSmtpServer write SetSmtpServer;
+    property HttpServer: THttpServerSettings read FHttpServer write SetHttpServer;
     property SettingsFoldername: String read GetSettingsFoldername;
     property FontSize: Integer read FFontSize write SetFontSize;
     property StartMinimized: Boolean read FStartMinimized write FStartMinimized;
@@ -100,20 +119,20 @@ const
 {$endif}
   SAppDataFolder = 'quarkz\Qizmos';
 
-{ TApplicationSettings }
-
-procedure TApplicationSettings.ChangeEvent(
-  const AValue: TApplicationSettingValue);
+procedure SettingChangeEvent(const AValue: TApplicationSettingValue);
 begin
   GlobalEventBus.Post(TEventFactory.NewSettingChangeEvent(AValue));
 end;
+
+{ TApplicationSettings }
 
 constructor TApplicationSettings.Create;
 begin
   inherited Create;
   FTheme := atSystem;
   FFormPosition := TApplicationFormPosition.Create;
-  FSmtpServer := TSmtpServerSettings.Create(GetSettingsFoldername);
+  FSmtpServer := TSmtpServerSettings.Create;
+  FHttpServer := THttpServerSettings.Create;
   FDrawerOpened := true;
   FFontSize := 9;
   FStartMinimized := false;
@@ -123,6 +142,7 @@ end;
 destructor TApplicationSettings.Destroy;
 begin
   FSmtpServer.Free;
+  FHttpServer.Free;
   FormPosition.Free;
   inherited;
 end;
@@ -227,7 +247,7 @@ begin
   if FFontSize <> AValue then
     begin
       FFontSize := AValue;
-      ChangeEvent(svFont);
+      SettingChangeEvent(svFont);
     end;
 end;
 
@@ -235,6 +255,11 @@ procedure TApplicationSettings.SetFormPositon(
   const Value: TApplicationFormPosition);
 begin
   FFormPosition.Assign(Value);
+end;
+
+procedure TApplicationSettings.SetHttpServer(const Value: THttpServerSettings);
+begin
+  FHttpServer.Assign(Value);
 end;
 
 procedure TApplicationSettings.SetSmtpServer(const Value: TSmtpServerSettings);
@@ -305,10 +330,40 @@ begin
     inherited Assign(Source);
 end;
 
-constructor TSmtpServerSettings.Create(const ASettingsFolder: String);
+constructor TSmtpServerSettings.Create;
 begin
   inherited Create;
   FActiveOnStartup := false;
+end;
+
+{ THttpServerSettings }
+
+procedure THttpServerSettings.Assign(Source: TPersistent);
+begin
+  if Source is THttpServerSettings then
+    begin
+      ActiveOnStartup := THttpServerSettings(Source).ActiveOnStartup;
+    end
+  else
+    inherited Assign(Source);
+end;
+
+constructor THttpServerSettings.Create;
+begin
+  inherited Create;
+  FActiveOnStartup := false;
+  FPort := 80;
+  FResultCode := 200;
+  FResultText := 'successful';
+end;
+
+procedure THttpServerSettings.SetPort(AValue: Integer);
+begin
+  if FPort <> AValue then
+    begin
+      FPort := AValue;
+      SettingChangeEvent(svHttpPort);
+    end;
 end;
 
 initialization

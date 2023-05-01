@@ -88,7 +88,6 @@ object wSettingsCommonForm: TwSettingsCommonForm
     Align = alTop
     BorderWidth = 1
     TabOrder = 3
-    ExplicitTop = 96
     DesignSize = (
       616
       36)
@@ -125,8 +124,6 @@ object wSettingsCommonForm: TwSettingsCommonForm
     Align = alTop
     BorderWidth = 1
     TabOrder = 2
-    ExplicitLeft = 17
-    ExplicitTop = 93
     DesignSize = (
       616
       36)
@@ -165,8 +162,6 @@ object wSettingsCommonForm: TwSettingsCommonForm
     Align = alTop
     BorderWidth = 1
     TabOrder = 5
-    ExplicitLeft = 16
-    ExplicitTop = 100
     DesignSize = (
       616
       36)
@@ -203,8 +198,6 @@ object wSettingsCommonForm: TwSettingsCommonForm
     Align = alTop
     BorderWidth = 1
     TabOrder = 4
-    ExplicitLeft = 7
-    ExplicitTop = 175
     DesignSize = (
       616
       36)

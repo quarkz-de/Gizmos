@@ -2,7 +2,13 @@ unit Qizmos.Types;
 
 interface
 
+uses
+  Vcl.WinXCtrls;
+
 const
+  SwitchStates: array[Boolean] of TToggleSwitchState = (tssOff, tssOn);
+  ServerStates: array[Boolean] of String = ('inaktiv', 'aktiv');
+
   mfMaxItemsPerGroup = 100;
 
   mfMainBase = 100;

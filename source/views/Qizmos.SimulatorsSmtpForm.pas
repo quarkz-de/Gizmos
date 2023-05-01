@@ -10,11 +10,9 @@ uses
   Vcl.ExtCtrls, Vcl.WinXCtrls, Vcl.StdCtrls, Vcl.VirtualImage, Vcl.ActnList,
   IdBaseComponent, IdComponent, IdCustomTCPServer, IdTCPServer, IdCmdTCPServer,
   IdExplicitTLSClientServerBase, IdSMTPServer, IdMessage, IdContext,
-  IdServerIOHandler, IdSSL, IdSSLOpenSSL,
   VirtualTrees,
   LoggerPro,
-  Qizmos.Forms, Qizmos.Events, Qizmos.SimulatorsSmtpVisualizers,
-  IdSSLOpenSSLHeaders;
+  Qizmos.Forms, Qizmos.Events, Qizmos.SimulatorsSmtpVisualizers;
 
 type
   TwSimulatorsSmtpForm = class(TManagedForm)
@@ -66,8 +64,8 @@ type
     procedure AddLastMessageToList;
     procedure LoadSettings;
   public
-    property Log: ILogWriter read FLog;
     procedure ThemeChanged; override;
+    property Log: ILogWriter read FLog;
   end;
 
 var
@@ -80,7 +78,7 @@ implementation
 uses
   Spring.Container, Spring.Collections,
   LoggerPro.VCLListViewAppender,
-  Qizmos.DataModule, Qizmos.EMailViewer, Qizmos.Settings;
+  Qizmos.Types, Qizmos.DataModule, Qizmos.EMailViewer, Qizmos.Settings;
 
 const
   tagServer = 'SERVER';
@@ -112,9 +110,6 @@ begin
 end;
 
 procedure TwSimulatorsSmtpForm.acServerActivateExecute(Sender: TObject);
-const
-  SwitchStates: array[Boolean] of TToggleSwitchState = (tssOff, tssOn);
-  ServerStates: array[Boolean] of String = ('inaktiv', 'aktiv');
 begin
   smtpServer.Active := not smtpServer.Active;
   tsActive.State := SwitchStates[smtpServer.Active];

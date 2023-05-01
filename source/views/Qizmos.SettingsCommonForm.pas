@@ -56,7 +56,7 @@ implementation
 {$R *.dfm}
 
 uses
-  Qizmos.Settings;
+  Qizmos.Types, Qizmos.Settings;
 
 const
   iiSystemTheme = 0;
@@ -119,8 +119,6 @@ begin
 end;
 
 procedure TwSettingsCommonForm.LoadValues;
-const
-  ToggleSwitcheStates: array[Boolean] of TToggleSwitchState = (tssOff, tssOn);
 begin
   case ApplicationSettings.Theme of
     atSystem:
@@ -132,9 +130,9 @@ begin
   end;
 
   tbFontSize.Position := ApplicationSettings.FontSize;
-  tsAutoRun.State := ToggleSwitcheStates[IsAutoRun];
-  tsMinimizeToTray.State := ToggleSwitcheStates[ApplicationSettings.MinimizeToTray];
-  tsStartMinimized.State := ToggleSwitcheStates[ApplicationSettings.StartMinimized];
+  tsAutoRun.State := SwitchStates[IsAutoRun];
+  tsMinimizeToTray.State := SwitchStates[ApplicationSettings.MinimizeToTray];
+  tsStartMinimized.State := SwitchStates[ApplicationSettings.StartMinimized];
 end;
 
 procedure TwSettingsCommonForm.tbFontSizeChange(Sender: TObject);
