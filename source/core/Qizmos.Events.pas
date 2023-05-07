@@ -14,7 +14,9 @@ type
   IModuleChangeEvent = interface
     ['{C52EBC6A-D733-44FD-8F0F-F4109D1290B0}']
     function GetFormId: TManagedFormId;
+    function GetSubId: TManagedFormId;
     property FormId: TManagedFormId read GetFormId;
+    property SubId: TManagedFormId read GetSubId;
   end;
 
   ISettingChangeEvent = interface
@@ -27,7 +29,9 @@ type
   public
     class function NewThemeChangeEvent: IThemeChangeEvent;
     class function NewModuleChangeEvent(
-      const AFormId: TManagedFormId): IModuleChangeEvent;
+      const AFormId: TManagedFormId): IModuleChangeEvent; overload;
+    class function NewModuleChangeEvent(
+      const AFormId, ASubId: TManagedFormId): IModuleChangeEvent; overload;
     class function NewSettingChangeEvent(
       const AValue: TApplicationSettingValue): ISettingChangeEvent;
   end;
@@ -40,11 +44,15 @@ type
   TModuleChangeEvent = class(TInterfacedObject, IModuleChangeEvent)
   private
     FFormId: TManagedFormId;
+    FSubId: TManagedFormId;
   protected
     function GetFormId: TManagedFormId;
+    function GetSubId: TManagedFormId;
   public
-    constructor Create(const AFormId: TManagedFormId);
+    constructor Create(const AFormId: TManagedFormId); overload;
+    constructor Create(const AFormId, ASubId: TManagedFormId); overload;
     property FormId: TManagedFormId read GetFormId;
+    property SubId: TManagedFormId read GetSubId;
   end;
 
   TSettingChangeEvent = class(TInterfacedObject, ISettingChangeEvent)
@@ -65,6 +73,12 @@ begin
   Result := TModuleChangeEvent.Create(AFormId);
 end;
 
+class function TEventFactory.NewModuleChangeEvent(const AFormId,
+  ASubId: TManagedFormId): IModuleChangeEvent;
+begin
+  Result := TModuleChangeEvent.Create(AFormId, ASubId);
+end;
+
 class function TEventFactory.NewSettingChangeEvent(
   const AValue: TApplicationSettingValue): ISettingChangeEvent;
 begin
@@ -82,11 +96,24 @@ constructor TModuleChangeEvent.Create(const AFormId: TManagedFormId);
 begin
   inherited Create;
   FFormId := AFormId;
+  FSubId := 0;
+end;
+
+constructor TModuleChangeEvent.Create(const AFormId, ASubId: TManagedFormId);
+begin
+  inherited Create;
+  FFormId := AFormId;
+  FSubId := ASubId;
 end;
 
 function TModuleChangeEvent.GetFormId: TManagedFormId;
 begin
   Result := FFormId;
+end;
+
+function TModuleChangeEvent.GetSubId: TManagedFormId;
+begin
+  Result := FSubId;
 end;
 
 { TSettingChangeEvent }

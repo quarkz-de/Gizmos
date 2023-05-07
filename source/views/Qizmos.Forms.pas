@@ -25,6 +25,7 @@ type
     constructor Create(AOwner: TComponent); override;
     property FormId: TManagedFormId read FFormId write FFormId;
     property ImageIndex: Integer read FImageIndex write FImageIndex;
+    procedure SelectSubForm(const AForm: TManagedFormId); virtual;
   end;
 
   TManagedFormClass = class of TManagedForm;
@@ -45,6 +46,7 @@ type
     procedure ShowForm(const AForm: TManagedFormId);
     procedure ThemeChanged; virtual;
     property ActiveForm: TManagedForm read GetActiveForm;
+    function GetForm(const AForm: TManagedFormId): TManagedForm;
   end;
 
   TApplicationFormList = class(TManagedFormList)
@@ -122,6 +124,19 @@ begin
       end;
 end;
 
+function TManagedFormList.GetForm(const AForm: TManagedFormId): TManagedForm;
+var
+  Form: TManagedForm;
+begin
+  Result := nil;
+  for Form in FForms.Values do
+    if Form.FormId = AForm then
+      begin
+        Result := Form;
+        Break;
+      end;
+end;
+
 procedure TManagedFormList.ShowForm(const AForm: TManagedFormId);
 var
   Form: TManagedForm;
@@ -140,7 +155,7 @@ begin
         begin
           Form.Deactivate;
           Form.Visible := false;
-          Form.Parent := nil;
+          // Form.Parent := nil;
         end;
     end;
 end;
@@ -185,6 +200,11 @@ constructor TManagedForm.Create(AOwner: TComponent);
 begin
   inherited;
   BorderStyle := bsNone;
+end;
+
+procedure TManagedForm.SelectSubForm(const AForm: TManagedFormId);
+begin
+
 end;
 
 { TAppForm }

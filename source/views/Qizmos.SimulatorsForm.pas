@@ -9,8 +9,8 @@ uses
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.VirtualImage,
   Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.ImgList, Vcl.VirtualImageList,
   Vcl.ActnList,
-  Qodelib.NavigationView,
-  Qizmos.Forms, Qizmos.Events, Qodelib.Panels;
+  Qodelib.NavigationView, Qodelib.Panels,
+  Qizmos.Forms, Qizmos.Events, Qizmos.Types;
 
 type
   TwSimulatorsForm = class(TManagedForm)
@@ -28,6 +28,7 @@ type
     FForms: TManagedFormList;
   public
     procedure ThemeChanged; override;
+    procedure SelectSubForm(const AForm: TManagedFormId); override;
   end;
 
 var
@@ -38,7 +39,7 @@ implementation
 {$R *.dfm}
 
 uses
-  Qizmos.DataModule, Qizmos.Types;
+  Qizmos.DataModule;
 
 { TwSimulatorsForm }
 
@@ -61,6 +62,22 @@ end;
 procedure TwSimulatorsForm.FormDestroy(Sender: TObject);
 begin
   FForms.Free;
+end;
+
+procedure TwSimulatorsForm.SelectSubForm(const AForm: TManagedFormId);
+begin
+  case AForm of
+    mfSimulatorsSmtp:
+      begin
+        acSmtpBlackhole.Execute;
+        nvSettings.ItemIndex := 0;
+      end;
+    mfSimulatorsHttp:
+      begin
+        acHttpBlackhole.Execute;
+        nvSettings.ItemIndex := 1;
+      end;
+  end;
 end;
 
 procedure TwSimulatorsForm.ThemeChanged;

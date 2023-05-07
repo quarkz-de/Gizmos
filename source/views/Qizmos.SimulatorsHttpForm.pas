@@ -79,9 +79,6 @@ end;
 procedure TwSimulatorsHttpForm.httpServerCommandGet(AContext: TIdContext;
   ARequestInfo: TIdHTTPRequestInfo; AResponseInfo: TIdHTTPResponseInfo);
 begin
-// Port=48080
-// ResultMsg1='200=SMS wurde angenommen und versendet (200)'
-
   Log.Info('Command %s', [HTTPRequestStrings[Ord(ARequestInfo.CommandType)]], tagMessage);
   Log.Info('Params %s', [ARequestInfo.Params.CommaText], tagMessage);
 

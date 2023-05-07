@@ -33,9 +33,7 @@ object wSimulatorsForm: TwSimulatorsForm
       end>
     ItemIndex = 0
     TabOrder = 0
-    ExplicitLeft = 0
-    ExplicitTop = 0
-    ExplicitHeight = 439
+    ExplicitHeight = 431
   end
   object pnFormContainer: TQzPanel
     Left = 176
@@ -46,9 +44,8 @@ object wSimulatorsForm: TwSimulatorsForm
     Align = alClient
     BorderWidth = 1
     TabOrder = 1
-    ExplicitLeft = 170
-    ExplicitWidth = 446
-    ExplicitHeight = 439
+    ExplicitWidth = 432
+    ExplicitHeight = 437
   end
   object alActions: TActionList
     Images = viImages

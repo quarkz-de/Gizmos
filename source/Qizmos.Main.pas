@@ -162,6 +162,28 @@ begin
       txCaption.Caption := AEvent.FormId.ToString;
       imIcon.ImageIndex := AEvent.FormId.ToImageIndex;
       Caption := 'Qizmos - ' + AEvent.FormId.ToString;
+
+      if FForms.ActiveForm <> FForms.GetForm(AEvent.FormId) then
+        begin
+          FForms.ShowForm(AEvent.FormId);
+        end;
+
+      if AEvent.SubId > 0 then
+        FForms.ActiveForm.SelectSubForm(AEvent.SubId);
+
+      case AEvent.FormId of
+        mfMainSimulators:
+          begin
+            nvHeader.ItemIndex := 1;
+            nvFooter.ItemIndex := -1;
+          end;
+        mfMainSettings:
+          begin
+            nvHeader.ItemIndex := -1;
+            nvFooter.ItemIndex := 0;
+          end;
+      end;
+
     end;
 end;
 
