@@ -29,7 +29,8 @@ uses
   Qizmos.SimulatorsSmtpVisualizers in 'views\Qizmos.SimulatorsSmtpVisualizers.pas',
   Qizmos.EMailViewer in 'views\Qizmos.EMailViewer.pas' {wEMailViewer},
   Qizmos.SettingsSimulatorsForm in 'views\Qizmos.SettingsSimulatorsForm.pas' {wSettingsSimulatorsForm},
-  Qizmos.SimulatorsHttpVisualizers in 'views\Qizmos.SimulatorsHttpVisualizers.pas';
+  Qizmos.SimulatorsHttpVisualizers in 'views\Qizmos.SimulatorsHttpVisualizers.pas',
+  Qizmos.SettingsFormHelpers in 'views\Qizmos.SettingsFormHelpers.pas';
 
 {$R *.res}
 

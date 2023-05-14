@@ -23,10 +23,13 @@ object wSettingsSimulatorsForm: TwSettingsSimulatorsForm
     Margins.Top = 12
     Margins.Right = 12
     Margins.Bottom = 0
-    Edges = [qeBottom]
+    Edges = []
     Align = alTop
     BorderWidth = 1
+    Color = clBtnHighlight
+    ParentBackground = False
     TabOrder = 0
+    ExplicitLeft = 17
     object txSmtpBlackhole: TLabel
       Left = 8
       Top = 10
@@ -48,12 +51,13 @@ object wSettingsSimulatorsForm: TwSettingsSimulatorsForm
     Edges = [qeBottom]
     Align = alTop
     BorderWidth = 1
+    ParentBackground = False
     TabOrder = 1
     DesignSize = (
       616
       36)
     object txSmtpActiveOnStartup: TLabel
-      Left = 28
+      Left = 8
       Top = 9
       Width = 127
       Height = 15
@@ -81,9 +85,11 @@ object wSettingsSimulatorsForm: TwSettingsSimulatorsForm
     Margins.Top = 12
     Margins.Right = 12
     Margins.Bottom = 0
-    Edges = [qeBottom]
+    Edges = []
     Align = alTop
     BorderWidth = 1
+    Color = clBtnHighlight
+    ParentBackground = False
     TabOrder = 2
     object txHttpBlackhole: TLabel
       Left = 8
@@ -111,7 +117,7 @@ object wSettingsSimulatorsForm: TwSettingsSimulatorsForm
       616
       36)
     object txHttpActiveOnStartup: TLabel
-      Left = 28
+      Left = 8
       Top = 9
       Width = 127
       Height = 15
@@ -143,13 +149,11 @@ object wSettingsSimulatorsForm: TwSettingsSimulatorsForm
     Align = alTop
     BorderWidth = 1
     TabOrder = 4
-    ExplicitLeft = 16
-    ExplicitTop = 148
     DesignSize = (
       616
       36)
     object txHttpPort: TLabel
-      Left = 28
+      Left = 8
       Top = 9
       Width = 22
       Height = 15
@@ -182,13 +186,11 @@ object wSettingsSimulatorsForm: TwSettingsSimulatorsForm
     Align = alTop
     BorderWidth = 1
     TabOrder = 6
-    ExplicitLeft = 16
-    ExplicitTop = 190
     DesignSize = (
       616
       36)
     object txHttpResultText: TLabel
-      Left = 28
+      Left = 8
       Top = 9
       Width = 76
       Height = 15
@@ -219,13 +221,11 @@ object wSettingsSimulatorsForm: TwSettingsSimulatorsForm
     Align = alTop
     BorderWidth = 1
     TabOrder = 5
-    ExplicitLeft = 16
-    ExplicitTop = 190
     DesignSize = (
       616
       36)
     object txHttpResultCode: TLabel
-      Left = 28
+      Left = 8
       Top = 9
       Width = 83
       Height = 15

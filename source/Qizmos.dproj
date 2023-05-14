@@ -163,6 +163,7 @@
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="views\Qizmos.SimulatorsHttpVisualizers.pas"/>
+        <DCCReference Include="views\Qizmos.SettingsFormHelpers.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

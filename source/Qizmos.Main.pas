@@ -25,8 +25,7 @@ type
     acSectionSimulators: TAction;
     tiTrayIcon: TTrayIcon;
     aeAppEvents: TApplicationEvents;
-    pnHeader: TPanel;
-    shHeader: TShape;
+    pnHeader: TQzPanel;
     txCaption: TLabel;
     imIcon: TVirtualImage;
     btBurgerButton: TSpeedButton;

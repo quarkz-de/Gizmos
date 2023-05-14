@@ -23,9 +23,11 @@ object wSettingsCommonForm: TwSettingsCommonForm
     Margins.Top = 12
     Margins.Right = 12
     Margins.Bottom = 0
-    Edges = [qeBottom]
+    Edges = []
     Align = alTop
     BorderWidth = 1
+    Color = clBtnHighlight
+    ParentBackground = False
     TabOrder = 0
     object txView: TLabel
       Left = 8
@@ -53,7 +55,7 @@ object wSettingsCommonForm: TwSettingsCommonForm
       616
       36)
     object txTheme: TLabel
-      Left = 28
+      Left = 8
       Top = 11
       Width = 114
       Height = 15
@@ -92,7 +94,7 @@ object wSettingsCommonForm: TwSettingsCommonForm
       616
       36)
     object txAutoRun: TLabel
-      Left = 28
+      Left = 8
       Top = 9
       Width = 109
       Height = 15
@@ -128,7 +130,7 @@ object wSettingsCommonForm: TwSettingsCommonForm
       616
       36)
     object txFontSize: TLabel
-      Left = 28
+      Left = 8
       Top = 9
       Width = 279
       Height = 15
@@ -166,7 +168,7 @@ object wSettingsCommonForm: TwSettingsCommonForm
       616
       36)
     object txMinimizeToTray: TLabel
-      Left = 28
+      Left = 8
       Top = 9
       Width = 192
       Height = 15
@@ -202,7 +204,7 @@ object wSettingsCommonForm: TwSettingsCommonForm
       616
       36)
     object txStartMinimized: TLabel
-      Left = 28
+      Left = 8
       Top = 9
       Width = 91
       Height = 15

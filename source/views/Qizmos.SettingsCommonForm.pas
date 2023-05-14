@@ -56,7 +56,7 @@ implementation
 {$R *.dfm}
 
 uses
-  Qizmos.Types, Qizmos.Settings;
+  Qizmos.Types, Qizmos.Settings, Qizmos.SettingsFormHelpers;
 
 const
   iiSystemTheme = 0;
@@ -86,17 +86,9 @@ begin
 end;
 
 procedure TwSettingsCommonForm.FontChanged;
-const
-  DefaultHeight1 = 32;
 begin
   inherited;
-  txView.Font := Font;
-  txView.Font.Size := Font.Size + 2;
-
-  pnView.Height := DefaultHeight1 + Font.Size;
-  pnTheme.Height := DefaultHeight1 + Font.Size;
-  pnAutoRun.Height := DefaultHeight1 + Font.Size;
-  pnFontSize.Height := DefaultHeight1 + Font.Size;
+  TSettingsFormPanelHelper.UpdatePanelFonts(self);
 end;
 
 procedure TwSettingsCommonForm.FormCreate(Sender: TObject);

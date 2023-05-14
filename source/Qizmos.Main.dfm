@@ -22,35 +22,21 @@ object wMainForm: TwMainForm
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   TextHeight = 21
-  object pnHeader: TPanel
-    AlignWithMargins = True
-    Left = 8
-    Top = 8
-    Width = 893
+  object pnHeader: TQzPanel
+    Left = 0
+    Top = 0
+    Width = 909
     Height = 45
     Margins.Left = 8
     Margins.Top = 8
     Margins.Right = 8
     Margins.Bottom = 8
+    Edges = [qeBottom]
     Align = alTop
-    BevelOuter = bvNone
+    BorderWidth = 1
     Color = clWindow
     ParentBackground = False
     TabOrder = 0
-    object shHeader: TShape
-      Left = 0
-      Top = 0
-      Width = 893
-      Height = 45
-      Align = alClient
-      Brush.Color = clWindow
-      Pen.Style = psClear
-      Shape = stRoundRect
-      ExplicitLeft = 1
-      ExplicitTop = -8
-      ExplicitWidth = 901
-      ExplicitHeight = 49
-    end
     object txCaption: TLabel
       Left = 114
       Top = 7
@@ -88,9 +74,9 @@ object wMainForm: TwMainForm
   end
   object pnFormContainer: TQzPanel
     Left = 176
-    Top = 61
+    Top = 45
     Width = 733
-    Height = 508
+    Height = 524
     Edges = [qeLeft]
     Align = alClient
     BorderWidth = 1
@@ -99,9 +85,9 @@ object wMainForm: TwMainForm
   object svSplitView: TSplitView
     AlignWithMargins = True
     Left = 3
-    Top = 64
+    Top = 48
     Width = 170
-    Height = 502
+    Height = 518
     BevelEdges = []
     BevelKind = bkFlat
     CloseStyle = svcCompact
@@ -115,7 +101,7 @@ object wMainForm: TwMainForm
       Left = 0
       Top = 0
       Width = 170
-      Height = 454
+      Height = 470
       Align = alClient
       BorderStyle = bsNone
       ButtonHeight = 48
@@ -135,7 +121,7 @@ object wMainForm: TwMainForm
     end
     object nvFooter: TQzNavigationView
       Left = 0
-      Top = 454
+      Top = 470
       Width = 170
       Height = 48
       Align = alBottom
@@ -198,6 +184,16 @@ object wMainForm: TwMainForm
         CollectionIndex = 8
         CollectionName = '008_Message'
         Name = '008_Message'
+      end
+      item
+        CollectionIndex = 9
+        CollectionName = '009_Expand'
+        Name = '009_Expand'
+      end
+      item
+        CollectionIndex = 10
+        CollectionName = '010_Collapse'
+        Name = '010_Collapse'
       end>
     ImageCollection = dmCommon.icDarkIcons
     Width = 32
@@ -252,6 +248,16 @@ object wMainForm: TwMainForm
         CollectionIndex = 8
         CollectionName = '008_Message'
         Name = '008_Message'
+      end
+      item
+        CollectionIndex = 9
+        CollectionName = '009_Expand'
+        Name = '009_Expand'
+      end
+      item
+        CollectionIndex = 10
+        CollectionName = '010_Collapse'
+        Name = '010_Collapse'
       end>
     ImageCollection = dmCommon.icDarkIcons
     Left = 256

@@ -2,8 +2,8 @@ object wSimulatorsForm: TwSimulatorsForm
   Left = 0
   Top = 0
   Caption = 'Simulatoren'
-  ClientHeight = 438
-  ClientWidth = 612
+  ClientHeight = 436
+  ClientWidth = 604
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,7 +18,7 @@ object wSimulatorsForm: TwSimulatorsForm
     Left = 3
     Top = 3
     Width = 170
-    Height = 432
+    Height = 430
     Align = alLeft
     BorderStyle = bsNone
     ButtonHeight = 40
@@ -33,13 +33,12 @@ object wSimulatorsForm: TwSimulatorsForm
       end>
     ItemIndex = 0
     TabOrder = 0
-    ExplicitHeight = 431
   end
   object pnFormContainer: TQzPanel
     Left = 176
     Top = 0
-    Width = 436
-    Height = 438
+    Width = 428
+    Height = 436
     Edges = [qeLeft]
     Align = alClient
     BorderWidth = 1
@@ -114,6 +113,16 @@ object wSimulatorsForm: TwSimulatorsForm
         CollectionIndex = 8
         CollectionName = '008_Message'
         Name = '008_Message'
+      end
+      item
+        CollectionIndex = 9
+        CollectionName = '009_Expand'
+        Name = '009_Expand'
+      end
+      item
+        CollectionIndex = 10
+        CollectionName = '010_Collapse'
+        Name = '010_Collapse'
       end>
     ImageCollection = dmCommon.icDarkIcons
     Width = 24

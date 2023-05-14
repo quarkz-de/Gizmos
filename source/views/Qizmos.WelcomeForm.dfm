@@ -19,6 +19,7 @@ object wWelcomeForm: TwWelcomeForm
     Width = 761
     Height = 479
     Align = alClient
+    BorderStyle = bsNone
     ItemCount = 2
     ItemColor = clBtnFace
     ItemWidth = 180

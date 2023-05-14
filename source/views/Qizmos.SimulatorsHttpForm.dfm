@@ -2,8 +2,8 @@ object wSimulatorsHttpForm: TwSimulatorsHttpForm
   Left = 0
   Top = 0
   Caption = 'HTTP Blackhole'
-  ClientHeight = 440
-  ClientWidth = 620
+  ClientHeight = 438
+  ClientWidth = 612
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,13 +16,13 @@ object wSimulatorsHttpForm: TwSimulatorsHttpForm
   object pnHeader: TPanel
     Left = 0
     Top = 0
-    Width = 620
+    Width = 612
     Height = 41
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 0
     DesignSize = (
-      620
+      612
       41)
     object txCaption: TLabel
       Left = 64
@@ -49,7 +49,7 @@ object wSimulatorsHttpForm: TwSimulatorsHttpForm
       ImageName = '008_Message'
     end
     object tsActive: TToggleSwitch
-      Left = 520
+      Left = 512
       Top = 12
       Width = 76
       Height = 20
@@ -64,8 +64,8 @@ object wSimulatorsHttpForm: TwSimulatorsHttpForm
     AlignWithMargins = True
     Left = 8
     Top = 49
-    Width = 604
-    Height = 383
+    Width = 596
+    Height = 381
     Margins.Left = 8
     Margins.Top = 8
     Margins.Right = 8

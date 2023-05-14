@@ -7,9 +7,9 @@ uses
   System.SysUtils, System.Variants, System.Classes,
   System.Win.Registry,
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls,
-  Vcl.ComCtrls, Vcl.WinXCtrls, Vcl.ExtCtrls,
+  Vcl.ComCtrls, Vcl.WinXCtrls, Vcl.ExtCtrls, Vcl.NumberBox,
   Qodelib.Panels,
-  Qizmos.Forms, Vcl.NumberBox;
+  Qizmos.Forms;
 
 type
   TwSettingsSimulatorsForm = class(TManagedForm)
@@ -55,7 +55,7 @@ implementation
 {$R *.dfm}
 
 uses
-  Qizmos.Types, Qizmos.Settings;
+  Qizmos.Types, Qizmos.Settings, Qizmos.SettingsFormHelpers;
 
 { TwSettingsCommonForm }
 
@@ -75,22 +75,9 @@ begin
 end;
 
 procedure TwSettingsSimulatorsForm.FontChanged;
-const
-  DefaultHeight1 = 32;
 begin
   inherited;
-  txSmtpBlackhole.Font := Font;
-  txSmtpBlackhole.Font.Size := Font.Size + 2;
-  txHttpBlackhole.Font := Font;
-  txHttpBlackhole.Font.Size := Font.Size + 2;
-
-  pnSmtpBlackhole.Height := DefaultHeight1 + Font.Size;
-  pnSmtpActiveOnStartup.Height := DefaultHeight1 + Font.Size;
-  pnHttpBlackhole.Height := DefaultHeight1 + Font.Size;
-  pnHttpActiveOnStartup.Height := DefaultHeight1 + Font.Size;
-  pnHttpPort.Height := DefaultHeight1 + Font.Size;
-  pnHttpResultCode.Height := DefaultHeight1 + Font.Size;
-  pnHttpResultText.Height := DefaultHeight1 + Font.Size;
+  TSettingsFormPanelHelper.UpdatePanelFonts(self);
 end;
 
 procedure TwSettingsSimulatorsForm.FormCreate(Sender: TObject);
