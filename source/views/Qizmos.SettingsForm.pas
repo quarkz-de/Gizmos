@@ -4,10 +4,10 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages,
-  System.SysUtils, System.Variants, System.Classes, System.Actions,
+  System.SysUtils, System.Variants, System.Classes,
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
   Vcl.Imaging.pngimage, Vcl.ExtCtrls, Vcl.StdCtrls,
-  Vcl.VirtualImageList, Vcl.ComCtrls, Vcl.ActnList,
+  Vcl.VirtualImageList, Vcl.ComCtrls,
   Qodelib.NavigationView, Qodelib.Panels, Qodelib.ManagedForms,
   Qizmos.Forms, System.ImageList, Vcl.ImgList;
 

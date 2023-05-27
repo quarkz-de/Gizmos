@@ -5,10 +5,8 @@ interface
 uses
   Winapi.Windows, Winapi.Messages,
   System.SysUtils, System.Variants, System.Classes,
-  System.Actions,
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
   Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.VirtualImageList,
-  Vcl.ActnList,
   Qodelib.NavigationView, Qodelib.Panels, Qodelib.ManagedForms,
   Qizmos.Forms, Qizmos.Types, System.ImageList, Vcl.ImgList;
 
