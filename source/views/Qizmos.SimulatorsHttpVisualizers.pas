@@ -3,8 +3,8 @@ unit Qizmos.SimulatorsHttpVisualizers;
 interface
 
 uses
-  System.SysUtils, System.Classes, System.Generics.Collections,
-  Spring.Collections, Spring.Container,
+  System.SysUtils, System.Classes,
+  Spring.Container,
   VirtualTrees, VirtualTrees.Header, VirtualTrees.Types;
 
 type

@@ -2,7 +2,7 @@ object wSettingsCommonForm: TwSettingsCommonForm
   Left = 0
   Top = 0
   BorderStyle = bsNone
-  Caption = 'Einstellungen'
+  Caption = 'Allgemein'
   ClientHeight = 480
   ClientWidth = 640
   Color = clBtnFace

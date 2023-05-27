@@ -3,6 +3,7 @@ object wSettingsForm: TwSettingsForm
   Top = 0
   BiDiMode = bdLeftToRight
   BorderStyle = bsNone
+  Caption = 'Einstellungen'
   ClientHeight = 468
   ClientWidth = 777
   Color = clBtnFace

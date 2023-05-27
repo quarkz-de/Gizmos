@@ -22,7 +22,6 @@ object wSimulatorsHttpForm: TwSimulatorsHttpForm
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 0
-    ExplicitWidth = 608
     DesignSize = (
       624
       41)
@@ -59,7 +58,6 @@ object wSimulatorsHttpForm: TwSimulatorsHttpForm
       Anchors = [akTop, akRight]
       TabOrder = 0
       ThumbWidth = 20
-      ExplicitLeft = 500
     end
   end
   object pcSmtpBlackhole: TPageControl
@@ -75,8 +73,6 @@ object wSimulatorsHttpForm: TwSimulatorsHttpForm
     ActivePage = tsMessages
     Align = alClient
     TabOrder = 1
-    ExplicitWidth = 592
-    ExplicitHeight = 380
     object tsMessages: TTabSheet
       Caption = 'Nachrichten'
       object vtMessages: TVirtualStringTree
@@ -108,8 +104,6 @@ object wSimulatorsHttpForm: TwSimulatorsHttpForm
         TabOrder = 0
         Touch.InteractiveGestures = [igPan, igPressAndTap]
         Touch.InteractiveGestureOptions = [igoPanSingleFingerHorizontal, igoPanSingleFingerVertical, igoPanInertia, igoPanGutter, igoParentPassthrough]
-        ExplicitWidth = 588
-        ExplicitHeight = 310
         Columns = <>
       end
       object pnMessages: TPanel
@@ -120,7 +114,6 @@ object wSimulatorsHttpForm: TwSimulatorsHttpForm
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 1
-        ExplicitWidth = 584
         object btClear: TButton
           Left = 8
           Top = 8

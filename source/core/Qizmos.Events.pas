@@ -3,7 +3,6 @@ unit Qizmos.Events;
 interface
 
 uses
-  EventBus,
   Qodelib.ManagedForms,
   Qizmos.Types, Qizmos.Settings;
 

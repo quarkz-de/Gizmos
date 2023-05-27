@@ -3,14 +3,13 @@ unit Qizmos.SettingsForm;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, Winapi.ShellAPI,
+  Winapi.Windows, Winapi.Messages,
   System.SysUtils, System.Variants, System.Classes, System.Actions,
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
   Vcl.Imaging.pngimage, Vcl.ExtCtrls, Vcl.StdCtrls,
-  Vcl.VirtualImage, System.ImageList, Vcl.ImgList,
   Vcl.VirtualImageList, Vcl.ComCtrls, Vcl.ActnList,
   Qodelib.NavigationView, Qodelib.Panels, Qodelib.ManagedForms,
-  Qizmos.Forms, Qizmos.Events;
+  Qizmos.Forms, System.ImageList, Vcl.ImgList;
 
 type
   TwSettingsForm = class(TManagedForm)
@@ -38,7 +37,6 @@ implementation
 {$R *.dfm}
 
 uses
-  Qodelib.IOUtils,
   Qizmos.Settings, Qizmos.DataModule, Qizmos.Types,
   Qizmos.SettingsCommonForm, Qizmos.SettingsInfoForm,
   Qizmos.SettingsSimulatorsForm;

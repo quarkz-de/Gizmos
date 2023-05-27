@@ -3,7 +3,7 @@ unit Qizmos.DataModule;
 interface
 
 uses
-  System.SysUtils, System.Classes, System.IOUtils,
+  System.SysUtils, System.Classes,
   Vcl.BaseImageCollection, Vcl.ImageCollection, Vcl.Forms;
 
 type

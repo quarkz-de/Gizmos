@@ -572,6 +572,7 @@ object wEMailViewer: TwEMailViewer
     Align = alTop
     BorderWidth = 1
     TabOrder = 0
+    ExplicitWidth = 608
     DesignSize = (
       612
       101)
@@ -599,35 +600,35 @@ object wEMailViewer: TwEMailViewer
     object edSender: TEdit
       Left = 108
       Top = 9
-      Width = 493
+      Width = 489
       Height = 23
       Anchors = [akLeft, akTop, akRight]
       ReadOnly = True
       TabOrder = 0
       Text = 'edSender'
-      ExplicitWidth = 497
+      ExplicitWidth = 485
     end
     object edRecipient: TEdit
       Left = 108
       Top = 38
-      Width = 493
+      Width = 489
       Height = 23
       Anchors = [akLeft, akTop, akRight]
       ReadOnly = True
       TabOrder = 1
       Text = 'edRecipient'
-      ExplicitWidth = 497
+      ExplicitWidth = 485
     end
     object edSubject: TEdit
       Left = 108
       Top = 67
-      Width = 493
+      Width = 489
       Height = 23
       Anchors = [akLeft, akTop, akRight]
       ReadOnly = True
       TabOrder = 2
       Text = 'edSubject'
-      ExplicitWidth = 497
+      ExplicitWidth = 485
     end
   end
   object pcMail: TPageControl
@@ -640,19 +641,23 @@ object wEMailViewer: TwEMailViewer
     ActivePage = tsBody
     Align = alClient
     TabOrder = 1
+    ExplicitWidth = 602
+    ExplicitHeight = 327
     object tsBody: TTabSheet
       Caption = 'Nachricht'
       object edBody: TMemo
         Left = 0
         Top = 0
-        Width = 602
-        Height = 299
+        Width = 598
+        Height = 298
         Align = alClient
         BorderStyle = bsNone
         Lines.Strings = (
           'edBody')
         ReadOnly = True
         TabOrder = 0
+        ExplicitWidth = 594
+        ExplicitHeight = 297
       end
     end
     object tsHeader: TTabSheet
@@ -661,8 +666,8 @@ object wEMailViewer: TwEMailViewer
       object edHeader: TMemo
         Left = 0
         Top = 0
-        Width = 602
-        Height = 299
+        Width = 598
+        Height = 298
         Align = alClient
         BorderStyle = bsNone
         Lines.Strings = (

@@ -5,15 +5,16 @@ interface
 uses
   Winapi.Windows, Winapi.Messages,
   System.SysUtils, System.Variants, System.Classes, System.Actions,
-  System.Generics.Collections, System.IOUtils,
+  System.Generics.Collections,
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls,
   Vcl.ExtCtrls, Vcl.WinXCtrls, Vcl.StdCtrls, Vcl.VirtualImage, Vcl.ActnList,
-  IdBaseComponent, IdComponent, IdCustomTCPServer, IdTCPServer, IdCmdTCPServer,
-  IdExplicitTLSClientServerBase, IdSMTPServer, IdMessage, IdContext,
+  IdBaseComponent, IdCustomTCPServer,
+  IdSMTPServer, IdMessage, IdContext,
   VirtualTrees,
   LoggerPro,
   Qodelib.ManagedForms,
-  Qizmos.Forms, Qizmos.Events, Qizmos.SimulatorsSmtpVisualizers;
+  Qizmos.Forms, Qizmos.SimulatorsSmtpVisualizers, IdComponent, IdTCPServer,
+  IdCmdTCPServer, IdExplicitTLSClientServerBase;
 
 type
   TwSimulatorsSmtpForm = class(TManagedForm)
@@ -80,7 +81,7 @@ implementation
 {$R *.dfm}
 
 uses
-  Spring.Container, Spring.Collections,
+  Spring.Container,
   LoggerPro.VCLListViewAppender,
   Qizmos.Types, Qizmos.DataModule, Qizmos.EMailViewer, Qizmos.Settings;
 

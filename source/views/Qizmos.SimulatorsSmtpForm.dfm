@@ -27,8 +27,6 @@ object wSimulatorsSmtpForm: TwSimulatorsSmtpForm
     ActivePage = tsMessages
     Align = alClient
     TabOrder = 0
-    ExplicitWidth = 608
-    ExplicitHeight = 384
     object tsMessages: TTabSheet
       Caption = 'Nachrichten'
       object vtMessages: TVirtualStringTree
@@ -62,8 +60,6 @@ object wSimulatorsSmtpForm: TwSimulatorsSmtpForm
         OnFocusChanged = vtMessagesFocusChanged
         Touch.InteractiveGestures = [igPan, igPressAndTap]
         Touch.InteractiveGestureOptions = [igoPanSingleFingerHorizontal, igoPanSingleFingerVertical, igoPanInertia, igoPanGutter, igoParentPassthrough]
-        ExplicitWidth = 604
-        ExplicitHeight = 314
         Columns = <>
       end
       object pnMessages: TPanel
@@ -74,7 +70,6 @@ object wSimulatorsSmtpForm: TwSimulatorsSmtpForm
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 1
-        ExplicitWidth = 600
         object btClear: TButton
           Left = 8
           Top = 8
@@ -133,7 +128,6 @@ object wSimulatorsSmtpForm: TwSimulatorsSmtpForm
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 1
-    ExplicitWidth = 624
     DesignSize = (
       640
       41)
@@ -170,7 +164,6 @@ object wSimulatorsSmtpForm: TwSimulatorsSmtpForm
       Anchors = [akTop, akRight]
       TabOrder = 0
       ThumbWidth = 20
-      ExplicitLeft = 516
     end
   end
   object smtpServer: TIdSMTPServer

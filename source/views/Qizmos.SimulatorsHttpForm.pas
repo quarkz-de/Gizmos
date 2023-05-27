@@ -10,10 +10,11 @@ uses
   VirtualTrees,
   EventBus,
   LoggerPro,
-  IdBaseComponent, IdComponent, IdCustomTCPServer, IdCustomHTTPServer,
-  IdHTTPServer, IdContext, IdTCPConnection, IdTCPClient, IdHTTP,
+  IdCustomTCPServer, IdCustomHTTPServer,
+  IdHTTPServer, IdContext,
   Qodelib.ManagedForms,
-  Qizmos.Forms, Qizmos.SimulatorsHttpVisualizers, Qizmos.Events;
+  Qizmos.Forms, Qizmos.SimulatorsHttpVisualizers, Qizmos.Events,
+  IdBaseComponent, IdComponent;
 
 type
   TwSimulatorsHttpForm = class(TManagedForm)
@@ -62,7 +63,7 @@ implementation
 {$R *.dfm}
 
 uses
-  Spring.Container, Spring.Collections,
+  Spring.Container,
   LoggerPro.VCLListViewAppender,
   Qizmos.Types, Qizmos.DataModule, Qizmos.Settings;
 

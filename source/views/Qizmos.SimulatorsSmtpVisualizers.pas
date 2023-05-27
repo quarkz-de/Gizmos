@@ -4,7 +4,7 @@ interface
 
 uses
   System.SysUtils, System.Generics.Collections,
-  Spring.Collections, Spring.Container,
+  Spring.Container,
   IdMessage,
   VirtualTrees, VirtualTrees.Header, VirtualTrees.Types;
 

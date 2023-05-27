@@ -3,7 +3,7 @@ unit Qizmos.WelcomeForm;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, Winapi.ShellAPI,
+  Winapi.Windows, Winapi.Messages,
   System.SysUtils, System.Variants, System.Classes,
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls,
   Vcl.StdCtrls, Vcl.VirtualImage, Vcl.ControlList,
@@ -32,7 +32,7 @@ implementation
 {$R *.dfm}
 
 uses
-  Qizmos.DataModule, Qizmos.Types, Qizmos.Main, Qizmos.Events;
+  Qizmos.DataModule, Qizmos.Types, Qizmos.Events;
 
 { TwWelcomeForm }
 

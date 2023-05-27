@@ -9,8 +9,8 @@ uses
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ImgList,
   Vcl.VirtualImageList, Vcl.Buttons, Vcl.StdCtrls, Vcl.VirtualImage,
   Vcl.ExtCtrls, Vcl.WinXCtrls, Vcl.PlatformDefaultStyleActnCtrls,
-  Vcl.ActnMan, Vcl.ToolWin, Vcl.ActnCtrls, Vcl.ActnMenus, Vcl.TitleBarCtrls,
-  Vcl.ActnList, Vcl.StdActns, Vcl.AppEvnts,
+  Vcl.ActnMan, Vcl.ActnMenus,
+  Vcl.ActnList, Vcl.AppEvnts,
   EventBus,
   Qodelib.NavigationView, Qodelib.ManagedForms,
   Qizmos.Forms, Qizmos.Events, Qodelib.Panels;
