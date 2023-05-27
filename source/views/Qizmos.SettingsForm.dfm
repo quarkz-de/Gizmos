@@ -13,7 +13,6 @@ object wSettingsForm: TwSettingsForm
   Font.Style = []
   ParentBiDiMode = False
   OnCreate = FormCreate
-  OnDestroy = FormDestroy
   TextHeight = 13
   object nvSettings: TQzNavigationView
     AlignWithMargins = True
@@ -97,6 +96,16 @@ object wSettingsForm: TwSettingsForm
         CollectionIndex = 8
         CollectionName = '008_Message'
         Name = '008_Message'
+      end
+      item
+        CollectionIndex = 9
+        CollectionName = '009_Expand'
+        Name = '009_Expand'
+      end
+      item
+        CollectionIndex = 10
+        CollectionName = '010_Collapse'
+        Name = '010_Collapse'
       end>
     ImageCollection = dmCommon.icDarkIcons
     Width = 24

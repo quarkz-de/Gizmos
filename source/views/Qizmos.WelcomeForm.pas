@@ -8,7 +8,7 @@ uses
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls,
   Vcl.StdCtrls, Vcl.VirtualImage, Vcl.ControlList,
   EventBus,
-  Qizmos.Forms;
+  Qizmos.Forms, Qodelib.ManagedForms;
 
 type
   TwWelcomeForm = class(TManagedForm)
@@ -21,7 +21,9 @@ type
     procedure clModulesItemClick(Sender: TObject);
   private
     procedure UpdateTheme;
-  public
+  protected
+    function GetFormId: TQzManagedFormId; override;
+    function GetImageIndex: Integer; override;
     procedure ThemeChanged; override;
   end;
 
@@ -39,6 +41,16 @@ begin
   UpdateTheme;
 end;
 
+function TwWelcomeForm.GetFormId: TQzManagedFormId;
+begin
+  Result := mfMainWelcome;
+end;
+
+function TwWelcomeForm.GetImageIndex: Integer;
+begin
+  Result := iiMainWelcome;
+end;
+
 procedure TwWelcomeForm.clModulesBeforeDrawItem(AIndex: Integer;
   ACanvas: TCanvas; ARect: TRect; AState: TOwnerDrawState);
 begin
@@ -46,12 +58,12 @@ begin
     0:
       begin
         txTitle.Caption := 'SMTP Blackhole';
-        imIcon.ImageIndex := 7;
+        imIcon.ImageIndex := iiSimulatorsSmtp;
       end;
     1:
       begin
         txTitle.Caption := 'HTTP Blackhole';
-        imIcon.ImageIndex := 8;
+        imIcon.ImageIndex := iiSimulatorsHttp;
       end;
   end;
 end;

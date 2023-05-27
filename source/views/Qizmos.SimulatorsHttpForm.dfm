@@ -1,9 +1,10 @@
 object wSimulatorsHttpForm: TwSimulatorsHttpForm
   Left = 0
   Top = 0
+  BorderStyle = bsNone
   Caption = 'HTTP Blackhole'
-  ClientHeight = 438
-  ClientWidth = 612
+  ClientHeight = 476
+  ClientWidth = 624
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,13 +17,14 @@ object wSimulatorsHttpForm: TwSimulatorsHttpForm
   object pnHeader: TPanel
     Left = 0
     Top = 0
-    Width = 612
+    Width = 624
     Height = 41
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 0
+    ExplicitWidth = 608
     DesignSize = (
-      612
+      624
       41)
     object txCaption: TLabel
       Left = 64
@@ -49,7 +51,7 @@ object wSimulatorsHttpForm: TwSimulatorsHttpForm
       ImageName = '008_Message'
     end
     object tsActive: TToggleSwitch
-      Left = 512
+      Left = 516
       Top = 12
       Width = 76
       Height = 20
@@ -57,15 +59,15 @@ object wSimulatorsHttpForm: TwSimulatorsHttpForm
       Anchors = [akTop, akRight]
       TabOrder = 0
       ThumbWidth = 20
-      ExplicitLeft = 528
+      ExplicitLeft = 500
     end
   end
   object pcSmtpBlackhole: TPageControl
     AlignWithMargins = True
     Left = 8
     Top = 49
-    Width = 596
-    Height = 381
+    Width = 608
+    Height = 419
     Margins.Left = 8
     Margins.Top = 8
     Margins.Right = 8
@@ -73,15 +75,15 @@ object wSimulatorsHttpForm: TwSimulatorsHttpForm
     ActivePage = tsMessages
     Align = alClient
     TabOrder = 1
-    ExplicitWidth = 608
-    ExplicitHeight = 384
+    ExplicitWidth = 592
+    ExplicitHeight = 380
     object tsMessages: TTabSheet
       Caption = 'Nachrichten'
       object vtMessages: TVirtualStringTree
         Left = 0
         Top = 41
         Width = 600
-        Height = 313
+        Height = 348
         Align = alClient
         BorderStyle = bsNone
         Colors.BorderColor = 15987699
@@ -106,7 +108,8 @@ object wSimulatorsHttpForm: TwSimulatorsHttpForm
         TabOrder = 0
         Touch.InteractiveGestures = [igPan, igPressAndTap]
         Touch.InteractiveGestureOptions = [igoPanSingleFingerHorizontal, igoPanSingleFingerVertical, igoPanInertia, igoPanGutter, igoParentPassthrough]
-        ExplicitTop = 39
+        ExplicitWidth = 588
+        ExplicitHeight = 310
         Columns = <>
       end
       object pnMessages: TPanel
@@ -117,7 +120,7 @@ object wSimulatorsHttpForm: TwSimulatorsHttpForm
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 1
-        ExplicitWidth = 604
+        ExplicitWidth = 584
         object btClear: TButton
           Left = 8
           Top = 8

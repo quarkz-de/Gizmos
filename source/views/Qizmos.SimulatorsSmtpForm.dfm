@@ -1,9 +1,10 @@
 object wSimulatorsSmtpForm: TwSimulatorsSmtpForm
   Left = 0
   Top = 0
+  BorderStyle = bsNone
   Caption = 'SMTP Blackhole'
-  ClientHeight = 442
-  ClientWidth = 628
+  ClientHeight = 480
+  ClientWidth = 640
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,8 +18,8 @@ object wSimulatorsSmtpForm: TwSimulatorsSmtpForm
     AlignWithMargins = True
     Left = 8
     Top = 49
-    Width = 612
-    Height = 385
+    Width = 624
+    Height = 423
     Margins.Left = 8
     Margins.Top = 8
     Margins.Right = 8
@@ -33,8 +34,8 @@ object wSimulatorsSmtpForm: TwSimulatorsSmtpForm
       object vtMessages: TVirtualStringTree
         Left = 0
         Top = 41
-        Width = 604
-        Height = 314
+        Width = 616
+        Height = 352
         Align = alClient
         BorderStyle = bsNone
         Colors.BorderColor = 15987699
@@ -61,12 +62,14 @@ object wSimulatorsSmtpForm: TwSimulatorsSmtpForm
         OnFocusChanged = vtMessagesFocusChanged
         Touch.InteractiveGestures = [igPan, igPressAndTap]
         Touch.InteractiveGestureOptions = [igoPanSingleFingerHorizontal, igoPanSingleFingerVertical, igoPanInertia, igoPanGutter, igoParentPassthrough]
+        ExplicitWidth = 604
+        ExplicitHeight = 314
         Columns = <>
       end
       object pnMessages: TPanel
         Left = 0
         Top = 0
-        Width = 604
+        Width = 616
         Height = 41
         Align = alTop
         BevelOuter = bvNone
@@ -125,14 +128,14 @@ object wSimulatorsSmtpForm: TwSimulatorsSmtpForm
   object pnHeader: TPanel
     Left = 0
     Top = 0
-    Width = 628
+    Width = 640
     Height = 41
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 1
     ExplicitWidth = 624
     DesignSize = (
-      628
+      640
       41)
     object txCaption: TLabel
       Left = 64
@@ -159,7 +162,7 @@ object wSimulatorsSmtpForm: TwSimulatorsSmtpForm
       ImageName = '007_Mail'
     end
     object tsActive: TToggleSwitch
-      Left = 528
+      Left = 532
       Top = 12
       Width = 76
       Height = 20
@@ -167,7 +170,7 @@ object wSimulatorsSmtpForm: TwSimulatorsSmtpForm
       Anchors = [akTop, akRight]
       TabOrder = 0
       ThumbWidth = 20
-      ExplicitLeft = 524
+      ExplicitLeft = 516
     end
   end
   object smtpServer: TIdSMTPServer

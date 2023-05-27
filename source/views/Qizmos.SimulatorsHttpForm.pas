@@ -12,6 +12,7 @@ uses
   LoggerPro,
   IdBaseComponent, IdComponent, IdCustomTCPServer, IdCustomHTTPServer,
   IdHTTPServer, IdContext, IdTCPConnection, IdTCPClient, IdHTTP,
+  Qodelib.ManagedForms,
   Qizmos.Forms, Qizmos.SimulatorsHttpVisualizers, Qizmos.Events;
 
 type
@@ -43,6 +44,9 @@ type
     FMessagesVisualizer: IHttpMessageListVisualizer;
     procedure LoadSettings;
     procedure SetServerPort;
+  protected
+    function GetFormId: TQzManagedFormId; override;
+    function GetImageIndex: Integer; override;
   public
     procedure ThemeChanged; override;
     property Log: ILogWriter read FLog;
@@ -104,6 +108,16 @@ end;
 procedure TwSimulatorsHttpForm.FormDestroy(Sender: TObject);
 begin
   httpServer.Active := false;
+end;
+
+function TwSimulatorsHttpForm.GetFormId: TQzManagedFormId;
+begin
+  Result := mfSimulatorsHttp;
+end;
+
+function TwSimulatorsHttpForm.GetImageIndex: Integer;
+begin
+  Result := iiSimulatorsHttp;
 end;
 
 procedure TwSimulatorsHttpForm.httpServerConnect(AContext: TIdContext);

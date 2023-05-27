@@ -8,8 +8,7 @@ uses
   System.Win.Registry,
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls,
   Vcl.ComCtrls, Vcl.WinXCtrls, Vcl.ExtCtrls, Vcl.NumberBox,
-  Qodelib.Panels,
-  Qizmos.Forms;
+  Qizmos.Forms, Qodelib.Panels, Qodelib.ManagedForms;
 
 type
   TwSettingsSimulatorsForm = class(TManagedForm)
@@ -39,12 +38,11 @@ type
     procedure tsHttpActiveOnStartupClick(Sender: TObject);
     procedure tsSmtpActiveOnStartupClick(Sender: TObject);
   private
-    { Private-Deklarationen }
     procedure LoadValues;
   protected
+    function GetFormId: TQzManagedFormId; override;
+    function GetImageIndex: Integer; override;
     procedure FontChanged; override;
-  public
-    { Public-Deklarationen }
   end;
 
 var
@@ -83,6 +81,16 @@ end;
 procedure TwSettingsSimulatorsForm.FormCreate(Sender: TObject);
 begin
   LoadValues;
+end;
+
+function TwSettingsSimulatorsForm.GetFormId: TQzManagedFormId;
+begin
+  Result := mfSettingsSimulators;
+end;
+
+function TwSettingsSimulatorsForm.GetImageIndex: Integer;
+begin
+  Result := iiSettingsSimulators;
 end;
 
 procedure TwSettingsSimulatorsForm.LoadValues;

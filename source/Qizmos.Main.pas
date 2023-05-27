@@ -12,11 +12,11 @@ uses
   Vcl.ActnMan, Vcl.ToolWin, Vcl.ActnCtrls, Vcl.ActnMenus, Vcl.TitleBarCtrls,
   Vcl.ActnList, Vcl.StdActns, Vcl.AppEvnts,
   EventBus,
-  Qodelib.NavigationView,
-  Qizmos.Events, Qizmos.Forms, Qodelib.Panels;
+  Qodelib.NavigationView, Qodelib.ManagedForms,
+  Qizmos.Forms, Qizmos.Events, Qodelib.Panels;
 
 type
-  TwMainForm = class(TAppForm)
+  TwMainForm = class(TManagedForm)
     vilLargeIcons: TVirtualImageList;
     vilIcons: TVirtualImageList;
     alActions: TActionList;
@@ -48,18 +48,22 @@ type
     procedure tiTrayIconClick(Sender: TObject);
     procedure tiTrayIconDblClick(Sender: TObject);
   private
-    FForms: TManagedFormList;
     procedure InitSettings;
     procedure WMSettingChange(var Message: TWMSettingChange); message WM_SETTINGCHANGE;
     procedure RestoreFromTray;
   protected
-    property Forms: TManagedFormList read FForms;
+    function GetFormId: TQzManagedFormId; override;
     procedure FontChanged; override;
+    procedure RegisterForms; override;
+    procedure ActiveFormChanged(ActiveForm: TQzManagedForm); override;
+    procedure ThemeChanged; override;
   public
     [Subscribe]
     procedure OnModuleChange(AEvent: IModuleChangeEvent);
     [Subscribe]
     procedure OnThemeChange(AEvent: IThemeChangeEvent);
+    [Subscribe]
+    procedure OnSettingChange(AEvent: ISettingChangeEvent);
   end;
 
 var
@@ -70,7 +74,8 @@ implementation
 {$R *.dfm}
 
 uses
-  Qizmos.DataModule, Qizmos.Settings, Qizmos.About, Qizmos.Types;
+  Qizmos.DataModule, Qizmos.Settings, Qizmos.About, Qizmos.Types,
+  Qizmos.WelcomeForm, Qizmos.SettingsForm, Qizmos.SimulatorsForm;
 
 { TwMain }
 
@@ -81,17 +86,38 @@ end;
 
 procedure TwMainForm.acSectionSettingsExecute(Sender: TObject);
 begin
-  FForms.ShowForm(mfMainSettings);
+  ManagedForms.ShowForm(mfMainSettings);
 end;
 
 procedure TwMainForm.acSectionSimulatorsExecute(Sender: TObject);
 begin
-  FForms.ShowForm(mfMainSimulators);
+  ManagedForms.ShowForm(mfMainSimulators);
 end;
 
 procedure TwMainForm.acSectionWelcomeExecute(Sender: TObject);
 begin
-  FForms.ShowForm(mfMainWelcome);
+  ManagedForms.ShowForm(mfMainWelcome);
+end;
+
+procedure TwMainForm.ActiveFormChanged(ActiveForm: TQzManagedForm);
+begin
+  txCaption.Caption := ActiveForm.Caption;
+  imIcon.ImageIndex := ActiveForm.ImageIndex;
+  Caption := 'Qizmos - ' + ActiveForm.Caption;
+
+  if ActiveForm.FormId = mfMainSettings then
+    nvHeader.ItemIndex := -1
+  else
+    nvFooter.ItemIndex := -1;
+
+  case ActiveForm.FormId of
+    mfMainSettings:
+      nvFooter.ItemIndex := 0;
+    mfMainWelcome:
+      nvHeader.ItemIndex := 0;
+    mfMainSimulators:
+      nvHeader.ItemIndex := 1;
+  end;
 end;
 
 procedure TwMainForm.aeAppEventsMinimize(Sender: TObject);
@@ -118,7 +144,6 @@ end;
 
 procedure TwMainForm.FormCreate(Sender: TObject);
 begin
-  FForms := TApplicationFormList.Create(pnFormContainer);
   acSectionWelcome.Execute;
   GlobalEventBus.RegisterSubscriberForEvents(Self);
   dmCommon.MainFormCreated;
@@ -128,7 +153,11 @@ end;
 procedure TwMainForm.FormDestroy(Sender: TObject);
 begin
   ApplicationSettings.FormPosition.SavePosition(self);
-  FForms.Free;
+end;
+
+function TwMainForm.GetFormId: TQzManagedFormId;
+begin
+  Result := mfMainForm;
 end;
 
 procedure TwMainForm.InitSettings;
@@ -155,43 +184,34 @@ begin
 end;
 
 procedure TwMainForm.OnModuleChange(AEvent: IModuleChangeEvent);
+var
+  Form: TQzManagedForm;
 begin
-  if AEvent.FormId.IsMainModule then
-    begin
-      txCaption.Caption := AEvent.FormId.ToString;
-      imIcon.ImageIndex := AEvent.FormId.ToImageIndex;
-      Caption := 'Qizmos - ' + AEvent.FormId.ToString;
+  Form := ManagedForms.ShowForm(AEvent.FormId);
+  if Assigned(Form) then
+    Form.ManagedForms.ShowForm(AEvent.SubId);
+end;
 
-      if FForms.ActiveForm <> FForms.GetForm(AEvent.FormId) then
-        begin
-          FForms.ShowForm(AEvent.FormId);
-        end;
-
-      if AEvent.SubId > 0 then
-        FForms.ActiveForm.SelectSubForm(AEvent.SubId);
-
-      case AEvent.FormId of
-        mfMainSimulators:
-          begin
-            nvHeader.ItemIndex := 1;
-            nvFooter.ItemIndex := -1;
-          end;
-        mfMainSettings:
-          begin
-            nvHeader.ItemIndex := -1;
-            nvFooter.ItemIndex := 0;
-          end;
-      end;
-
-    end;
+procedure TwMainForm.OnSettingChange(AEvent: ISettingChangeEvent);
+begin
+  case AEvent.Value of
+    svFont:
+      FontChanged;
+  end;
 end;
 
 procedure TwMainForm.OnThemeChange(AEvent: IThemeChangeEvent);
 begin
-  imIcon.ImageCollection := dmCommon.GetImageCollection;
-  vilIcons.ImageCollection := dmCommon.GetImageCollection;
-  vilLargeIcons.ImageCollection := dmCommon.GetImageCollection;
-  FForms.ThemeChanged;
+  ThemeChanged;
+end;
+
+procedure TwMainForm.RegisterForms;
+begin
+  inherited;
+  ManagedForms.Container := pnFormContainer;
+  ManagedForms.AddForm(TwWelcomeForm);
+  ManagedForms.AddForm(TwSettingsForm);
+  ManagedForms.AddForm(TwSimulatorsForm);
 end;
 
 procedure TwMainForm.RestoreFromTray;
@@ -214,6 +234,14 @@ begin
   ApplicationSettings.DrawerOpened := true;
   nvHeader.ButtonOptions := nvHeader.ButtonOptions + [nboShowCaptions];
   nvFooter.ButtonOptions := nvFooter.ButtonOptions + [nboShowCaptions];
+end;
+
+procedure TwMainForm.ThemeChanged;
+begin
+  inherited;
+  imIcon.ImageCollection := dmCommon.GetImageCollection;
+  vilIcons.ImageCollection := dmCommon.GetImageCollection;
+  vilLargeIcons.ImageCollection := dmCommon.GetImageCollection;
 end;
 
 procedure TwMainForm.tiTrayIconClick(Sender: TObject);

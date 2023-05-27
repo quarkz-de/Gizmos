@@ -1,9 +1,10 @@
 object wSimulatorsForm: TwSimulatorsForm
   Left = 0
   Top = 0
+  BorderStyle = bsNone
   Caption = 'Simulatoren'
-  ClientHeight = 436
-  ClientWidth = 604
+  ClientHeight = 474
+  ClientWidth = 616
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -11,14 +12,13 @@ object wSimulatorsForm: TwSimulatorsForm
   Font.Name = 'Segoe UI'
   Font.Style = []
   OnCreate = FormCreate
-  OnDestroy = FormDestroy
   TextHeight = 15
   object nvSettings: TQzNavigationView
     AlignWithMargins = True
     Left = 3
     Top = 3
     Width = 170
-    Height = 430
+    Height = 468
     Align = alLeft
     BorderStyle = bsNone
     ButtonHeight = 40
@@ -33,18 +33,19 @@ object wSimulatorsForm: TwSimulatorsForm
       end>
     ItemIndex = 0
     TabOrder = 0
+    ExplicitHeight = 429
   end
   object pnFormContainer: TQzPanel
     Left = 176
     Top = 0
-    Width = 428
-    Height = 436
+    Width = 440
+    Height = 474
     Edges = [qeLeft]
     Align = alClient
     BorderWidth = 1
     TabOrder = 1
-    ExplicitWidth = 432
-    ExplicitHeight = 437
+    ExplicitWidth = 424
+    ExplicitHeight = 435
   end
   object alActions: TActionList
     Images = viImages

@@ -9,7 +9,7 @@ uses
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.VirtualImage,
   Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.ImgList, Vcl.VirtualImageList,
   Vcl.ActnList,
-  Qodelib.NavigationView, Qodelib.Panels,
+  Qodelib.NavigationView, Qodelib.Panels, Qodelib.ManagedForms,
   Qizmos.Forms, Qizmos.Events, Qizmos.Types;
 
 type
@@ -22,13 +22,13 @@ type
     pnFormContainer: TQzPanel;
     procedure acHttpBlackholeExecute(Sender: TObject);
     procedure acSmtpBlackholeExecute(Sender: TObject);
-    procedure FormDestroy(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-  private
-    FForms: TManagedFormList;
   public
+    function GetFormId: TQzManagedFormId; override;
+    function GetImageIndex: Integer; override;
     procedure ThemeChanged; override;
-    procedure SelectSubForm(const AForm: TManagedFormId); override;
+    procedure RegisterForms; override;
+    procedure ActiveFormChanged(ActiveForm: TQzManagedForm); override;
   end;
 
 var
@@ -39,53 +39,54 @@ implementation
 {$R *.dfm}
 
 uses
-  Qizmos.DataModule;
+  Qizmos.DataModule,
+  Qizmos.SimulatorsSmtpForm, Qizmos.SimulatorsHttpForm;
 
 { TwSimulatorsForm }
 
 procedure TwSimulatorsForm.acHttpBlackholeExecute(Sender: TObject);
 begin
-  FForms.ShowForm(mfSimulatorsHttp);
+  ManagedForms.ShowForm(mfSimulatorsHttp);
 end;
 
 procedure TwSimulatorsForm.acSmtpBlackholeExecute(Sender: TObject);
 begin
-  FForms.ShowForm(mfSimulatorsSmtp);
+  ManagedForms.ShowForm(mfSimulatorsSmtp);
+end;
+
+procedure TwSimulatorsForm.ActiveFormChanged(ActiveForm: TQzManagedForm);
+begin
+  inherited;
+
 end;
 
 procedure TwSimulatorsForm.FormCreate(Sender: TObject);
 begin
-  FForms := TSimulatorsFormList.Create(pnFormContainer);
   acSmtpBlackhole.Execute;
 end;
 
-procedure TwSimulatorsForm.FormDestroy(Sender: TObject);
+function TwSimulatorsForm.GetFormId: TQzManagedFormId;
 begin
-  FForms.Free;
+  Result := mfMainSimulators;
 end;
 
-procedure TwSimulatorsForm.SelectSubForm(const AForm: TManagedFormId);
+function TwSimulatorsForm.GetImageIndex: Integer;
 begin
-  case AForm of
-    mfSimulatorsSmtp:
-      begin
-        acSmtpBlackhole.Execute;
-        nvSettings.ItemIndex := 0;
-      end;
-    mfSimulatorsHttp:
-      begin
-        acHttpBlackhole.Execute;
-        nvSettings.ItemIndex := 1;
-      end;
-  end;
+  Result := iiMainSimulators;
+end;
+
+procedure TwSimulatorsForm.RegisterForms;
+begin
+  inherited;
+  ManagedForms.Container := pnFormContainer;
+  ManagedForms.AddForm(TwSimulatorsSmtpForm);
+  ManagedForms.AddForm(TwSimulatorsHttpForm)
 end;
 
 procedure TwSimulatorsForm.ThemeChanged;
 begin
   inherited;
   viImages.ImageCollection := dmCommon.GetImageCollection;
-  if FForms <> nil then
-    FForms.ThemeChanged;
 end;
 
 end.

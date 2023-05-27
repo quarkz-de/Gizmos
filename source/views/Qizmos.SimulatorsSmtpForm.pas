@@ -12,6 +12,7 @@ uses
   IdExplicitTLSClientServerBase, IdSMTPServer, IdMessage, IdContext,
   VirtualTrees,
   LoggerPro,
+  Qodelib.ManagedForms,
   Qizmos.Forms, Qizmos.Events, Qizmos.SimulatorsSmtpVisualizers;
 
 type
@@ -63,6 +64,9 @@ type
     FMessagesVisualizer: IMessageListVisualizer;
     procedure AddLastMessageToList;
     procedure LoadSettings;
+  protected
+    function GetFormId: TQzManagedFormId; override;
+    function GetImageIndex: Integer; override;
   public
     procedure ThemeChanged; override;
     property Log: ILogWriter read FLog;
@@ -152,6 +156,16 @@ procedure TwSimulatorsSmtpForm.FormDestroy(Sender: TObject);
 begin
   smtpServer.Active := false;
   FMessages.Free;
+end;
+
+function TwSimulatorsSmtpForm.GetFormId: TQzManagedFormId;
+begin
+  Result := mfSimulatorsSmtp;
+end;
+
+function TwSimulatorsSmtpForm.GetImageIndex: Integer;
+begin
+  Result := iiSimulatorsSmtp;
 end;
 
 procedure TwSimulatorsSmtpForm.LoadSettings;

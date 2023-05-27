@@ -29,7 +29,6 @@ object wSettingsSimulatorsForm: TwSettingsSimulatorsForm
     Color = clBtnHighlight
     ParentBackground = False
     TabOrder = 0
-    ExplicitLeft = 17
     object txSmtpBlackhole: TLabel
       Left = 8
       Top = 10

@@ -2,7 +2,7 @@ object wWelcomeForm: TwWelcomeForm
   Left = 0
   Top = 0
   BorderStyle = bsNone
-  Caption = 'dmCommon.icLogo'
+  Caption = 'Start'
   ClientHeight = 479
   ClientWidth = 761
   Color = clBtnFace

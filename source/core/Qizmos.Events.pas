@@ -4,6 +4,7 @@ interface
 
 uses
   EventBus,
+  Qodelib.ManagedForms,
   Qizmos.Types, Qizmos.Settings;
 
 type
@@ -13,10 +14,10 @@ type
 
   IModuleChangeEvent = interface
     ['{C52EBC6A-D733-44FD-8F0F-F4109D1290B0}']
-    function GetFormId: TManagedFormId;
-    function GetSubId: TManagedFormId;
-    property FormId: TManagedFormId read GetFormId;
-    property SubId: TManagedFormId read GetSubId;
+    function GetFormId: TQzManagedFormId;
+    function GetSubId: TQzManagedFormId;
+    property FormId: TQzManagedFormId read GetFormId;
+    property SubId: TQzManagedFormId read GetSubId;
   end;
 
   ISettingChangeEvent = interface
@@ -29,9 +30,9 @@ type
   public
     class function NewThemeChangeEvent: IThemeChangeEvent;
     class function NewModuleChangeEvent(
-      const AFormId: TManagedFormId): IModuleChangeEvent; overload;
+      const AFormId: TQzManagedFormId): IModuleChangeEvent; overload;
     class function NewModuleChangeEvent(
-      const AFormId, ASubId: TManagedFormId): IModuleChangeEvent; overload;
+      const AFormId, ASubId: TQzManagedFormId): IModuleChangeEvent; overload;
     class function NewSettingChangeEvent(
       const AValue: TApplicationSettingValue): ISettingChangeEvent;
   end;
@@ -43,16 +44,16 @@ type
 
   TModuleChangeEvent = class(TInterfacedObject, IModuleChangeEvent)
   private
-    FFormId: TManagedFormId;
-    FSubId: TManagedFormId;
+    FFormId: TQzManagedFormId;
+    FSubId: TQzManagedFormId;
   protected
-    function GetFormId: TManagedFormId;
-    function GetSubId: TManagedFormId;
+    function GetFormId: TQzManagedFormId;
+    function GetSubId: TQzManagedFormId;
   public
-    constructor Create(const AFormId: TManagedFormId); overload;
-    constructor Create(const AFormId, ASubId: TManagedFormId); overload;
-    property FormId: TManagedFormId read GetFormId;
-    property SubId: TManagedFormId read GetSubId;
+    constructor Create(const AFormId: TQzManagedFormId); overload;
+    constructor Create(const AFormId, ASubId: TQzManagedFormId); overload;
+    property FormId: TQzManagedFormId read GetFormId;
+    property SubId: TQzManagedFormId read GetSubId;
   end;
 
   TSettingChangeEvent = class(TInterfacedObject, ISettingChangeEvent)
@@ -68,13 +69,13 @@ type
 { TEventFactory }
 
 class function TEventFactory.NewModuleChangeEvent(
-  const AFormId: TManagedFormId): IModuleChangeEvent;
+  const AFormId: TQzManagedFormId): IModuleChangeEvent;
 begin
   Result := TModuleChangeEvent.Create(AFormId);
 end;
 
 class function TEventFactory.NewModuleChangeEvent(const AFormId,
-  ASubId: TManagedFormId): IModuleChangeEvent;
+  ASubId: TQzManagedFormId): IModuleChangeEvent;
 begin
   Result := TModuleChangeEvent.Create(AFormId, ASubId);
 end;
@@ -92,26 +93,26 @@ end;
 
 { TModuleChangeEvent }
 
-constructor TModuleChangeEvent.Create(const AFormId: TManagedFormId);
+constructor TModuleChangeEvent.Create(const AFormId: TQzManagedFormId);
 begin
   inherited Create;
   FFormId := AFormId;
   FSubId := 0;
 end;
 
-constructor TModuleChangeEvent.Create(const AFormId, ASubId: TManagedFormId);
+constructor TModuleChangeEvent.Create(const AFormId, ASubId: TQzManagedFormId);
 begin
   inherited Create;
   FFormId := AFormId;
   FSubId := ASubId;
 end;
 
-function TModuleChangeEvent.GetFormId: TManagedFormId;
+function TModuleChangeEvent.GetFormId: TQzManagedFormId;
 begin
   Result := FFormId;
 end;
 
-function TModuleChangeEvent.GetSubId: TManagedFormId;
+function TModuleChangeEvent.GetSubId: TQzManagedFormId;
 begin
   Result := FSubId;
 end;

@@ -132,9 +132,9 @@ object wSettingsCommonForm: TwSettingsCommonForm
     object txFontSize: TLabel
       Left = 8
       Top = 9
-      Width = 279
+      Width = 65
       Height = 15
-      Caption = 'Schriftgr'#246#223'e (erfordert den Neustart des Programms)'
+      Caption = 'Schriftgr'#246#223'e'
     end
     object tbFontSize: TTrackBar
       Left = 452

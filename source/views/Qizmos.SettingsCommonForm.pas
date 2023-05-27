@@ -8,8 +8,8 @@ uses
   System.Win.Registry,
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls,
   Vcl.ComCtrls, Vcl.WinXCtrls, Vcl.ExtCtrls,
-  Qodelib.Panels,
-  Qizmos.Forms;
+  Qodelib.Trackbars,
+  Qizmos.Forms, Qodelib.Panels, Qodelib.ManagedForms;
 
 type
   TwSettingsCommonForm = class(TManagedForm)
@@ -38,14 +38,13 @@ type
     procedure tsMinimizeToTrayClick(Sender: TObject);
     procedure tsStartMinimizedClick(Sender: TObject);
   private
-    { Private-Deklarationen }
     procedure LoadValues;
     procedure UpdateAutoRun;
     function IsAutoRun: Boolean;
   protected
+    function GetFormId: TQzManagedFormId; override;
+    function GetImageIndex: Integer; override;
     procedure FontChanged; override;
-  public
-    { Public-Deklarationen }
   end;
 
 var
@@ -94,6 +93,16 @@ end;
 procedure TwSettingsCommonForm.FormCreate(Sender: TObject);
 begin
   LoadValues;
+end;
+
+function TwSettingsCommonForm.GetFormId: TQzManagedFormId;
+begin
+  Result := mfSettingsCommon;
+end;
+
+function TwSettingsCommonForm.GetImageIndex: Integer;
+begin
+  Result := iiSettingsCommon;
 end;
 
 function TwSettingsCommonForm.IsAutoRun: Boolean;

@@ -9,8 +9,8 @@ uses
   Vcl.Imaging.pngimage, Vcl.ExtCtrls, Vcl.StdCtrls,
   Vcl.VirtualImage, System.ImageList, Vcl.ImgList,
   Vcl.VirtualImageList, Vcl.ComCtrls, Vcl.ActnList,
-  Qodelib.NavigationView,
-  Qizmos.Forms, Qizmos.Events, Qodelib.Panels;
+  Qodelib.NavigationView, Qodelib.Panels, Qodelib.ManagedForms,
+  Qizmos.Forms, Qizmos.Events;
 
 type
   TwSettingsForm = class(TManagedForm)
@@ -21,17 +21,16 @@ type
     acInfo: TAction;
     pnFormContainer: TQzPanel;
     acSimulators: TAction;
-    procedure FormDestroy(Sender: TObject);
     procedure acInfoExecute(Sender: TObject);
     procedure acSettingsExecute(Sender: TObject);
     procedure acSimulatorsExecute(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-  private
-    FForms: TManagedFormList;
   protected
-    property Forms: TManagedFormList read FForms;
-  public
+    function GetFormId: TQzManagedFormId; override;
+    function GetImageIndex: Integer; override;
     procedure ThemeChanged; override;
+    procedure RegisterForms; override;
+    procedure ActiveFormChanged(ActiveForm: TQzManagedForm); override;
   end;
 
 implementation
@@ -40,7 +39,9 @@ implementation
 
 uses
   Qodelib.IOUtils,
-  Qizmos.Settings, Qizmos.DataModule, Qizmos.Types;
+  Qizmos.Settings, Qizmos.DataModule, Qizmos.Types,
+  Qizmos.SettingsCommonForm, Qizmos.SettingsInfoForm,
+  Qizmos.SettingsSimulatorsForm;
 
 const
   iiSystemTheme = 0;
@@ -51,36 +52,53 @@ const
 
 procedure TwSettingsForm.acInfoExecute(Sender: TObject);
 begin
-  FForms.ShowForm(mfSettingsInfo);
+  ManagedForms.ShowForm(mfSettingsInfo);
 end;
 
 procedure TwSettingsForm.acSettingsExecute(Sender: TObject);
 begin
-  FForms.ShowForm(mfSettingsCommon);
+  ManagedForms.ShowForm(mfSettingsCommon);
 end;
 
 procedure TwSettingsForm.acSimulatorsExecute(Sender: TObject);
 begin
-  FForms.ShowForm(mfSettingsSimulators);
+  ManagedForms.ShowForm(mfSettingsSimulators);
+end;
+
+procedure TwSettingsForm.ActiveFormChanged(ActiveForm: TQzManagedForm);
+begin
+  inherited;
+
 end;
 
 procedure TwSettingsForm.FormCreate(Sender: TObject);
 begin
-  FForms := TSettingsFormList.Create(pnFormContainer);
   acSettings.Execute;
 end;
 
-procedure TwSettingsForm.FormDestroy(Sender: TObject);
+function TwSettingsForm.GetFormId: TQzManagedFormId;
 begin
-  FForms.Free;
+  Result := mfMainSettings;
+end;
+
+function TwSettingsForm.GetImageIndex: Integer;
+begin
+  Result := iiMainSettings;
+end;
+
+procedure TwSettingsForm.RegisterForms;
+begin
+  inherited;
+  ManagedForms.Container := pnFormContainer;
+  ManagedForms.AddForm(TwSettingsCommonForm);
+  ManagedForms.AddForm(TwSettingsSimulatorsForm);
+  ManagedForms.AddForm(TwSettingsInfoForm);
 end;
 
 procedure TwSettingsForm.ThemeChanged;
 begin
   inherited;
   viImages.ImageCollection := dmCommon.GetImageCollection;
-  if FForms <> nil then
-    FForms.ThemeChanged;
 end;
 
 end.

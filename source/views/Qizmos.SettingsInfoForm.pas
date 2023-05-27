@@ -7,7 +7,7 @@ uses
   System.SysUtils, System.Variants, System.Classes,
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls,
   Vcl.VirtualImage,
-  Qizmos.Forms, Qodelib.Panels;
+  Qizmos.Forms, Qodelib.Panels, Qodelib.ManagedForms;
 
 type
   TwSettingsInfoForm = class(TManagedForm)
@@ -21,10 +21,9 @@ type
     procedure FormCreate(Sender: TObject);
     procedure txWebsiteLinkClick(Sender: TObject; const Link: string; LinkType:
         TSysLinkType);
-  private
-    { Private-Deklarationen }
-  public
-    { Public-Deklarationen }
+  protected
+    function GetFormId: TQzManagedFormId; override;
+    function GetImageIndex: Integer; override;
   end;
 
 var
@@ -35,13 +34,24 @@ implementation
 {$R *.dfm}
 
 uses
-  Qodelib.IOUtils;
+  Qodelib.IOUtils,
+  Qizmos.Types;
 
 { TwSettingsInfoForm }
 
 procedure TwSettingsInfoForm.FormCreate(Sender: TObject);
 begin
   txVersion.Caption := 'Version ' + TVersionHelper.GetAppVersion;
+end;
+
+function TwSettingsInfoForm.GetFormId: TQzManagedFormId;
+begin
+  Result := mfSettingsInfo;
+end;
+
+function TwSettingsInfoForm.GetImageIndex: Integer;
+begin
+  Result := iiSettingsInfo;
 end;
 
 procedure TwSettingsInfoForm.txWebsiteLinkClick(Sender: TObject;
