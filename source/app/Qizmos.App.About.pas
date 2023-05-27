@@ -1,4 +1,4 @@
-unit Qizmos.About;
+unit Qizmos.App.About;
 
 interface
 

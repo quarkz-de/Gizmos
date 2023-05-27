@@ -1,4 +1,4 @@
-unit Qizmos.SimulatorsSmtpVisualizers;
+unit Qizmos.Simulators.SmtpVisualizers;
 
 interface
 

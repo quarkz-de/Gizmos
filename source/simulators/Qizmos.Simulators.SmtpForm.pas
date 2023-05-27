@@ -1,4 +1,4 @@
-unit Qizmos.SimulatorsSmtpForm;
+unit Qizmos.Simulators.SmtpForm;
 
 interface
 
@@ -8,13 +8,13 @@ uses
   System.Generics.Collections,
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls,
   Vcl.ExtCtrls, Vcl.WinXCtrls, Vcl.StdCtrls, Vcl.VirtualImage, Vcl.ActnList,
-  IdBaseComponent, IdCustomTCPServer,
-  IdSMTPServer, IdMessage, IdContext,
+  IdBaseComponent, IdCustomTCPServer, IdSMTPServer, IdMessage, IdContext,
+  IdComponent, IdTCPServer, IdCmdTCPServer, IdExplicitTLSClientServerBase,
   VirtualTrees,
   LoggerPro,
   Qodelib.ManagedForms,
-  Qizmos.Forms, Qizmos.SimulatorsSmtpVisualizers, IdComponent, IdTCPServer,
-  IdCmdTCPServer, IdExplicitTLSClientServerBase;
+  Qizmos.Core.Forms, 
+  Qizmos.Simulators.SmtpVisualizers;
 
 type
   TwSimulatorsSmtpForm = class(TManagedForm)
@@ -83,7 +83,9 @@ implementation
 uses
   Spring.Container,
   LoggerPro.VCLListViewAppender,
-  Qizmos.Types, Qizmos.DataModule, Qizmos.EMailViewer, Qizmos.Settings;
+  Qizmos.App.DataModule,
+  Qizmos.Core.Types, Qizmos.Core.Settings,
+  Qizmos.Simulators.EMailViewer;
 
 const
   tagServer = 'SERVER';

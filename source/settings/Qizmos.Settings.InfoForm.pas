@@ -1,4 +1,4 @@
-unit Qizmos.SettingsInfoForm;
+unit Qizmos.Settings.InfoForm;
 
 interface
 
@@ -7,7 +7,8 @@ uses
   System.SysUtils, System.Variants, System.Classes,
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls,
   Vcl.VirtualImage,
-  Qizmos.Forms, Qodelib.ManagedForms;
+  Qodelib.ManagedForms,
+  Qizmos.Core.Forms;
 
 type
   TwSettingsInfoForm = class(TManagedForm)
@@ -35,7 +36,7 @@ implementation
 
 uses
   Qodelib.IOUtils,
-  Qizmos.Types;
+  Qizmos.Core.Types;
 
 { TwSettingsInfoForm }
 

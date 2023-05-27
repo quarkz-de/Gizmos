@@ -1,10 +1,10 @@
-unit Qizmos.Events;
+unit Qizmos.Core.Events;
 
 interface
 
 uses
   Qodelib.ManagedForms,
-  Qizmos.Types, Qizmos.Settings;
+  Qizmos.Core.Types, Qizmos.Core.Settings;
 
 type
   IThemeChangeEvent = interface

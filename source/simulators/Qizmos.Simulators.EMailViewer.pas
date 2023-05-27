@@ -1,4 +1,4 @@
-unit Qizmos.EMailViewer;
+unit Qizmos.Simulators.EMailViewer;
 
 interface
 
@@ -9,7 +9,7 @@ uses
   Vcl.ExtCtrls, Vcl.ComCtrls,
   IdMessage,
   Qodelib.Panels,
-  Qizmos.Forms;
+  Qizmos.Core.Forms;
 
 type
   TwEMailViewer = class(TDialogForm)

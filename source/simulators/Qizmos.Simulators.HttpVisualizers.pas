@@ -1,4 +1,4 @@
-unit Qizmos.SimulatorsHttpVisualizers;
+unit Qizmos.Simulators.HttpVisualizers;
 
 interface
 

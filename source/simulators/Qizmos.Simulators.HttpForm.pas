@@ -1,4 +1,4 @@
-unit Qizmos.SimulatorsHttpForm;
+unit Qizmos.Simulators.HttpForm;
 
 interface
 
@@ -10,11 +10,11 @@ uses
   VirtualTrees,
   EventBus,
   LoggerPro,
-  IdCustomTCPServer, IdCustomHTTPServer,
-  IdHTTPServer, IdContext,
+  IdCustomTCPServer, IdCustomHTTPServer, IdHTTPServer, IdContext,
+  IdBaseComponent, IdComponent,
   Qodelib.ManagedForms,
-  Qizmos.Forms, Qizmos.SimulatorsHttpVisualizers, Qizmos.Events,
-  IdBaseComponent, IdComponent;
+  Qizmos.Core.Forms, Qizmos.Core.Events,
+  Qizmos.Simulators.HttpVisualizers;
 
 type
   TwSimulatorsHttpForm = class(TManagedForm)
@@ -65,7 +65,8 @@ implementation
 uses
   Spring.Container,
   LoggerPro.VCLListViewAppender,
-  Qizmos.Types, Qizmos.DataModule, Qizmos.Settings;
+  Qizmos.App.DataModule,
+  Qizmos.Core.Types, Qizmos.Core.Settings;
 
 const
   tagServer = 'SERVER';

@@ -1,4 +1,4 @@
-unit Qizmos.SettingsSimulatorsForm;
+unit Qizmos.Settings.SimulatorsForm;
 
 interface
 
@@ -7,7 +7,8 @@ uses
   System.SysUtils, System.Variants, System.Classes,
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls,
   Vcl.ComCtrls, Vcl.WinXCtrls, Vcl.ExtCtrls, Vcl.NumberBox,
-  Qizmos.Forms, Qodelib.Panels, Qodelib.ManagedForms;
+  Qodelib.Panels, Qodelib.ManagedForms,
+  Qizmos.Core.Forms;
 
 type
   TwSettingsSimulatorsForm = class(TManagedForm)
@@ -52,7 +53,7 @@ implementation
 {$R *.dfm}
 
 uses
-  Qizmos.Types, Qizmos.Settings, Qizmos.SettingsFormHelpers;
+  Qizmos.Core.Types, Qizmos.Core.Settings, Qizmos.Settings.FormHelpers;
 
 { TwSettingsCommonForm }
 

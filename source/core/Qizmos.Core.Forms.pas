@@ -1,11 +1,11 @@
-unit Qizmos.Forms;
+unit Qizmos.Core.Forms;
 
 interface
 
 uses
   Vcl.Forms,
   Qodelib.ManagedForms, Qodelib.NavigationView,
-  Qizmos.Types;
+  Qizmos.Core.Types;
 
 type
   TManagedForm = class(TQzManagedForm)
@@ -40,7 +40,7 @@ type
 implementation
 
 uses
-  Qizmos.Settings;
+  Qizmos.Core.Settings;
 
 { TDialogForm }
 

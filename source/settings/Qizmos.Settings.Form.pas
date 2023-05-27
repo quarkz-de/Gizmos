@@ -1,15 +1,15 @@
-unit Qizmos.SettingsForm;
+unit Qizmos.Settings.Form;
 
 interface
 
 uses
   Winapi.Windows, Winapi.Messages,
-  System.SysUtils, System.Variants, System.Classes,
-  Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
+  System.SysUtils, System.Variants, System.Classes, System.ImageList, 
+  Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ImgList,
   Vcl.Imaging.pngimage, Vcl.ExtCtrls, Vcl.StdCtrls,
   Vcl.VirtualImageList, Vcl.ComCtrls,
   Qodelib.NavigationView, Qodelib.Panels, Qodelib.ManagedForms,
-  Qizmos.Forms, System.ImageList, Vcl.ImgList;
+  Qizmos.Core.Forms;
 
 type
   TwSettingsForm = class(TManagedForm)
@@ -30,9 +30,9 @@ implementation
 {$R *.dfm}
 
 uses
-  Qizmos.Settings, Qizmos.DataModule, Qizmos.Types,
-  Qizmos.SettingsCommonForm, Qizmos.SettingsInfoForm,
-  Qizmos.SettingsSimulatorsForm;
+  Qizmos.App.DataModule, Qizmos.Core.Settings, Qizmos.Core.Types,
+  Qizmos.Settings.CommonForm, Qizmos.Settings.InfoForm,
+  Qizmos.Settings.SimulatorsForm;
 
 const
   iiSystemTheme = 0;

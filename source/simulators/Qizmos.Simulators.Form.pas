@@ -1,14 +1,14 @@
-unit Qizmos.SimulatorsForm;
+unit Qizmos.Simulators.Form;
 
 interface
 
 uses
   Winapi.Windows, Winapi.Messages,
-  System.SysUtils, System.Variants, System.Classes,
-  Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
+  System.SysUtils, System.Variants, System.Classes, System.ImageList,
+  Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ImgList,
   Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.VirtualImageList,
   Qodelib.NavigationView, Qodelib.Panels, Qodelib.ManagedForms,
-  Qizmos.Forms, Qizmos.Types, System.ImageList, Vcl.ImgList;
+  Qizmos.Core.Forms, Qizmos.Core.Types;
 
 type
   TwSimulatorsForm = class(TManagedForm)
@@ -32,8 +32,8 @@ implementation
 {$R *.dfm}
 
 uses
-  Qizmos.DataModule,
-  Qizmos.SimulatorsSmtpForm, Qizmos.SimulatorsHttpForm;
+  Qizmos.App.DataModule,
+  Qizmos.Simulators.SmtpForm, Qizmos.Simulators.HttpForm;
 
 { TwSimulatorsForm }
 

@@ -1,4 +1,4 @@
-unit Qizmos.WelcomeForm;
+unit Qizmos.App.WelcomeForm;
 
 interface
 
@@ -8,7 +8,8 @@ uses
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls,
   Vcl.StdCtrls, Vcl.VirtualImage, Vcl.ControlList,
   EventBus,
-  Qizmos.Forms, Qodelib.ManagedForms;
+  Qodelib.ManagedForms,
+  Qizmos.Core.Forms;
 
 type
   TwWelcomeForm = class(TManagedForm)
@@ -32,7 +33,7 @@ implementation
 {$R *.dfm}
 
 uses
-  Qizmos.DataModule, Qizmos.Types, Qizmos.Events;
+  Qizmos.App.DataModule, Qizmos.Core.Types, Qizmos.Core.Events;
 
 { TwWelcomeForm }
 

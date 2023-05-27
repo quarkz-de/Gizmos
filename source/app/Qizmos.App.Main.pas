@@ -1,4 +1,4 @@
-unit Qizmos.Main;
+unit Qizmos.App.Main;
 
 interface
 
@@ -9,8 +9,8 @@ uses
   Vcl.VirtualImageList, Vcl.Buttons, Vcl.StdCtrls, Vcl.VirtualImage,
   Vcl.ExtCtrls, Vcl.WinXCtrls, Vcl.AppEvnts,
   EventBus,
-  Qodelib.NavigationView, Qodelib.ManagedForms,
-  Qizmos.Forms, Qizmos.Events, Qodelib.Panels;
+  Qodelib.NavigationView, Qodelib.ManagedForms, Qodelib.Panels,
+  Qizmos.Core.Forms, Qizmos.Core.Events;
 
 type
   TwMainForm = class(TManagedForm)
@@ -64,8 +64,9 @@ implementation
 {$R *.dfm}
 
 uses
-  Qizmos.DataModule, Qizmos.Settings, Qizmos.About, Qizmos.Types,
-  Qizmos.WelcomeForm, Qizmos.SettingsForm, Qizmos.SimulatorsForm;
+  Qizmos.App.DataModule, Qizmos.App.WelcomeForm, Qizmos.App.About,
+  Qizmos.Core.Settings, Qizmos.Core.Types,
+  Qizmos.Settings.Form, Qizmos.Simulators.Form;
 
 { TwMain }
 

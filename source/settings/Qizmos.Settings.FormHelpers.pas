@@ -1,4 +1,4 @@
-unit Qizmos.SettingsFormHelpers;
+unit Qizmos.Settings.FormHelpers;
 
 interface
 

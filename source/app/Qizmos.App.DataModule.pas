@@ -1,4 +1,4 @@
-unit Qizmos.DataModule;
+unit Qizmos.App.DataModule;
 
 interface
 
@@ -28,7 +28,7 @@ implementation
 uses
   Spring.Container,
   EventBus,
-  Qizmos.Settings, Qizmos.Events;
+  Qizmos.Core.Settings, Qizmos.Core.Events;
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 

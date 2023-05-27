@@ -1,4 +1,4 @@
-unit Qizmos.SettingsCommonForm;
+unit Qizmos.Settings.CommonForm;
 
 interface
 
@@ -8,8 +8,8 @@ uses
   System.Win.Registry,
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls,
   Vcl.ComCtrls, Vcl.WinXCtrls, Vcl.ExtCtrls,
-  Qodelib.Trackbars,
-  Qizmos.Forms, Qodelib.Panels, Qodelib.ManagedForms;
+  Qodelib.Trackbars, Qodelib.Panels, Qodelib.ManagedForms,
+  Qizmos.Core.Forms;
 
 type
   TwSettingsCommonForm = class(TManagedForm)
@@ -55,7 +55,7 @@ implementation
 {$R *.dfm}
 
 uses
-  Qizmos.Types, Qizmos.Settings, Qizmos.SettingsFormHelpers;
+  Qizmos.Core.Types, Qizmos.Core.Settings, Qizmos.Settings.FormHelpers;
 
 const
   iiSystemTheme = 0;

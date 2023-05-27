@@ -111,59 +111,50 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="Qizmos.Main.pas">
+        <DCCReference Include="core\Qizmos.Core.Events.pas"/>
+        <DCCReference Include="core\Qizmos.Core.Settings.pas"/>
+        <DCCReference Include="core\Qizmos.Core.Types.pas"/>
+        <DCCReference Include="core\Qizmos.Core.Forms.pas"/>
+        <DCCReference Include="app\Qizmos.App.Main.pas">
             <Form>wMainForm</Form>
         </DCCReference>
-        <DCCReference Include="Qizmos.DataModule.pas">
+        <DCCReference Include="app\Qizmos.App.DataModule.pas">
             <Form>dmCommon</Form>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
-        <DCCReference Include="core\Qizmos.Events.pas"/>
-        <DCCReference Include="core\Qizmos.Settings.pas"/>
-        <DCCReference Include="views\Qizmos.About.pas">
+        <DCCReference Include="app\Qizmos.App.About.pas">
             <Form>wAbout</Form>
         </DCCReference>
-        <DCCReference Include="views\Qizmos.Forms.pas"/>
-        <DCCReference Include="views\Qizmos.SettingsForm.pas">
-            <Form>wSettingsForm</Form>
-        </DCCReference>
-        <DCCReference Include="views\Qizmos.WelcomeForm.pas">
+        <DCCReference Include="app\Qizmos.App.WelcomeForm.pas">
             <Form>wWelcomeForm</Form>
         </DCCReference>
-        <DCCReference Include="views\Qizmos.SettingsCommonForm.pas">
+        <DCCReference Include="settings\Qizmos.Settings.Form.pas">
+            <Form>wSettingsForm</Form>
+        </DCCReference>
+        <DCCReference Include="settings\Qizmos.Settings.CommonForm.pas">
             <Form>wSettingsCommonForm</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="views\Qizmos.SettingsInfoForm.pas">
+        <DCCReference Include="settings\Qizmos.Settings.InfoForm.pas">
             <Form>wSettingsInfoForm</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="views\Qizmos.SimulatorsForm.pas">
-            <Form>wSimulatorsForm</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="views\Qizmos.SimulatorsSmtpForm.pas">
-            <Form>wSimulatorsSmtpForm</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="views\Qizmos.SimulatorsHttpForm.pas">
-            <Form>wSimulatorsHttpForm</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="core\Qizmos.Types.pas"/>
-        <DCCReference Include="views\Qizmos.SimulatorsSmtpVisualizers.pas">
-            <Form>$R *.res</Form>
-        </DCCReference>
-        <DCCReference Include="views\Qizmos.EMailViewer.pas">
-            <Form>wEMailViewer</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="views\Qizmos.SettingsSimulatorsForm.pas">
+        <DCCReference Include="settings\Qizmos.Settings.SimulatorsForm.pas">
             <Form>wSettingsSimulatorsForm</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="views\Qizmos.SimulatorsHttpVisualizers.pas"/>
-        <DCCReference Include="views\Qizmos.SettingsFormHelpers.pas"/>
+        <DCCReference Include="settings\Qizmos.Settings.FormHelpers.pas"/>
+        <DCCReference Include="simulators\Qizmos.Simulators.Form.pas">
+            <Form>wSimulatorsForm</Form>
+        </DCCReference>
+        <DCCReference Include="simulators\Qizmos.Simulators.SmtpForm.pas">
+            <Form>wSimulatorsSmtpForm</Form>
+        </DCCReference>
+        <DCCReference Include="simulators\Qizmos.Simulators.HttpForm.pas">
+            <Form>wSimulatorsHttpForm</Form>
+        </DCCReference>
+        <DCCReference Include="simulators\Qizmos.Simulators.SmtpVisualizers.pas"/>
+        <DCCReference Include="simulators\Qizmos.Simulators.HttpVisualizers.pas"/>
+        <DCCReference Include="simulators\Qizmos.Simulators.EMailViewer.pas">
+            <Form>wEMailViewer</Form>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

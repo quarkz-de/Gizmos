@@ -1,4 +1,4 @@
-unit Qizmos.Types;
+unit Qizmos.Core.Types;
 
 interface
 

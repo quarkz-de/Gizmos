@@ -1,4 +1,4 @@
-unit Qizmos.Settings;
+unit Qizmos.Core.Settings;
 
 interface
 
@@ -109,7 +109,7 @@ uses
   Neon.Core.Persistence, Neon.Core.Persistence.JSON,
   EventBus,
   Qodelib.IOUtils,
-  Qizmos.Events;
+  Qizmos.Core.Events;
 
 const
 {$ifdef DEBUG}
