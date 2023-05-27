@@ -13,7 +13,7 @@ object wSimulatorsForm: TwSimulatorsForm
   Font.Style = []
   OnCreate = FormCreate
   TextHeight = 15
-  object nvSettings: TQzNavigationView
+  object nvNavigation: TQzNavigationView
     AlignWithMargins = True
     Left = 3
     Top = 3
@@ -24,15 +24,9 @@ object wSimulatorsForm: TwSimulatorsForm
     ButtonHeight = 40
     ButtonOptions = [nboGroupStyle, nboShowCaptions]
     Images = viImages
-    Items = <
-      item
-        Action = acSmtpBlackhole
-      end
-      item
-        Action = acHttpBlackhole
-      end>
-    ItemIndex = 0
+    Items = <>
     TabOrder = 0
+    OnButtonClicked = nvNavigationButtonClicked
   end
   object pnFormContainer: TQzPanel
     Left = 176
@@ -43,26 +37,6 @@ object wSimulatorsForm: TwSimulatorsForm
     Align = alClient
     BorderWidth = 1
     TabOrder = 1
-  end
-  object alActions: TActionList
-    Images = viImages
-    Left = 576
-    Top = 60
-    object acSmtpBlackhole: TAction
-      Caption = 'SMTP Blackhole'
-      Checked = True
-      GroupIndex = 1
-      ImageIndex = 7
-      ImageName = '007_Mail'
-      OnExecute = acSmtpBlackholeExecute
-    end
-    object acHttpBlackhole: TAction
-      Caption = 'HTTP Blackhole'
-      GroupIndex = 1
-      ImageIndex = 8
-      ImageName = '008_Message'
-      OnExecute = acHttpBlackholeExecute
-    end
   end
   object viImages: TVirtualImageList
     AutoFill = True

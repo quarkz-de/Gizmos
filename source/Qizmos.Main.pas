@@ -19,10 +19,6 @@ type
   TwMainForm = class(TManagedForm)
     vilLargeIcons: TVirtualImageList;
     vilIcons: TVirtualImageList;
-    alActions: TActionList;
-    acSectionWelcome: TAction;
-    acSectionSettings: TAction;
-    acSectionSimulators: TAction;
     tiTrayIcon: TTrayIcon;
     aeAppEvents: TApplicationEvents;
     pnHeader: TQzPanel;
@@ -34,10 +30,7 @@ type
     nvHeader: TQzNavigationView;
     nvFooter: TQzNavigationView;
     procedure FormCreate(Sender: TObject);
-    procedure acSectionWelcomeExecute(Sender: TObject);
-    procedure acSectionSettingsExecute(Sender: TObject);
     procedure acHelpAboutExecute(Sender: TObject);
-    procedure acSectionSimulatorsExecute(Sender: TObject);
     procedure aeAppEventsMinimize(Sender: TObject);
     procedure btBurgerButtonClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -82,21 +75,6 @@ uses
 procedure TwMainForm.acHelpAboutExecute(Sender: TObject);
 begin
   TwAbout.ExecuteDialog;
-end;
-
-procedure TwMainForm.acSectionSettingsExecute(Sender: TObject);
-begin
-  ManagedForms.ShowForm(mfMainSettings);
-end;
-
-procedure TwMainForm.acSectionSimulatorsExecute(Sender: TObject);
-begin
-  ManagedForms.ShowForm(mfMainSimulators);
-end;
-
-procedure TwMainForm.acSectionWelcomeExecute(Sender: TObject);
-begin
-  ManagedForms.ShowForm(mfMainWelcome);
 end;
 
 procedure TwMainForm.ActiveFormChanged(ActiveForm: TQzManagedForm);
@@ -144,7 +122,7 @@ end;
 
 procedure TwMainForm.FormCreate(Sender: TObject);
 begin
-  acSectionWelcome.Execute;
+  ManagedForms.ShowForm(mfMainWelcome);
   GlobalEventBus.RegisterSubscriberForEvents(Self);
   dmCommon.MainFormCreated;
   InitSettings;
@@ -175,11 +153,13 @@ end;
 
 procedure TwMainForm.nvFooterButtonClicked(Sender: TObject; Index: Integer);
 begin
+  ManagedForms.ShowForm(nvFooter.Items[Index].Tag);
   nvHeader.ItemIndex := -1;
 end;
 
 procedure TwMainForm.nvHeaderButtonClicked(Sender: TObject; Index: Integer);
 begin
+  ManagedForms.ShowForm(nvHeader.Items[Index].Tag);
   nvFooter.ItemIndex := -1;
 end;
 
@@ -206,12 +186,20 @@ begin
 end;
 
 procedure TwMainForm.RegisterForms;
+var
+  Helper: TNavigationViewFormHelper;
 begin
   inherited;
   ManagedForms.Container := pnFormContainer;
-  ManagedForms.AddForm(TwWelcomeForm);
-  ManagedForms.AddForm(TwSettingsForm);
-  ManagedForms.AddForm(TwSimulatorsForm);
+
+  Helper := TNavigationViewFormHelper.Create(self, nvHeader);
+  Helper.AddForm(TwWelcomeForm);
+  Helper.AddForm(TwSimulatorsForm);
+  Helper.Free;
+
+  Helper := TNavigationViewFormHelper.Create(self, nvFooter);
+  Helper.AddForm(TwSettingsForm);
+  Helper.Free;
 end;
 
 procedure TwMainForm.RestoreFromTray;

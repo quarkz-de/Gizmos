@@ -14,22 +14,15 @@ uses
 type
   TwSettingsForm = class(TManagedForm)
     viImages: TVirtualImageList;
-    nvSettings: TQzNavigationView;
-    alActions: TActionList;
-    acSettings: TAction;
-    acInfo: TAction;
+    nvNavigation: TQzNavigationView;
     pnFormContainer: TQzPanel;
-    acSimulators: TAction;
-    procedure acInfoExecute(Sender: TObject);
-    procedure acSettingsExecute(Sender: TObject);
-    procedure acSimulatorsExecute(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure nvNavigationButtonClicked(Sender: TObject; Index: Integer);
   protected
     function GetFormId: TQzManagedFormId; override;
     function GetImageIndex: Integer; override;
     procedure ThemeChanged; override;
     procedure RegisterForms; override;
-    procedure ActiveFormChanged(ActiveForm: TQzManagedForm); override;
   end;
 
 implementation
@@ -48,30 +41,9 @@ const
 
 { TwSettingsForm }
 
-procedure TwSettingsForm.acInfoExecute(Sender: TObject);
-begin
-  ManagedForms.ShowForm(mfSettingsInfo);
-end;
-
-procedure TwSettingsForm.acSettingsExecute(Sender: TObject);
-begin
-  ManagedForms.ShowForm(mfSettingsCommon);
-end;
-
-procedure TwSettingsForm.acSimulatorsExecute(Sender: TObject);
-begin
-  ManagedForms.ShowForm(mfSettingsSimulators);
-end;
-
-procedure TwSettingsForm.ActiveFormChanged(ActiveForm: TQzManagedForm);
-begin
-  inherited;
-
-end;
-
 procedure TwSettingsForm.FormCreate(Sender: TObject);
 begin
-  acSettings.Execute;
+  ManagedForms.ShowForm(mfSettingsCommon);
 end;
 
 function TwSettingsForm.GetFormId: TQzManagedFormId;
@@ -84,13 +56,25 @@ begin
   Result := iiMainSettings;
 end;
 
+procedure TwSettingsForm.nvNavigationButtonClicked(Sender: TObject;
+  Index: Integer);
+begin
+  ManagedForms.ShowForm(nvNavigation.Items[Index].Tag);
+end;
+
 procedure TwSettingsForm.RegisterForms;
+var
+  Helper: TNavigationViewFormHelper;
 begin
   inherited;
+
   ManagedForms.Container := pnFormContainer;
-  ManagedForms.AddForm(TwSettingsCommonForm);
-  ManagedForms.AddForm(TwSettingsSimulatorsForm);
-  ManagedForms.AddForm(TwSettingsInfoForm);
+
+  Helper := TNavigationViewFormHelper.Create(self, nvNavigation);
+  Helper.AddForm(TwSettingsCommonForm);
+  Helper.AddForm(TwSettingsSimulatorsForm);
+  Helper.AddForm(TwSettingsInfoForm);
+  Helper.Free;
 end;
 
 procedure TwSettingsForm.ThemeChanged;

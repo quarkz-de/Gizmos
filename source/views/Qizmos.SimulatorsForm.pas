@@ -14,21 +14,16 @@ uses
 
 type
   TwSimulatorsForm = class(TManagedForm)
-    alActions: TActionList;
-    acSmtpBlackhole: TAction;
-    acHttpBlackhole: TAction;
     viImages: TVirtualImageList;
-    nvSettings: TQzNavigationView;
+    nvNavigation: TQzNavigationView;
     pnFormContainer: TQzPanel;
-    procedure acHttpBlackholeExecute(Sender: TObject);
-    procedure acSmtpBlackholeExecute(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure nvNavigationButtonClicked(Sender: TObject; Index: Integer);
   public
     function GetFormId: TQzManagedFormId; override;
     function GetImageIndex: Integer; override;
     procedure ThemeChanged; override;
     procedure RegisterForms; override;
-    procedure ActiveFormChanged(ActiveForm: TQzManagedForm); override;
   end;
 
 var
@@ -44,25 +39,9 @@ uses
 
 { TwSimulatorsForm }
 
-procedure TwSimulatorsForm.acHttpBlackholeExecute(Sender: TObject);
-begin
-  ManagedForms.ShowForm(mfSimulatorsHttp);
-end;
-
-procedure TwSimulatorsForm.acSmtpBlackholeExecute(Sender: TObject);
-begin
-  ManagedForms.ShowForm(mfSimulatorsSmtp);
-end;
-
-procedure TwSimulatorsForm.ActiveFormChanged(ActiveForm: TQzManagedForm);
-begin
-  inherited;
-
-end;
-
 procedure TwSimulatorsForm.FormCreate(Sender: TObject);
 begin
-  acSmtpBlackhole.Execute;
+  ManagedForms.ShowForm(mfSimulatorsSmtp);
 end;
 
 function TwSimulatorsForm.GetFormId: TQzManagedFormId;
@@ -75,12 +54,24 @@ begin
   Result := iiMainSimulators;
 end;
 
+procedure TwSimulatorsForm.nvNavigationButtonClicked(Sender: TObject;
+  Index: Integer);
+begin
+  ManagedForms.ShowForm(nvNavigation.Items[Index].Tag);
+end;
+
 procedure TwSimulatorsForm.RegisterForms;
+var
+  Helper: TNavigationViewFormHelper;
 begin
   inherited;
+
   ManagedForms.Container := pnFormContainer;
-  ManagedForms.AddForm(TwSimulatorsSmtpForm);
-  ManagedForms.AddForm(TwSimulatorsHttpForm)
+
+  Helper := TNavigationViewFormHelper.Create(self, nvNavigation);
+  Helper.AddForm(TwSimulatorsSmtpForm);
+  Helper.AddForm(TwSimulatorsHttpForm);
+  Helper.Free;
 end;
 
 procedure TwSimulatorsForm.ThemeChanged;

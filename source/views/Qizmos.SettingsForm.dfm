@@ -15,7 +15,7 @@ object wSettingsForm: TwSettingsForm
   ParentBiDiMode = False
   OnCreate = FormCreate
   TextHeight = 13
-  object nvSettings: TQzNavigationView
+  object nvNavigation: TQzNavigationView
     AlignWithMargins = True
     Left = 3
     Top = 3
@@ -26,19 +26,9 @@ object wSettingsForm: TwSettingsForm
     ButtonHeight = 40
     ButtonOptions = [nboGroupStyle, nboShowCaptions]
     Images = viImages
-    Items = <
-      item
-        Action = acSettings
-        Caption = 'Allgemein'
-      end
-      item
-        Action = acSimulators
-      end
-      item
-        Action = acInfo
-      end>
-    ItemIndex = 0
+    Items = <>
     TabOrder = 0
+    OnButtonClicked = nvNavigationButtonClicked
   end
   object pnFormContainer: TQzPanel
     Left = 176
@@ -113,31 +103,5 @@ object wSettingsForm: TwSettingsForm
     Height = 24
     Left = 688
     Top = 100
-  end
-  object alActions: TActionList
-    Images = viImages
-    Left = 688
-    Top = 56
-    object acSettings: TAction
-      Caption = 'Einstellungen'
-      Checked = True
-      GroupIndex = 1
-      ImageIndex = 2
-      ImageName = '002_Settings'
-      OnExecute = acSettingsExecute
-    end
-    object acInfo: TAction
-      Caption = 'Info'
-      GroupIndex = 1
-      ImageIndex = 1
-      ImageName = '001_Help'
-      OnExecute = acInfoExecute
-    end
-    object acSimulators: TAction
-      Caption = 'Simulatoren'
-      ImageIndex = 6
-      ImageName = '006_Simulator'
-      OnExecute = acSimulatorsExecute
-    end
   end
 end

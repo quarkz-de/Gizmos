@@ -107,17 +107,11 @@ object wMainForm: TwMainForm
       ButtonHeight = 48
       ButtonOptions = [nboGroupStyle, nboShowCaptions]
       Images = vilLargeIcons
-      Items = <
-        item
-          Action = acSectionWelcome
-          AllowReorder = False
-        end
-        item
-          Action = acSectionSimulators
-        end>
-      ItemIndex = 0
+      Items = <>
       TabOrder = 0
       OnButtonClicked = nvHeaderButtonClicked
+      ExplicitLeft = -3
+      ExplicitTop = -3
     end
     object nvFooter: TQzNavigationView
       Left = 0
@@ -129,10 +123,7 @@ object wMainForm: TwMainForm
       ButtonHeight = 48
       ButtonOptions = [nboGroupStyle, nboShowCaptions]
       Images = vilLargeIcons
-      Items = <
-        item
-          Action = acSectionSettings
-        end>
+      Items = <>
       TabOrder = 1
       OnButtonClicked = nvFooterButtonClicked
     end
@@ -262,35 +253,6 @@ object wMainForm: TwMainForm
     ImageCollection = dmCommon.icDarkIcons
     Left = 256
     Top = 76
-  end
-  object alActions: TActionList
-    Images = vilLargeIcons
-    Left = 204
-    Top = 76
-    object acSectionWelcome: TAction
-      Category = 'Section'
-      AutoCheck = True
-      Caption = 'Start'
-      GroupIndex = 1
-      ImageIndex = 5
-      ImageName = '005_Start'
-      OnExecute = acSectionWelcomeExecute
-    end
-    object acSectionSettings: TAction
-      Category = 'Section'
-      Caption = 'Einstellungen'
-      GroupIndex = 1
-      ImageIndex = 2
-      ImageName = '002_Settings'
-      OnExecute = acSectionSettingsExecute
-    end
-    object acSectionSimulators: TAction
-      Category = 'Section'
-      Caption = 'Simulatoren'
-      ImageIndex = 6
-      ImageName = '006_Simulator'
-      OnExecute = acSectionSimulatorsExecute
-    end
   end
   object tiTrayIcon: TTrayIcon
     OnClick = tiTrayIconClick
