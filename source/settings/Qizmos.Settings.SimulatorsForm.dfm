@@ -2,7 +2,7 @@ object wSettingsSimulatorsForm: TwSettingsSimulatorsForm
   Left = 0
   Top = 0
   BorderStyle = bsNone
-  Caption = 'Einstellungen'
+  Caption = 'Simulatoren'
   ClientHeight = 480
   ClientWidth = 640
   Color = clBtnFace
