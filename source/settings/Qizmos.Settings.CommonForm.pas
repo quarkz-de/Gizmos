@@ -45,6 +45,7 @@ type
     function GetFormId: TQzManagedFormId; override;
     function GetImageIndex: Integer; override;
     procedure FontChanged; override;
+    procedure ThemeChanged; override;
   end;
 
 var
@@ -139,6 +140,19 @@ end;
 procedure TwSettingsCommonForm.tbFontSizeChange(Sender: TObject);
 begin
   ApplicationSettings.FontSize := tbFontSize.Position;
+end;
+
+procedure TwSettingsCommonForm.ThemeChanged;
+begin
+  inherited;
+  case ApplicationSettings.Theme of
+    atSystem:
+      cbTheme.ItemIndex := iiSystemTheme;
+    atLight:
+      cbTheme.ItemIndex := iiLightTheme;
+    atDark:
+      cbTheme.ItemIndex := iiDarkTheme;
+  end;
 end;
 
 procedure TwSettingsCommonForm.tsAutoRunClick(Sender: TObject);

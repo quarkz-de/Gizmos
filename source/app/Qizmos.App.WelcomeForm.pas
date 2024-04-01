@@ -20,12 +20,9 @@ type
     procedure clModulesBeforeDrawItem(AIndex: Integer; ACanvas: TCanvas;
       ARect: TRect; AState: TOwnerDrawState);
     procedure clModulesItemClick(Sender: TObject);
-  private
-    procedure UpdateTheme;
   protected
     function GetFormId: TQzManagedFormId; override;
     function GetImageIndex: Integer; override;
-    procedure ThemeChanged; override;
   end;
 
 implementation
@@ -35,11 +32,18 @@ implementation
 uses
   Qizmos.App.DataModule, Qizmos.Core.Types, Qizmos.Core.Events;
 
+const
+  biNotes = 0;
+  biSimulatorsSmtp = 1;
+  biSimulatorsHttp = 2;
+
+  biMaxItems = 3;
+
 { TwWelcomeForm }
 
 procedure TwWelcomeForm.FormCreate(Sender: TObject);
 begin
-  UpdateTheme;
+  clModules.ItemCount := biMaxItems;
 end;
 
 function TwWelcomeForm.GetFormId: TQzManagedFormId;
@@ -56,12 +60,17 @@ procedure TwWelcomeForm.clModulesBeforeDrawItem(AIndex: Integer;
   ACanvas: TCanvas; ARect: TRect; AState: TOwnerDrawState);
 begin
   case AIndex of
-    0:
+    biNotes:
+      begin
+        txTitle.Caption := 'Notizen';
+        imIcon.ImageIndex := iiNotes;
+      end;
+    biSimulatorsSmtp:
       begin
         txTitle.Caption := 'SMTP Blackhole';
         imIcon.ImageIndex := iiSimulatorsSmtp;
       end;
-    1:
+    biSimulatorsHttp:
       begin
         txTitle.Caption := 'HTTP Blackhole';
         imIcon.ImageIndex := iiSimulatorsHttp;
@@ -72,23 +81,15 @@ end;
 procedure TwWelcomeForm.clModulesItemClick(Sender: TObject);
 begin
   case clModules.ItemIndex of
-    0:
+    biNotes:
+      GlobalEventBus.Post(TEventFactory.NewModuleChangeEvent(mfMainNotes, 0));
+    biSimulatorsSmtp:
       GlobalEventBus.Post(TEventFactory.NewModuleChangeEvent(mfMainSimulators, mfSimulatorsSmtp));
-    1:
+    biSimulatorsHttp:
       GlobalEventBus.Post(TEventFactory.NewModuleChangeEvent(mfMainSimulators, mfSimulatorsHttp));
   end;
+
   clModules.ItemIndex := -1;
-end;
-
-procedure TwWelcomeForm.ThemeChanged;
-begin
-  inherited;
-  UpdateTheme;
-end;
-
-procedure TwWelcomeForm.UpdateTheme;
-begin
-  imIcon.ImageCollection := dmCommon.GetImageCollection;
 end;
 
 end.

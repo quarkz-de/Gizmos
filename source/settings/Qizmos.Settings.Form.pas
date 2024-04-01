@@ -80,7 +80,7 @@ end;
 procedure TwSettingsForm.ThemeChanged;
 begin
   inherited;
-  viImages.ImageCollection := dmCommon.GetImageCollection;
+  viImages.UpdateImageList;;
 end;
 
 end.

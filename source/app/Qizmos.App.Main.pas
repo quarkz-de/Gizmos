@@ -26,10 +26,12 @@ type
     svSplitView: TSplitView;
     nvHeader: TQzNavigationView;
     nvFooter: TQzNavigationView;
+    btSwitchStyle: TSpeedButton;
     procedure FormCreate(Sender: TObject);
     procedure acHelpAboutExecute(Sender: TObject);
     procedure aeAppEventsMinimize(Sender: TObject);
     procedure btBurgerButtonClick(Sender: TObject);
+    procedure btSwitchStyleClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure nvFooterButtonClicked(Sender: TObject; Index: Integer);
     procedure nvHeaderButtonClicked(Sender: TObject; Index: Integer);
@@ -66,7 +68,7 @@ implementation
 uses
   Qizmos.App.DataModule, Qizmos.App.WelcomeForm, Qizmos.App.About,
   Qizmos.Core.Settings, Qizmos.Core.Types,
-  Qizmos.Settings.Form, Qizmos.Simulators.Form;
+  Qizmos.Settings.Form, Qizmos.Simulators.Form, Qizmos.Notes.Form;
 
 { TwMain }
 
@@ -91,8 +93,10 @@ begin
       nvFooter.ItemIndex := 0;
     mfMainWelcome:
       nvHeader.ItemIndex := 0;
-    mfMainSimulators:
+    mfMainNotes:
       nvHeader.ItemIndex := 1;
+    mfMainSimulators:
+      nvHeader.ItemIndex := 2;
   end;
 end;
 
@@ -111,11 +115,30 @@ begin
   svSplitView.Opened := not svSplitView.Opened;
 end;
 
+procedure TwMainForm.btSwitchStyleClick(Sender: TObject);
+begin
+  case ApplicationSettings.Theme of
+    atSystem:
+      begin
+        if TApplicationSettings.IsDarkThemeEnabled then
+          ApplicationSettings.Theme := atLight
+        else
+          ApplicationSettings.Theme := atDark;
+      end;
+    atLight:
+      ApplicationSettings.Theme := atDark;
+    atDark:
+      ApplicationSettings.Theme := atLight;
+  end;
+end;
+
 procedure TwMainForm.FontChanged;
+const
+  HeaderFontSizeDelta = 2;
 begin
   inherited;
-  nvHeader.Font.Size := Font.Size + 2;
-  nvFooter.Font.Size := Font.Size + 2;
+  nvHeader.Font.Size := Font.Size + HeaderFontSizeDelta;
+  nvFooter.Font.Size := Font.Size + HeaderFontSizeDelta;
 end;
 
 procedure TwMainForm.FormCreate(Sender: TObject);
@@ -192,6 +215,7 @@ begin
 
   Helper := TNavigationViewFormHelper.Create(self, nvHeader);
   Helper.AddForm(TwWelcomeForm);
+  Helper.AddForm(TwNotesForm);
   Helper.AddForm(TwSimulatorsForm);
   Helper.Free;
 
@@ -225,9 +249,8 @@ end;
 procedure TwMainForm.ThemeChanged;
 begin
   inherited;
-  imIcon.ImageCollection := dmCommon.GetImageCollection;
-  vilIcons.ImageCollection := dmCommon.GetImageCollection;
-  vilLargeIcons.ImageCollection := dmCommon.GetImageCollection;
+  vilIcons.UpdateImageList;
+  vilLargeIcons.UpdateImageList;
 end;
 
 procedure TwMainForm.tiTrayIconClick(Sender: TObject);

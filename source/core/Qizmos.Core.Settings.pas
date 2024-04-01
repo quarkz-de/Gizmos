@@ -8,7 +8,7 @@ uses
   Vcl.Forms, Vcl.Themes;
 
 type
-  TApplicationSettingValue = (svFont, svHttpPort);
+  TApplicationSettingValue = (svFont, svHttpPort, svEditorFont);
 
   TSmtpServerSettings = class(TPersistent)
   private
@@ -37,6 +37,21 @@ type
     property ResultText: String read FResultText write FResultText;
   end;
 
+  TNotesSettings = class(TPersistent)
+  private
+    FFolder: String;
+    FEditorFont: String;
+    FEditorFontSize: Integer;
+    procedure SetFolder(Value: String);
+  public
+    constructor Create;
+    procedure Assign(Source: TPersistent); override;
+  published
+    property Folder: String read FFolder write SetFolder;
+    property EditorFont: String read FEditorFont write FEditorFont;
+    property EditorFontSize: Integer read FEditorFontSize write FEditorFontSize;
+  end;
+
   TApplicationFormPosition = class(TPersistent)
   private
     FWindowState: TWindowState;
@@ -63,6 +78,7 @@ type
     FFormPosition: TApplicationFormPosition;
     FSmtpServer: TSmtpServerSettings;
     FHttpServer: THttpServerSettings;
+    FNotes: TNotesSettings;
     FTheme: TApplicationTheme;
     FThemeName: String;
     FIsDarkTheme: Boolean;
@@ -78,12 +94,14 @@ type
     procedure SetFormPositon(const Value: TApplicationFormPosition);
     procedure SetSmtpServer(const Value: TSmtpServerSettings);
     procedure SetHttpServer(const Value: THttpServerSettings);
+    procedure SetNotes(const Value: TNotesSettings);
     procedure InitTheme;
   public
     constructor Create;
     destructor Destroy; override;
     procedure LoadSettings;
     procedure SaveSettings;
+    class function IsDarkThemeEnabled: Boolean;
   published
     procedure WindowsThemeChanged;
     property Theme: TApplicationTheme read GetTheme write SetTheme;
@@ -93,6 +111,7 @@ type
       write SetFormPositon;
     property SmtpServer: TSmtpServerSettings read FSmtpServer write SetSmtpServer;
     property HttpServer: THttpServerSettings read FHttpServer write SetHttpServer;
+    property Notes: TNotesSettings read FNotes write SetNotes;
     property SettingsFoldername: String read GetSettingsFoldername;
     property FontSize: Integer read FFontSize write SetFontSize;
     property StartMinimized: Boolean read FStartMinimized write FStartMinimized;
@@ -112,12 +131,13 @@ uses
   Qizmos.Core.Events;
 
 const
+  SAppDataFolder = 'quarkz\Qizmos';
 {$ifdef DEBUG}
   SSettingsFilename = 'Qizmos-debug.json';
 {$else}
   SSettingsFilename = 'Qizmos.json';
 {$endif}
-  SAppDataFolder = 'quarkz\Qizmos';
+  SAppNotesFolder = '.Notes';
 
 procedure SettingChangeEvent(const AValue: TApplicationSettingValue);
 begin
@@ -133,6 +153,7 @@ begin
   FFormPosition := TApplicationFormPosition.Create;
   FSmtpServer := TSmtpServerSettings.Create;
   FHttpServer := THttpServerSettings.Create;
+  FNotes := TNotesSettings.Create;
   FDrawerOpened := true;
   FFontSize := 9;
   FStartMinimized := false;
@@ -144,6 +165,7 @@ begin
   FSmtpServer.Free;
   FHttpServer.Free;
   FormPosition.Free;
+  FNotes.Free;
   inherited;
 end;
 
@@ -167,33 +189,15 @@ const
   SWindowsTheme = 'Windows';
   SDarkTheme = 'Windows11 Modern Dark';
   SLightTheme = 'Windows11 Modern Light';
-var
-  Reg: TRegistry;
 begin
   case FTheme of
     atSystem:
       begin
-        Reg := TRegistry.Create(KEY_READ);
-        Reg.RootKey := HKEY_CURRENT_USER;
-        if Reg.OpenKey('SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize', false) then
-          begin
-            if Reg.ReadBool('AppsUseLightTheme') then
-              begin
-                FThemeName := SLightTheme;
-                FIsDarkTheme := false;
-              end
-            else
-              begin
-                FThemeName := SDarkTheme;
-                FIsDarkTheme := true;
-              end;
-          end
+        FIsDarkTheme := IsDarkThemeEnabled;
+        if FIsDarkTheme then
+          FThemeName := SDarkTheme
         else
-          begin
-            FThemeName := SWindowsTheme;
-            FIsDarkTheme := false;
-          end;
-        Reg.Free;
+          FThemeName := SLightTheme;
       end;
     atLight:
       begin
@@ -211,6 +215,19 @@ begin
         FIsDarkTheme := false;
       end;
   end;
+end;
+
+class function TApplicationSettings.IsDarkThemeEnabled: Boolean;
+var
+  Reg: TRegistry;
+begin
+  Reg := TRegistry.Create(KEY_READ);
+  Reg.RootKey := HKEY_CURRENT_USER;
+  if Reg.OpenKey('SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize', false) then
+    Result := not Reg.ReadBool('AppsUseLightTheme')
+  else
+    Result := false;
+  Reg.Free;
 end;
 
 procedure TApplicationSettings.LoadSettings;
@@ -260,6 +277,11 @@ end;
 procedure TApplicationSettings.SetHttpServer(const Value: THttpServerSettings);
 begin
   FHttpServer.Assign(Value);
+end;
+
+procedure TApplicationSettings.SetNotes(const Value: TNotesSettings);
+begin
+  FNotes.Assign(Value);
 end;
 
 procedure TApplicationSettings.SetSmtpServer(const Value: TSmtpServerSettings);
@@ -364,6 +386,33 @@ begin
       FPort := AValue;
       SettingChangeEvent(svHttpPort);
     end;
+end;
+
+{ TNotesSettings }
+
+procedure TNotesSettings.Assign(Source: TPersistent);
+begin
+  if Source is TNotesSettings then
+    begin
+      Folder := TNotesSettings(Source).Folder;
+    end
+  else
+    inherited Assign(Source);
+end;
+
+constructor TNotesSettings.Create;
+begin
+  inherited Create;
+  Folder := TPath.Combine(TKnownFolders.GetAppDataPath,
+    TPath.Combine(SAppDataFolder, SAppNotesFolder));
+  FEditorFont := 'Consolas';
+  FEditorFontSize := 10;
+end;
+
+procedure TNotesSettings.SetFolder(Value: String);
+begin
+  FFolder := Value;
+  ForceDirectories(FFolder);
 end;
 
 initialization

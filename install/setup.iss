@@ -25,6 +25,7 @@ LicenseFile=D:\Entw\quarkz.dx\Qizmos\LICENSE
 OutputBaseFilename=SetupQizmos
 Compression=lzma
 SolidCompression=yes
+ArchitecturesInstallIn64BitMode=x64
 
 [Languages]
 Name: "german"; MessagesFile: "compiler:Languages\German.isl"
@@ -33,7 +34,8 @@ Name: "german"; MessagesFile: "compiler:Languages\German.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "..\source\Win32\Release\Qizmos.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\source\Win32\Release\Qizmos.exe"; DestDir: "{app}"; Flags: ignoreversion; Check: not Is64BitInstallMode
+Source: "..\source\Win64\Release\Qizmos.exe"; DestDir: "{app}"; Flags: ignoreversion; Check: Is64BitInstallMode
 
 [Icons]
 Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
@@ -41,3 +43,6 @@ Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: 
 
 [Run]
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
+
+[LangOptions]
+LanguageID=$0407

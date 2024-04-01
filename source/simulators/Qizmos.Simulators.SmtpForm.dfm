@@ -94,8 +94,8 @@ object wSimulatorsSmtpForm: TwSimulatorsSmtpForm
       object lvLog: TListView
         Left = 0
         Top = 0
-        Width = 604
-        Height = 355
+        Width = 616
+        Height = 393
         Align = alClient
         Columns = <
           item
@@ -149,7 +149,7 @@ object wSimulatorsSmtpForm: TwSimulatorsSmtpForm
       Top = 8
       Width = 32
       Height = 32
-      ImageCollection = dmCommon.icDarkIcons
+      ImageCollection = dmCommon.icSvgIcons
       ImageWidth = 0
       ImageHeight = 0
       ImageIndex = 7

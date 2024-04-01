@@ -4,20 +4,19 @@ interface
 
 uses
   System.SysUtils, System.Classes,
-  Vcl.BaseImageCollection, Vcl.ImageCollection, Vcl.Forms;
+  Vcl.BaseImageCollection, Vcl.ImageCollection, Vcl.Forms,
+  SVGIconImageCollection;
 
 type
   TdmCommon = class(TDataModule)
     icLogo: TImageCollection;
-    icLightIcons: TImageCollection;
-    icDarkIcons: TImageCollection;
+    icSvgIcons: TSVGIconImageCollection;
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
   private
     procedure ThemeChanged;
   public
     procedure MainFormCreated;
-    function GetImageCollection: TImageCollection;
   end;
 
 var
@@ -43,14 +42,6 @@ end;
 procedure TdmCommon.DataModuleDestroy(Sender: TObject);
 begin
   ApplicationSettings.SaveSettings;
-end;
-
-function TdmCommon.GetImageCollection: TImageCollection;
-begin
-  if ApplicationSettings.IsDarkTheme then
-    Result := icLightIcons
-  else
-    Result := icDarkIcons;
 end;
 
 procedure TdmCommon.MainFormCreated;

@@ -75,7 +75,7 @@ end;
 procedure TwSimulatorsForm.ThemeChanged;
 begin
   inherited;
-  viImages.ImageCollection := dmCommon.GetImageCollection;
+  viImages.UpdateImageList;
 end;
 
 end.

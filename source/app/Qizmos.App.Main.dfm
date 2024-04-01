@@ -37,6 +37,9 @@ object wMainForm: TwMainForm
     Color = clWindow
     ParentBackground = False
     TabOrder = 0
+    DesignSize = (
+      909
+      45)
     object txCaption: TLabel
       Left = 114
       Top = 7
@@ -55,11 +58,11 @@ object wMainForm: TwMainForm
       Top = 7
       Width = 32
       Height = 32
-      ImageCollection = dmCommon.icDarkIcons
+      ImageCollection = dmCommon.icSvgIcons
       ImageWidth = 0
       ImageHeight = 0
-      ImageIndex = 5
-      ImageName = '005_Start'
+      ImageIndex = 28
+      ImageName = '028_Apps'
     end
     object btBurgerButton: TSpeedButton
       Left = 7
@@ -70,6 +73,17 @@ object wMainForm: TwMainForm
       ImageName = '000_Menu'
       Images = vilLargeIcons
       OnClick = btBurgerButtonClick
+    end
+    object btSwitchStyle: TSpeedButton
+      Left = 873
+      Top = 7
+      Width = 32
+      Height = 32
+      Anchors = [akTop, akRight]
+      ImageIndex = 27
+      ImageName = '027_Light_Dark_Style'
+      Images = vilLargeIcons
+      OnClick = btSwitchStyleClick
     end
   end
   object pnFormContainer: TQzPanel
@@ -110,8 +124,6 @@ object wMainForm: TwMainForm
       Items = <>
       TabOrder = 0
       OnButtonClicked = nvHeaderButtonClicked
-      ExplicitLeft = -3
-      ExplicitTop = -3
     end
     object nvFooter: TQzNavigationView
       Left = 0
@@ -185,8 +197,98 @@ object wMainForm: TwMainForm
         CollectionIndex = 10
         CollectionName = '010_Collapse'
         Name = '010_Collapse'
+      end
+      item
+        CollectionIndex = 11
+        CollectionName = '011_Notebook'
+        Name = '011_Notebook'
+      end
+      item
+        CollectionIndex = 12
+        CollectionName = '012_Note'
+        Name = '012_Note'
+      end
+      item
+        CollectionIndex = 13
+        CollectionName = '013_Delete'
+        Name = '013_Delete'
+      end
+      item
+        CollectionIndex = 14
+        CollectionName = '014_Edit'
+        Name = '014_Edit'
+      end
+      item
+        CollectionIndex = 15
+        CollectionName = '015_Bold'
+        Name = '015_Bold'
+      end
+      item
+        CollectionIndex = 16
+        CollectionName = '016_Italic'
+        Name = '016_Italic'
+      end
+      item
+        CollectionIndex = 17
+        CollectionName = '017_Strikethrough'
+        Name = '017_Strikethrough'
+      end
+      item
+        CollectionIndex = 18
+        CollectionName = '018_Header_1'
+        Name = '018_Header_1'
+      end
+      item
+        CollectionIndex = 19
+        CollectionName = '019_Header_2'
+        Name = '019_Header_2'
+      end
+      item
+        CollectionIndex = 20
+        CollectionName = '020_Header_3'
+        Name = '020_Header_3'
+      end
+      item
+        CollectionIndex = 21
+        CollectionName = '021_Source_Code'
+        Name = '021_Source_Code'
+      end
+      item
+        CollectionIndex = 22
+        CollectionName = '022_Horizontal_Line'
+        Name = '022_Horizontal_Line'
+      end
+      item
+        CollectionIndex = 23
+        CollectionName = '023_Bulleted_List'
+        Name = '023_Bulleted_List'
+      end
+      item
+        CollectionIndex = 24
+        CollectionName = '024_Numbered_List'
+        Name = '024_Numbered_List'
+      end
+      item
+        CollectionIndex = 25
+        CollectionName = '025_Link'
+        Name = '025_Link'
+      end
+      item
+        CollectionIndex = 26
+        CollectionName = '026_Folder'
+        Name = '026_Folder'
+      end
+      item
+        CollectionIndex = 27
+        CollectionName = '027_Light_Dark_Style'
+        Name = '027_Light_Dark_Style'
+      end
+      item
+        CollectionIndex = 28
+        CollectionName = '028_Apps'
+        Name = '028_Apps'
       end>
-    ImageCollection = dmCommon.icDarkIcons
+    ImageCollection = dmCommon.icSvgIcons
     Width = 32
     Height = 32
     Left = 308
@@ -249,8 +351,98 @@ object wMainForm: TwMainForm
         CollectionIndex = 10
         CollectionName = '010_Collapse'
         Name = '010_Collapse'
+      end
+      item
+        CollectionIndex = 11
+        CollectionName = '011_Notebook'
+        Name = '011_Notebook'
+      end
+      item
+        CollectionIndex = 12
+        CollectionName = '012_Note'
+        Name = '012_Note'
+      end
+      item
+        CollectionIndex = 13
+        CollectionName = '013_Delete'
+        Name = '013_Delete'
+      end
+      item
+        CollectionIndex = 14
+        CollectionName = '014_Edit'
+        Name = '014_Edit'
+      end
+      item
+        CollectionIndex = 15
+        CollectionName = '015_Bold'
+        Name = '015_Bold'
+      end
+      item
+        CollectionIndex = 16
+        CollectionName = '016_Italic'
+        Name = '016_Italic'
+      end
+      item
+        CollectionIndex = 17
+        CollectionName = '017_Strikethrough'
+        Name = '017_Strikethrough'
+      end
+      item
+        CollectionIndex = 18
+        CollectionName = '018_Header_1'
+        Name = '018_Header_1'
+      end
+      item
+        CollectionIndex = 19
+        CollectionName = '019_Header_2'
+        Name = '019_Header_2'
+      end
+      item
+        CollectionIndex = 20
+        CollectionName = '020_Header_3'
+        Name = '020_Header_3'
+      end
+      item
+        CollectionIndex = 21
+        CollectionName = '021_Source_Code'
+        Name = '021_Source_Code'
+      end
+      item
+        CollectionIndex = 22
+        CollectionName = '022_Horizontal_Line'
+        Name = '022_Horizontal_Line'
+      end
+      item
+        CollectionIndex = 23
+        CollectionName = '023_Bulleted_List'
+        Name = '023_Bulleted_List'
+      end
+      item
+        CollectionIndex = 24
+        CollectionName = '024_Numbered_List'
+        Name = '024_Numbered_List'
+      end
+      item
+        CollectionIndex = 25
+        CollectionName = '025_Link'
+        Name = '025_Link'
+      end
+      item
+        CollectionIndex = 26
+        CollectionName = '026_Folder'
+        Name = '026_Folder'
+      end
+      item
+        CollectionIndex = 27
+        CollectionName = '027_Light_Dark_Style'
+        Name = '027_Light_Dark_Style'
+      end
+      item
+        CollectionIndex = 28
+        CollectionName = '028_Apps'
+        Name = '028_Apps'
       end>
-    ImageCollection = dmCommon.icDarkIcons
+    ImageCollection = dmCommon.icSvgIcons
     Left = 256
     Top = 76
   end

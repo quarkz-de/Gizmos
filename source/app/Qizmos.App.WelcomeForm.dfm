@@ -20,7 +20,6 @@ object wWelcomeForm: TwWelcomeForm
     Height = 479
     Align = alClient
     BorderStyle = bsNone
-    ItemCount = 2
     ItemColor = clBtnFace
     ItemWidth = 180
     ItemHeight = 180
@@ -49,7 +48,7 @@ object wWelcomeForm: TwWelcomeForm
       Top = 12
       Width = 96
       Height = 96
-      ImageCollection = dmCommon.icDarkIcons
+      ImageCollection = dmCommon.icSvgIcons
       ImageWidth = 0
       ImageHeight = 0
       ImageIndex = -1

@@ -8,7 +8,7 @@
 ## Suchpfad
 
 ```
-..\submodules\Qodelib;..\submodules\Qodelib\core;..\submodules\Qodelib\vcl;..\submodules\spring4d\source;..\submodules\spring4d\source\Base;..\submodules\spring4d\source\Base\Collections;..\submodules\spring4d\source\Base\Logging;..\submodules\spring4d\source\Base\Patches;..\submodules\spring4d\source\Core\Container;..\submodules\spring4d\source\Core\Interception;..\submodules\spring4d\source\Core\Logging;..\submodules\spring4d\source\Core\Mocking;..\submodules\spring4d\source\Core\Services;..\submodules\spring4d\source\Extensions\Cryptography;..\submodules\spring4d\source\Extensions\Utils;..\submodules\spring4d\source\Persistence\Adapters;..\submodules\spring4d\source\Persistence\Core;..\submodules\spring4d\source\Persistence\Criteria;..\submodules\spring4d\source\Persistence\Mapping;..\submodules\spring4d\source\Persistence\SQL;..\submodules\spring4d\Marshmallow\External\SQLite3;..\submodules\vcl-styles-utils\Common;..\submodules\DDetours\source;..\submodules\delphi-event-bus\source;..\submodules\delphi-neon\source;..\submodules\VirtualTreeView\source;..\submodules\loggerpro
+..\submodules\Qodelib;..\submodules\Qodelib\core;..\submodules\Qodelib\vcl;..\submodules\spring4d\source;..\submodules\spring4d\source\Base;..\submodules\spring4d\source\Base\Collections;..\submodules\spring4d\source\Base\Logging;..\submodules\spring4d\source\Base\Patches;..\submodules\spring4d\source\Core\Container;..\submodules\spring4d\source\Core\Interception;..\submodules\spring4d\source\Core\Logging;..\submodules\spring4d\source\Core\Mocking;..\submodules\spring4d\source\Core\Services;..\submodules\spring4d\source\Extensions\Cryptography;..\submodules\spring4d\source\Extensions\Utils;..\submodules\spring4d\source\Persistence\Adapters;..\submodules\spring4d\source\Persistence\Core;..\submodules\spring4d\source\Persistence\Criteria;..\submodules\spring4d\source\Persistence\Mapping;..\submodules\spring4d\source\Persistence\SQL;..\submodules\spring4d\Marshmallow\External\SQLite3;..\submodules\vcl-styles-utils\Common;..\submodules\DDetours\source;..\submodules\delphi-event-bus\source;..\submodules\delphi-neon\source;..\submodules\VirtualTreeView\source;..\submodules\loggerpro;..\submodules\synedit\source;..\submodules\synedit\source\highlighters;..\submodules\HtmlViewer\source;..\submodules\delphi-markdown\source;..\submodules\MustangpeakCommonLib\source;..\submodules\MustangpeakVirtualshellTools\source;..\submodules\MustangpeakEasyListview\source;..\submodules\SVGIconImageList\Source
 ```
 
 ## Links
@@ -19,5 +19,7 @@
 * [delphi-neon](https://github.com/paolo-rossi/delphi-neon) Delphi Neon
 * [DDetours](https://github.com/MahdiSafsafi/DDetours) DDetours
 * [VirtualTreeView](https://github.com/TurboPack/VirtualTreeView) VirtualTreeView
-* [LoggerPro](https://github.com/danieleteti/loggerpro.git) LoggerPro for Delphi
-* [Icons8](https://icons8.com/) die verwendeten Icons stammen von Icons8
+* [SynEdit](https://github.com/TurboPack/SynEdit) SynEdit
+* [LoggerPro](https://github.com/danieleteti/loggerpro) LoggerPro for Delphi
+* [Common Lib](https://github.com/TurboPack/MustangpeakCommonLib) [VirtualShellTools](https://github.com/TurboPack/MustangpeakVirtualshellTools) [ EasyListview](https://github.com/TurboPack/MustangpeakEasyListview) Mustangpeak Shell Tools
+* [Material Design Icons](https://pictogrammers.com/library/mdi/) die verwendeten Icons stammen von Pictogrammers

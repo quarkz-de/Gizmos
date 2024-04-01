@@ -16,6 +16,8 @@ uses
   Qizmos.Core.Settings in 'core\Qizmos.Core.Settings.pas',
   Qizmos.Core.Types in 'core\Qizmos.Core.Types.pas',
   Qizmos.Core.Forms in 'core\Qizmos.Core.Forms.pas',
+  Qizmos.Core.Markdown in 'core\Qizmos.Core.Markdown.pas',
+  Qizmos.Core.Shell in 'core\Qizmos.Core.Shell.pas',
   Qizmos.App.Main in 'app\Qizmos.App.Main.pas' {wMainForm},
   Qizmos.App.DataModule in 'app\Qizmos.App.DataModule.pas' {dmCommon: TDataModule},
   Qizmos.App.About in 'app\Qizmos.App.About.pas' {wAbout},
@@ -30,7 +32,9 @@ uses
   Qizmos.Simulators.HttpForm in 'simulators\Qizmos.Simulators.HttpForm.pas' {wSimulatorsHttpForm},
   Qizmos.Simulators.SmtpVisualizers in 'simulators\Qizmos.Simulators.SmtpVisualizers.pas',
   Qizmos.Simulators.HttpVisualizers in 'simulators\Qizmos.Simulators.HttpVisualizers.pas',
-  Qizmos.Simulators.EMailViewer in 'simulators\Qizmos.Simulators.EMailViewer.pas' {wEMailViewer};
+  Qizmos.Simulators.EMailViewer in 'simulators\Qizmos.Simulators.EMailViewer.pas' {wEMailViewer},
+  Qizmos.Notes.Form in 'notes\Qizmos.Notes.Form.pas' {wNotesForm},
+  Qizmos.Notes.Visualizers in 'notes\Qizmos.Notes.Visualizers.pas';
 
 {$R *.res}
 

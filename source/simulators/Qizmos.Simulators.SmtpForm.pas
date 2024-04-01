@@ -69,7 +69,6 @@ type
     function GetFormId: TQzManagedFormId; override;
     function GetImageIndex: Integer; override;
   public
-    procedure ThemeChanged; override;
     property Log: ILogWriter read FLog;
   end;
 
@@ -227,12 +226,6 @@ procedure TwSimulatorsSmtpForm.smtpServerUserLogin(
 begin
   Log.Info('Username: %s; Password: %s', [AUsername, APassword], tagServer);
   VAuthenticated := true;
-end;
-
-procedure TwSimulatorsSmtpForm.ThemeChanged;
-begin
-  inherited;
-  imIcon.ImageCollection := dmCommon.GetImageCollection;
 end;
 
 procedure TwSimulatorsSmtpForm.vtMessagesDblClick(Sender: TObject);

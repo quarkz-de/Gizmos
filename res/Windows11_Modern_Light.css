@@ -1,0 +1,38 @@
+body {
+  background-color: #f8f8f8;
+}
+
+a {
+  color: #0377d0;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+th, td {
+  border: 1px solid #d0d0d0;
+  text-align: left;
+  padding: 3px;
+}
+
+th {
+  background-color: #f3f3f3;
+}
+
+code {
+  font-size: 10pt;
+  font-family: "JetBrains Mono", Consolas, "Courier New", Courier, monospace;
+  background-color: #f3f3f3;
+}
+
+pre {
+  border: 1px solid #d0d0d0;
+  padding: 3px;
+  background-color: #f3f3f3;
+}
+
+blockquote {
+  border-left: 3px solid #0377d0;
+  padding-left: 6px;
+}

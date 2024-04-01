@@ -15,6 +15,7 @@ const
   mfMainSettings = mfMainBase + 1;
   mfMainWelcome = mfMainBase + 2;
   mfMainSimulators = mfMainBase + 3;
+  mfMainNotes = mfMainBase + 4;
 
   mfSettingsBase = 200;
   mfSettingsCommon = mfSettingsBase + 1;
@@ -27,13 +28,17 @@ const
 
   // Image Indexes
   iiMainSettings = 2;
-  iiMainWelcome = 5;
+  iiMainWelcome = 28;
   iiMainSimulators = 6;
+  iiMainNotes = 11;
+
   iiSettingsCommon = 2;
   iiSettingsSimulators = 6;
   iiSettingsInfo = 1;
+
   iiSimulatorsSmtp = 7;
   iiSimulatorsHttp = 8;
+  iiNotes = 11;
 
   // Other
   SwitchStates: array[Boolean] of TToggleSwitchState = (tssOff, tssOn);

@@ -49,7 +49,6 @@ type
     function GetFormId: TQzManagedFormId; override;
     function GetImageIndex: Integer; override;
   public
-    procedure ThemeChanged; override;
     property Log: ILogWriter read FLog;
     [Subscribe]
     procedure OnSettingChange(AEvent: ISettingChangeEvent);
@@ -157,12 +156,6 @@ begin
 
   if WasActive then
     httpServer.Active := true;
-end;
-
-procedure TwSimulatorsHttpForm.ThemeChanged;
-begin
-  inherited;
-  imIcon.ImageCollection := dmCommon.GetImageCollection;
 end;
 
 end.

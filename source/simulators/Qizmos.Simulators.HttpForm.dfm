@@ -43,7 +43,7 @@ object wSimulatorsHttpForm: TwSimulatorsHttpForm
       Top = 8
       Width = 32
       Height = 32
-      ImageCollection = dmCommon.icDarkIcons
+      ImageCollection = dmCommon.icSvgIcons
       ImageWidth = 0
       ImageHeight = 0
       ImageIndex = 8
@@ -131,7 +131,7 @@ object wSimulatorsHttpForm: TwSimulatorsHttpForm
         Left = 0
         Top = 0
         Width = 600
-        Height = 354
+        Height = 389
         Align = alClient
         Columns = <
           item
