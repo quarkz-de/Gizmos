@@ -7,7 +7,7 @@ uses
   System.IOUtils, System.Types, System.UITypes,
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.ComCtrls, Vcl.ActnList,
   Vcl.ExtCtrls, Vcl.Menus, Vcl.Themes, Vcl.ActnMan, Vcl.ActnCtrls,
-  Vcl.ImgList, Vcl.VirtualImageList, Vcl.ToolWin,
+  Vcl.ImgList, Vcl.VirtualImageList, Vcl.ToolWin, Vcl.Dialogs,
   Vcl.PlatformDefaultStyleActnCtrls,
   VirtualTrees,
   Eventbus,
@@ -16,7 +16,7 @@ uses
   HTMLUn2, HtmlView, UrlConn, HtmlGlobals,
   Qodelib.ManagedForms, Qodelib.Panels,
   Qizmos.Core.Forms, Qizmos.Core.Types, Qizmos.Core.Markdown,
-  Qizmos.Core.Events, Qizmos.Notes.Visualizers, Vcl.Dialogs;
+  Qizmos.Core.Events, Qizmos.Notes.Visualizers;
 
 type
   TwNotesForm = class(TManagedForm)
@@ -81,6 +81,7 @@ type
     procedure FormDeactivate(Sender: TObject);
     procedure hvTextHotSpotClick(Sender: TObject; const SRC: ThtString;
       var Handled: Boolean);
+    procedure pcNoteChanging(Sender: TObject; var AllowChange: Boolean);
     procedure vtNotebookFocusChanged(Sender: TBaseVirtualTree;
       Node: PVirtualNode; Column: TColumnIndex);
     procedure vtNotebookFocusChanging(Sender: TBaseVirtualTree;
@@ -98,6 +99,7 @@ type
     procedure InitNotebook;
     procedure LoadNote(const AFilename: String);
     procedure SaveNote(const AFilename: String);
+    procedure SaveCurrentNote;
   public
     function GetFormId: TQzManagedFormId; override;
     function GetImageIndex: Integer; override;
@@ -280,9 +282,27 @@ begin
   end;
 end;
 
+procedure TwNotesForm.pcNoteChanging(Sender: TObject; var AllowChange: Boolean);
+begin
+  if pcNote.ActivePage = tsEdit then
+    SaveCurrentNote;
+end;
+
 procedure TwNotesForm.SaveChanges;
 begin
-//  SaveNote(CurrentNote);
+  SaveCurrentNote;
+end;
+
+procedure TwNotesForm.SaveCurrentNote;
+var
+  Filename: String;
+begin
+  if FTreeVisualizer.GetSelectedItemType = itNote then
+    begin
+      Filename := FTreeVisualizer.GetSelectedItemName;
+      SaveNote(Filename);
+      UpdatePreview;
+    end;
 end;
 
 procedure TwNotesForm.SaveNote(const AFilename: String);
@@ -336,6 +356,7 @@ end;
 procedure TwNotesForm.UpdateTreeSettings;
 begin
   vtNotebook.DefaultNodeHeight := (ApplicationSettings.FontSize * 2) + 4;
+  hvText.DefFontSize := ApplicationSettings.FontSize;
 end;
 
 procedure TwNotesForm.vtNotebookFocusChanged(Sender: TBaseVirtualTree;

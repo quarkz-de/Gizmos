@@ -290,19 +290,14 @@ end;
 procedure TNotesTreeVisualizer.DragOver(Sender: TBaseVirtualTree;
   Source: TObject; Shift: TShiftState; State: TDragState; Pt: TPoint;
   Mode: TDropMode; var Effect: Integer; var Accept: Boolean);
-var
-  SourceNode, TargetNode: PVirtualNode;
 begin
   Accept := (Source = Sender);
 end;
 
 procedure TNotesTreeVisualizer.Edited(Sender: TBaseVirtualTree;
   Node: PVirtualNode; Column: TColumnIndex);
-var
-  Data: PNotesTreeItem;
 begin
-  Data := FTree.GetNodeData(Node);
-//  GlobalEventBus.Post(TEventFactory.NewNoteEditEvent(Data.Note));
+
 end;
 
 procedure TNotesTreeVisualizer.Editing(Sender: TBaseVirtualTree;

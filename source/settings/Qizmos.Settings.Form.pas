@@ -32,7 +32,7 @@ implementation
 uses
   Qizmos.App.DataModule, Qizmos.Core.Settings, Qizmos.Core.Types,
   Qizmos.Settings.CommonForm, Qizmos.Settings.InfoForm,
-  Qizmos.Settings.SimulatorsForm;
+  Qizmos.Settings.NotesForm, Qizmos.Settings.SimulatorsForm;
 
 const
   iiSystemTheme = 0;
@@ -72,6 +72,7 @@ begin
 
   Helper := TNavigationViewFormHelper.Create(self, nvNavigation);
   Helper.AddForm(TwSettingsCommonForm);
+  Helper.AddForm(TwSettingsNotesForm);
   Helper.AddForm(TwSettingsSimulatorsForm);
   Helper.AddForm(TwSettingsInfoForm);
   Helper.Free;
@@ -80,7 +81,7 @@ end;
 procedure TwSettingsForm.ThemeChanged;
 begin
   inherited;
-  viImages.UpdateImageList;;
+  viImages.UpdateImageList;
 end;
 
 end.

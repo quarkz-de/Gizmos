@@ -177,6 +177,16 @@ object wSettingsForm: TwSettingsForm
         CollectionIndex = 26
         CollectionName = '026_Folder'
         Name = '026_Folder'
+      end
+      item
+        CollectionIndex = 27
+        CollectionName = '027_Light_Dark_Style'
+        Name = '027_Light_Dark_Style'
+      end
+      item
+        CollectionIndex = 28
+        CollectionName = '028_Apps'
+        Name = '028_Apps'
       end>
     ImageCollection = dmCommon.icSvgIcons
     Width = 24

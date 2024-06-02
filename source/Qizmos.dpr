@@ -25,6 +25,7 @@ uses
   Qizmos.Settings.Form in 'settings\Qizmos.Settings.Form.pas' {wSettingsForm},
   Qizmos.Settings.CommonForm in 'settings\Qizmos.Settings.CommonForm.pas' {wSettingsCommonForm},
   Qizmos.Settings.InfoForm in 'settings\Qizmos.Settings.InfoForm.pas' {wSettingsInfoForm},
+  Qizmos.Settings.NotesForm in 'settings\Qizmos.Settings.NotesForm.pas' {wSettingsNotesForm},
   Qizmos.Settings.SimulatorsForm in 'settings\Qizmos.Settings.SimulatorsForm.pas' {wSettingsSimulatorsForm},
   Qizmos.Settings.FormHelpers in 'settings\Qizmos.Settings.FormHelpers.pas',
   Qizmos.Simulators.Form in 'simulators\Qizmos.Simulators.Form.pas' {wSimulatorsForm},
@@ -50,6 +51,7 @@ begin
   Application.Title := 'Qizmos';
   Application.CreateForm(TdmCommon, dmCommon);
   Application.CreateForm(TwMainForm, wMainForm);
+  Application.CreateForm(TwSettingsNotesForm, wSettingsNotesForm);
   Application.ShowMainForm := not (ApplicationSettings.StartMinimized and ApplicationSettings.MinimizeToTray);
   Application.Run;
 end.

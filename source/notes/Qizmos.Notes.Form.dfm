@@ -26,11 +26,12 @@ object wNotesForm: TwNotesForm
     Top = 44
     Width = 629
     Height = 496
-    ActivePage = tsEdit
+    ActivePage = tsView
     Align = alClient
     TabHeight = 30
     TabOrder = 0
     TabWidth = 80
+    OnChanging = pcNoteChanging
     object tsEdit: TTabSheet
       Caption = 'Bearbeiten'
       object edText: TSynEdit

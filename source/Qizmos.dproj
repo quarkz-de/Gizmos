@@ -8,7 +8,8 @@
         <AppType>Application</AppType>
         <FrameworkType>VCL</FrameworkType>
         <ProjectVersion>20.1</ProjectVersion>
-        <Platform Condition="'$(Platform)'==''">Win64</Platform>
+        <Platform Condition="'$(Platform)'==''">Win32</Platform>
+        <ProjectName Condition="'$(ProjectName)'==''">Qizmos</ProjectName>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
         <Base>true</Base>
@@ -67,12 +68,13 @@
         <SanitizedProjectName>Qizmos</SanitizedProjectName>
         <DCC_Namespace>Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;System;Xml;Data;Datasnap;Web;Soap;$(DCC_Namespace)</DCC_Namespace>
         <VerInfo_Locale>1031</VerInfo_Locale>
-        <VerInfo_Keys>CompanyName=quarkz.de;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.0;InternalName=Qizmos;LegalCopyright=(c) Reiner Lämmle;LegalTrademarks=;OriginalFilename=qizmos.exe;ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=;CFBundleName=</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=quarkz.de;FileDescription=$(MSBuildProjectName);FileVersion=1.1.0.0;InternalName=Qizmos;LegalCopyright=(c) Reiner Lämmle;LegalTrademarks=;OriginalFilename=qizmos.exe;ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=;CFBundleName=</VerInfo_Keys>
         <DCC_UnitSearchPath>..\submodules\Qodelib;..\submodules\Qodelib\core;..\submodules\Qodelib\vcl;..\submodules\spring4d\source;..\submodules\spring4d\source\Base;..\submodules\spring4d\source\Base\Collections;..\submodules\spring4d\source\Base\Logging;..\submodules\spring4d\source\Base\Patches;..\submodules\spring4d\source\Core\Container;..\submodules\spring4d\source\Core\Interception;..\submodules\spring4d\source\Core\Logging;..\submodules\spring4d\source\Core\Mocking;..\submodules\spring4d\source\Core\Services;..\submodules\spring4d\source\Extensions\Cryptography;..\submodules\spring4d\source\Extensions\Utils;..\submodules\spring4d\source\Persistence\Adapters;..\submodules\spring4d\source\Persistence\Core;..\submodules\spring4d\source\Persistence\Criteria;..\submodules\spring4d\source\Persistence\Mapping;..\submodules\spring4d\source\Persistence\SQL;..\submodules\spring4d\Marshmallow\External\SQLite3;..\submodules\vcl-styles-utils\Common;..\submodules\DDetours\source;..\submodules\delphi-event-bus\source;..\submodules\delphi-neon\source;..\submodules\VirtualTreeView\source;..\submodules\loggerpro;..\submodules\synedit\source;..\submodules\synedit\source\highlighters;..\submodules\HtmlViewer\source;..\submodules\delphi-markdown\source;..\submodules\MustangpeakCommonLib\source;..\submodules\MustangpeakVirtualshellTools\source;..\submodules\MustangpeakEasyListview\source;..\submodules\SVGIconImageList\Source;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
         <DCC_ExeOutput>.\$(Platform)\$(Config)</DCC_ExeOutput>
         <DCC_DcuOutput>.\$(Platform)\$(Config)</DCC_DcuOutput>
         <Custom_Styles>&quot;Windows11 Modern Dark|VCLSTYLE|$(BDSCOMMONDIR)\Styles\Windows11_Modern_Dark.vsf&quot;;&quot;Windows11 Modern Light|VCLSTYLE|$(BDSCOMMONDIR)\Styles\Windows11_Modern_Light.vsf&quot;</Custom_Styles>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+        <VerInfo_MinorVer>1</VerInfo_MinorVer>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win32)'!=''">
         <DCC_Namespace>Winapi;System.Win;Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Bde;$(DCC_Namespace)</DCC_Namespace>
@@ -159,6 +161,9 @@
         <DCCReference Include="settings\Qizmos.Settings.InfoForm.pas">
             <Form>wSettingsInfoForm</Form>
         </DCCReference>
+        <DCCReference Include="settings\Qizmos.Settings.NotesForm.pas">
+            <Form>wSettingsNotesForm</Form>
+        </DCCReference>
         <DCCReference Include="settings\Qizmos.Settings.SimulatorsForm.pas">
             <Form>wSettingsSimulatorsForm</Form>
         </DCCReference>
@@ -213,6 +218,12 @@
             <Deployment Version="4">
                 <DeployFile LocalName="Win32\Debug\Qizmos.exe" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32">
+                        <RemoteName>Qizmos.exe</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Win64\Debug\Qizmos.exe" Configuration="Debug" Class="ProjectOutput">
+                    <Platform Name="Win64">
                         <RemoteName>Qizmos.exe</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
@@ -877,6 +888,9 @@
                     <Platform Name="Win64">
                         <Operation>1</Operation>
                     </Platform>
+                    <Platform Name="Win64x">
+                        <Operation>1</Operation>
+                    </Platform>
                 </DeployClass>
                 <DeployClass Name="ProjectiOSDeviceDebug">
                     <Platform Name="iOSDevice32">
@@ -1169,6 +1183,7 @@
                 <ProjectRoot Platform="OSXARM64" Name="$(PROJECTNAME).app"/>
                 <ProjectRoot Platform="Win32" Name="$(PROJECTNAME)"/>
                 <ProjectRoot Platform="Win64" Name="$(PROJECTNAME)"/>
+                <ProjectRoot Platform="Win64x" Name="$(PROJECTNAME)"/>
             </Deployment>
             <MMX>
                 <UsesClauseFormatter AutoFormat="0">

@@ -21,6 +21,7 @@ const
   mfSettingsCommon = mfSettingsBase + 1;
   mfSettingsInfo = mfSettingsBase + 2;
   mfSettingsSimulators = mfSettingsBase + 3;
+  mfSettingsNotes = mfSettingsBase + 4;
 
   mfSimulatorsBase = 300;
   mfSimulatorsSmtp = mfSimulatorsBase + 1;
@@ -35,6 +36,7 @@ const
   iiSettingsCommon = 2;
   iiSettingsSimulators = 6;
   iiSettingsInfo = 1;
+  iiSettingsNotes = 11;
 
   iiSimulatorsSmtp = 7;
   iiSimulatorsHttp = 8;

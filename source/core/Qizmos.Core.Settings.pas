@@ -42,14 +42,16 @@ type
     FFolder: String;
     FEditorFont: String;
     FEditorFontSize: Integer;
-    procedure SetFolder(Value: String);
+    procedure SetFolder(AValue: String);
+    procedure SetEditorFont(AValue:  String);
+    procedure SetEditorFontSize(AValue:  Integer);
   public
     constructor Create;
     procedure Assign(Source: TPersistent); override;
   published
     property Folder: String read FFolder write SetFolder;
-    property EditorFont: String read FEditorFont write FEditorFont;
-    property EditorFontSize: Integer read FEditorFontSize write FEditorFontSize;
+    property EditorFont: String read FEditorFont write SetEditorFont;
+    property EditorFontSize: Integer read FEditorFontSize write SetEditorFontSize;
   end;
 
   TApplicationFormPosition = class(TPersistent)
@@ -409,9 +411,27 @@ begin
   FEditorFontSize := 10;
 end;
 
-procedure TNotesSettings.SetFolder(Value: String);
+procedure TNotesSettings.SetEditorFont(AValue: String);
 begin
-  FFolder := Value;
+  if FEditorFont <> AValue then
+    begin
+      FEditorFont := AValue;
+      SettingChangeEvent(svEditorFont);
+    end;
+end;
+
+procedure TNotesSettings.SetEditorFontSize(AValue: Integer);
+begin
+  if FEditorFontSize <> AValue then
+    begin
+      FEditorFontSize := AValue;
+      SettingChangeEvent(svEditorFont);
+    end;
+end;
+
+procedure TNotesSettings.SetFolder(AValue: String);
+begin
+  FFolder := AValue;
   ForceDirectories(FFolder);
 end;
 
