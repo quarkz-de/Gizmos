@@ -8,7 +8,8 @@ uses
   Vcl.Forms, Vcl.Themes;
 
 type
-  TApplicationSettingValue = (svFont, svHttpPort, svEditorFont);
+  TApplicationSettingValue = (svFont, svHttpPort, svEditorFont, svRedmineHost,
+    svRedmineApiKey);
 
   TSmtpServerSettings = class(TPersistent)
   private
@@ -54,6 +55,22 @@ type
     property EditorFontSize: Integer read FEditorFontSize write SetEditorFontSize;
   end;
 
+  TRedmineSettings = class(TPersistent)
+  private
+    FActiveOnStartup: Boolean;
+    FHost: String;
+    FApiKey: String;
+    procedure SetHost(AValue: String);
+    procedure SetApiKey(AValue: String);
+  public
+    constructor Create;
+    procedure Assign(Source: TPersistent); override;
+  published
+    property ActiveOnStartup: Boolean read FActiveOnStartup write FActiveOnStartup;
+    property Host: String read FHost write SetHost;
+    property ApiKey: String read FApiKey write SetApiKey;
+  end;
+
   TApplicationFormPosition = class(TPersistent)
   private
     FWindowState: TWindowState;
@@ -81,6 +98,7 @@ type
     FSmtpServer: TSmtpServerSettings;
     FHttpServer: THttpServerSettings;
     FNotes: TNotesSettings;
+    FRedmine: TRedmineSettings;
     FTheme: TApplicationTheme;
     FThemeName: String;
     FIsDarkTheme: Boolean;
@@ -97,6 +115,7 @@ type
     procedure SetSmtpServer(const Value: TSmtpServerSettings);
     procedure SetHttpServer(const Value: THttpServerSettings);
     procedure SetNotes(const Value: TNotesSettings);
+    procedure SetRedmine(const Value: TRedmineSettings);
     procedure InitTheme;
   public
     constructor Create;
@@ -114,6 +133,7 @@ type
     property SmtpServer: TSmtpServerSettings read FSmtpServer write SetSmtpServer;
     property HttpServer: THttpServerSettings read FHttpServer write SetHttpServer;
     property Notes: TNotesSettings read FNotes write SetNotes;
+    property Redmine: TRedmineSettings read FRedmine write SetRedmine;
     property SettingsFoldername: String read GetSettingsFoldername;
     property FontSize: Integer read FFontSize write SetFontSize;
     property StartMinimized: Boolean read FStartMinimized write FStartMinimized;
@@ -156,6 +176,7 @@ begin
   FSmtpServer := TSmtpServerSettings.Create;
   FHttpServer := THttpServerSettings.Create;
   FNotes := TNotesSettings.Create;
+  FRedmine := TRedmineSettings.Create;
   FDrawerOpened := true;
   FFontSize := 9;
   FStartMinimized := false;
@@ -168,6 +189,7 @@ begin
   FHttpServer.Free;
   FormPosition.Free;
   FNotes.Free;
+  FRedmine.Free;
   inherited;
 end;
 
@@ -286,6 +308,11 @@ begin
   FNotes.Assign(Value);
 end;
 
+procedure TApplicationSettings.SetRedmine(const Value: TRedmineSettings);
+begin
+  FRedmine.Assign(Value);
+end;
+
 procedure TApplicationSettings.SetSmtpServer(const Value: TSmtpServerSettings);
 begin
   FSmtpServer.Assign(Value);
@@ -397,6 +424,8 @@ begin
   if Source is TNotesSettings then
     begin
       Folder := TNotesSettings(Source).Folder;
+      EditorFont := TNotesSettings(Source).EditorFont;
+      EditorFontSize := TNotesSettings(Source).EditorFontSize;
     end
   else
     inherited Assign(Source);
@@ -433,6 +462,45 @@ procedure TNotesSettings.SetFolder(AValue: String);
 begin
   FFolder := AValue;
   ForceDirectories(FFolder);
+end;
+
+{ TRedmineSettings }
+
+procedure TRedmineSettings.Assign(Source: TPersistent);
+begin
+  if Source is TRedmineSettings then
+    begin
+      Host := TRedmineSettings(Source).Host;
+      ApiKey := TRedmineSettings(Source).ApiKey;
+    end
+  else
+    inherited Assign(Source);
+end;
+
+constructor TRedmineSettings.Create;
+begin
+  inherited Create;
+  FActiveOnStartup := false;
+  FHost := '';
+  FApiKey := '';
+end;
+
+procedure TRedmineSettings.SetApiKey(AValue: String);
+begin
+  if FApiKey <> AValue then
+    begin
+      FApiKey := AValue;
+      SettingChangeEvent(svRedmineApiKey);
+    end;
+end;
+
+procedure TRedmineSettings.SetHost(AValue: String);
+begin
+  if FHost <> AValue then
+    begin
+      FHost := AValue;
+      SettingChangeEvent(svRedmineHost);
+    end;
 end;
 
 initialization

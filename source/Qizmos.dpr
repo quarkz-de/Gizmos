@@ -27,6 +27,7 @@ uses
   Qizmos.Settings.InfoForm in 'settings\Qizmos.Settings.InfoForm.pas' {wSettingsInfoForm},
   Qizmos.Settings.NotesForm in 'settings\Qizmos.Settings.NotesForm.pas' {wSettingsNotesForm},
   Qizmos.Settings.SimulatorsForm in 'settings\Qizmos.Settings.SimulatorsForm.pas' {wSettingsSimulatorsForm},
+  Qizmos.Settings.RedmineForm in 'settings\Qizmos.Settings.RedmineForm.pas' {wSettingsRedmineForm},
   Qizmos.Settings.FormHelpers in 'settings\Qizmos.Settings.FormHelpers.pas',
   Qizmos.Simulators.Form in 'simulators\Qizmos.Simulators.Form.pas' {wSimulatorsForm},
   Qizmos.Simulators.SmtpForm in 'simulators\Qizmos.Simulators.SmtpForm.pas' {wSimulatorsSmtpForm},
@@ -35,7 +36,10 @@ uses
   Qizmos.Simulators.HttpVisualizers in 'simulators\Qizmos.Simulators.HttpVisualizers.pas',
   Qizmos.Simulators.EMailViewer in 'simulators\Qizmos.Simulators.EMailViewer.pas' {wEMailViewer},
   Qizmos.Notes.Form in 'notes\Qizmos.Notes.Form.pas' {wNotesForm},
-  Qizmos.Notes.Visualizers in 'notes\Qizmos.Notes.Visualizers.pas';
+  Qizmos.Notes.Visualizers in 'notes\Qizmos.Notes.Visualizers.pas',
+  Qizmos.Redmine.Form in 'redmine\Qizmos.Redmine.Form.pas' {wRedmineForm},
+  Qizmos.Redmine.Api in 'redmine\Qizmos.Redmine.Api.pas',
+  Qizmos.Redmine.UserForm in 'redmine\Qizmos.Redmine.UserForm.pas' {wRedmineUserForm};
 
 {$R *.res}
 
@@ -51,7 +55,6 @@ begin
   Application.Title := 'Qizmos';
   Application.CreateForm(TdmCommon, dmCommon);
   Application.CreateForm(TwMainForm, wMainForm);
-  Application.CreateForm(TwSettingsNotesForm, wSettingsNotesForm);
   Application.ShowMainForm := not (ApplicationSettings.StartMinimized and ApplicationSettings.MinimizeToTray);
   Application.Run;
 end.

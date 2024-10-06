@@ -36,8 +36,9 @@ const
   biNotes = 0;
   biSimulatorsSmtp = 1;
   biSimulatorsHttp = 2;
+  biRedmine = 3;
 
-  biMaxItems = 3;
+  biMaxItems = 4;
 
 { TwWelcomeForm }
 
@@ -75,6 +76,11 @@ begin
         txTitle.Caption := 'HTTP Blackhole';
         imIcon.ImageIndex := iiSimulatorsHttp;
       end;
+    biRedmine:
+      begin
+        txTitle.Caption := 'Redmine';
+        imIcon.ImageIndex := iiRedmine;
+      end;
   end;
 end;
 
@@ -87,6 +93,8 @@ begin
       GlobalEventBus.Post(TEventFactory.NewModuleChangeEvent(mfMainSimulators, mfSimulatorsSmtp));
     biSimulatorsHttp:
       GlobalEventBus.Post(TEventFactory.NewModuleChangeEvent(mfMainSimulators, mfSimulatorsHttp));
+    biRedmine:
+      GlobalEventBus.Post(TEventFactory.NewModuleChangeEvent(mfMainRedmine, 0));
   end;
 
   clModules.ItemIndex := -1;

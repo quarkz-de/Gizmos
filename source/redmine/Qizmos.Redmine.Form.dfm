@@ -1,26 +1,24 @@
-object wSettingsForm: TwSettingsForm
+object wRedmineForm: TwRedmineForm
   Left = 0
   Top = 0
-  BiDiMode = bdLeftToRight
   BorderStyle = bsNone
-  Caption = 'Einstellungen'
-  ClientHeight = 468
-  ClientWidth = 777
+  Caption = 'Redmine'
+  ClientHeight = 474
+  ClientWidth = 616
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -11
-  Font.Name = 'Tahoma'
+  Font.Height = -12
+  Font.Name = 'Segoe UI'
   Font.Style = []
-  ParentBiDiMode = False
   OnCreate = FormCreate
-  TextHeight = 13
+  TextHeight = 15
   object nvNavigation: TQzNavigationView
     AlignWithMargins = True
     Left = 3
     Top = 3
     Width = 170
-    Height = 462
+    Height = 468
     Align = alLeft
     BorderStyle = bsNone
     ButtonHeight = 40
@@ -33,8 +31,8 @@ object wSettingsForm: TwSettingsForm
   object pnFormContainer: TQzPanel
     Left = 176
     Top = 0
-    Width = 601
-    Height = 468
+    Width = 440
+    Height = 474
     Edges = [qeLeft]
     Align = alClient
     BorderWidth = 1
@@ -192,11 +190,31 @@ object wSettingsForm: TwSettingsForm
         CollectionIndex = 29
         CollectionName = '029_Redmine'
         Name = '029_Redmine'
+      end
+      item
+        CollectionIndex = 30
+        CollectionName = '030_User'
+        Name = '030_User'
+      end
+      item
+        CollectionIndex = 31
+        CollectionName = '031_Ticket'
+        Name = '031_Ticket'
+      end
+      item
+        CollectionIndex = 32
+        CollectionName = '032_External_Link'
+        Name = '032_External_Link'
+      end
+      item
+        CollectionIndex = 33
+        CollectionName = '033_Refresh'
+        Name = '033_Refresh'
       end>
     ImageCollection = dmCommon.icSvgIcons
     Width = 24
     Height = 24
-    Left = 688
-    Top = 100
+    Left = 576
+    Top = 104
   end
 end

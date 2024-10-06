@@ -287,6 +287,11 @@ object wMainForm: TwMainForm
         CollectionIndex = 28
         CollectionName = '028_Apps'
         Name = '028_Apps'
+      end
+      item
+        CollectionIndex = 29
+        CollectionName = '029_Redmine'
+        Name = '029_Redmine'
       end>
     ImageCollection = dmCommon.icSvgIcons
     Width = 32
@@ -441,6 +446,11 @@ object wMainForm: TwMainForm
         CollectionIndex = 28
         CollectionName = '028_Apps'
         Name = '028_Apps'
+      end
+      item
+        CollectionIndex = 29
+        CollectionName = '029_Redmine'
+        Name = '029_Redmine'
       end>
     ImageCollection = dmCommon.icSvgIcons
     Left = 256

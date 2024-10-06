@@ -32,7 +32,8 @@ implementation
 uses
   Qizmos.App.DataModule, Qizmos.Core.Settings, Qizmos.Core.Types,
   Qizmos.Settings.CommonForm, Qizmos.Settings.InfoForm,
-  Qizmos.Settings.NotesForm, Qizmos.Settings.SimulatorsForm;
+  Qizmos.Settings.NotesForm, Qizmos.Settings.SimulatorsForm,
+  Qizmos.Settings.RedmineForm;
 
 const
   iiSystemTheme = 0;
@@ -74,6 +75,7 @@ begin
   Helper.AddForm(TwSettingsCommonForm);
   Helper.AddForm(TwSettingsNotesForm);
   Helper.AddForm(TwSettingsSimulatorsForm);
+  Helper.AddForm(TwSettingsRedmineForm);
   Helper.AddForm(TwSettingsInfoForm);
   Helper.Free;
 end;

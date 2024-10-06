@@ -68,7 +68,8 @@ implementation
 uses
   Qizmos.App.DataModule, Qizmos.App.WelcomeForm, Qizmos.App.About,
   Qizmos.Core.Settings, Qizmos.Core.Types,
-  Qizmos.Settings.Form, Qizmos.Simulators.Form, Qizmos.Notes.Form;
+  Qizmos.Settings.Form, Qizmos.Simulators.Form, Qizmos.Notes.Form,
+  Qizmos.Redmine.Form;
 
 { TwMain }
 
@@ -97,6 +98,8 @@ begin
       nvHeader.ItemIndex := 1;
     mfMainSimulators:
       nvHeader.ItemIndex := 2;
+    mfMainRedmine:
+      nvHeader.ItemIndex := 3;
   end;
 end;
 
@@ -217,6 +220,7 @@ begin
   Helper.AddForm(TwWelcomeForm);
   Helper.AddForm(TwNotesForm);
   Helper.AddForm(TwSimulatorsForm);
+  Helper.AddForm(TwRedmineForm);
   Helper.Free;
 
   Helper := TNavigationViewFormHelper.Create(self, nvFooter);

@@ -28,6 +28,7 @@ type
   protected
     function GetFormId: TQzManagedFormId; override;
     function GetImageIndex: Integer; override;
+    procedure FontChanged; override;
   end;
 
 var
@@ -39,7 +40,7 @@ implementation
 
 uses
   Qodelib.Fonts,
-  Qizmos.Core.Types, Qizmos.Core.Settings;
+  Qizmos.Core.Types, Qizmos.Core.Settings, Qizmos.Settings.FormHelpers;
 
 { TwSettingsNotesForm }
 
@@ -47,6 +48,12 @@ procedure TwSettingsNotesForm.cbFontNameChange(Sender: TObject);
 begin
   if cbFontName.Items.IndexOf(cbFontName.Text) > -1 then
     ApplicationSettings.Notes.EditorFont := cbFontName.Text;
+end;
+
+procedure TwSettingsNotesForm.FontChanged;
+begin
+  inherited;
+  TSettingsFormPanelHelper.UpdatePanelFonts(self);
 end;
 
 procedure TwSettingsNotesForm.FormCreate(Sender: TObject);

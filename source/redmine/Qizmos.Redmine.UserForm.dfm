@@ -1,46 +1,158 @@
-object wSettingsForm: TwSettingsForm
+object wRedmineUserForm: TwRedmineUserForm
   Left = 0
   Top = 0
-  BiDiMode = bdLeftToRight
   BorderStyle = bsNone
-  Caption = 'Einstellungen'
-  ClientHeight = 468
-  ClientWidth = 777
+  Caption = 'Benutzer'
+  ClientHeight = 480
+  ClientWidth = 640
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -11
-  Font.Name = 'Tahoma'
+  Font.Height = -12
+  Font.Name = 'Segoe UI'
   Font.Style = []
-  ParentBiDiMode = False
   OnCreate = FormCreate
-  TextHeight = 13
-  object nvNavigation: TQzNavigationView
-    AlignWithMargins = True
-    Left = 3
-    Top = 3
-    Width = 170
-    Height = 462
-    Align = alLeft
-    BorderStyle = bsNone
-    ButtonHeight = 40
-    ButtonOptions = [nboGroupStyle, nboShowCaptions]
-    Images = viImages
-    Items = <>
-    TabOrder = 0
-    OnButtonClicked = nvNavigationButtonClicked
+  OnDestroy = FormDestroy
+  TextHeight = 15
+  object txIdLabel: TLabel
+    Left = 12
+    Top = 60
+    Width = 11
+    Height = 15
+    Caption = 'ID'
   end
-  object pnFormContainer: TQzPanel
-    Left = 176
+  object txId: TLabel
+    Left = 96
+    Top = 60
+    Width = 20
+    Height = 15
+    Caption = 'txId'
+  end
+  object txLoginLabel: TLabel
+    Left = 14
+    Top = 88
+    Width = 30
+    Height = 15
+    Caption = 'Login'
+  end
+  object txLogin: TLabel
+    Left = 96
+    Top = 88
+    Width = 40
+    Height = 15
+    Caption = 'txLogin'
+  end
+  object txVornameLabel: TLabel
+    Left = 14
+    Top = 116
+    Width = 47
+    Height = 15
+    Caption = 'Vorname'
+  end
+  object txFirstname: TLabel
+    Left = 96
+    Top = 116
+    Width = 62
+    Height = 15
+    Caption = 'txFirstname'
+  end
+  object txLastnameLabel: TLabel
+    Left = 14
+    Top = 144
+    Width = 58
+    Height = 15
+    Caption = 'Nachname'
+  end
+  object txLastname: TLabel
+    Left = 97
+    Top = 144
+    Width = 61
+    Height = 15
+    Caption = 'txLastname'
+  end
+  object txMailLabel: TLabel
+    Left = 14
+    Top = 172
+    Width = 23
+    Height = 15
+    Caption = 'Mail'
+  end
+  object txMail: TLabel
+    Left = 97
+    Top = 172
+    Width = 33
+    Height = 15
+    Caption = 'txMail'
+  end
+  object imMyPage: TVirtualImage
+    Left = 14
+    Top = 204
+    Width = 16
+    Height = 16
+    ImageCollection = dmCommon.icSvgIcons
+    ImageWidth = 0
+    ImageHeight = 0
+    ImageIndex = 32
+    ImageName = '032_External_Link'
+  end
+  object pnHeader: TPanel
+    Left = 0
     Top = 0
-    Width = 601
-    Height = 468
-    Edges = [qeLeft]
-    Align = alClient
-    BorderWidth = 1
-    TabOrder = 1
+    Width = 640
+    Height = 41
+    Align = alTop
+    BevelOuter = bvNone
+    TabOrder = 0
+    ExplicitLeft = -16
+    DesignSize = (
+      640
+      41)
+    object txCaption: TLabel
+      Left = 64
+      Top = 8
+      Width = 196
+      Height = 32
+      Caption = 'Redmine Benutzer'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -24
+      Font.Name = 'Segoe UI'
+      Font.Style = []
+      ParentFont = False
+    end
+    object imIcon: TVirtualImage
+      Left = 12
+      Top = 8
+      Width = 32
+      Height = 32
+      ImageCollection = dmCommon.icSvgIcons
+      ImageWidth = 0
+      ImageHeight = 0
+      ImageIndex = 30
+      ImageName = '030_User'
+    end
+    object btRefresh: TSpeedButton
+      Left = 608
+      Top = 7
+      Width = 32
+      Height = 32
+      Anchors = [akTop, akRight]
+      ImageIndex = 33
+      ImageName = '033_Refresh'
+      Images = vilLargeIcons
+      OnClick = btRefreshClick
+    end
   end
-  object viImages: TVirtualImageList
+  object txMyPage: TLinkLabel
+    Left = 36
+    Top = 204
+    Width = 65
+    Height = 19
+    Caption = 'Meine Seite'
+    TabOrder = 1
+    OnLinkClick = txMyPageLinkClick
+  end
+  object vilLargeIcons: TVirtualImageList
     AutoFill = True
     Images = <
       item
@@ -192,11 +304,31 @@ object wSettingsForm: TwSettingsForm
         CollectionIndex = 29
         CollectionName = '029_Redmine'
         Name = '029_Redmine'
+      end
+      item
+        CollectionIndex = 30
+        CollectionName = '030_User'
+        Name = '030_User'
+      end
+      item
+        CollectionIndex = 31
+        CollectionName = '031_Ticket'
+        Name = '031_Ticket'
+      end
+      item
+        CollectionIndex = 32
+        CollectionName = '032_External_Link'
+        Name = '032_External_Link'
+      end
+      item
+        CollectionIndex = 33
+        CollectionName = '033_Refresh'
+        Name = '033_Refresh'
       end>
     ImageCollection = dmCommon.icSvgIcons
-    Width = 24
-    Height = 24
-    Left = 688
-    Top = 100
+    Width = 32
+    Height = 32
+    Left = 308
+    Top = 76
   end
 end
