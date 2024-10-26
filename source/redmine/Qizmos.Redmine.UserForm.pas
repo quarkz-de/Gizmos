@@ -8,12 +8,12 @@ uses
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.WinXCtrls,
   Vcl.VirtualImage, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.Buttons,
   Vcl.ImgList, Vcl.VirtualImageList,
-  Qodelib.ManagedForms,
-  Qizmos.Core.Forms, Qizmos.Redmine.Api;
+  Qodelib.ManagedForms, Qodelib.Panels,
+  Qizmos.Core.Forms, Qizmos.Redmine.Api, Qizmos.Redmine.Classes;
 
 type
   TwRedmineUserForm = class(TManagedForm)
-    pnHeader: TPanel;
+    pnHeader: TQzPanel;
     txCaption: TLabel;
     imIcon: TVirtualImage;
     txIdLabel: TLabel;

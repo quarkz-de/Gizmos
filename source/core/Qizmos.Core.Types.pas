@@ -31,6 +31,7 @@ const
 
   mfRedmineBase = 400;
   mfRedmineUser = mfRedmineBase + 1;
+  mfRedmineTickets = mfRedmineBase + 2;
 
   // Image Indexes
   iiMainSettings = 2;
@@ -50,6 +51,7 @@ const
   iiNotes = 11;
   iiRedmine = 29;
   iiRedmineUser = 30;
+  iiRedmineTickets = 31;
 
   // Other
   SwitchStates: array[Boolean] of TToggleSwitchState = (tssOff, tssOn);

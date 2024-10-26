@@ -33,13 +33,13 @@ implementation
 {$R *.dfm}
 
 uses
-  Qizmos.Redmine.UserForm;
+  Qizmos.Redmine.UserForm, Qizmos.Redmine.TicketsForm;
 
 { TwRedmineForm }
 
 procedure TwRedmineForm.FormCreate(Sender: TObject);
 begin
-//  ManagedForms.ShowForm(mfRedmineUser);
+  ManagedForms.ShowForm(mfRedmineUser);
 end;
 
 function TwRedmineForm.GetFormId: TQzManagedFormId;
@@ -68,6 +68,7 @@ begin
 
   Helper := TNavigationViewFormHelper.Create(self, nvNavigation);
   Helper.AddForm(TwRedmineUserForm);
+  Helper.AddForm(TwRedmineTicketsForm);
   Helper.Free;
 end;
 

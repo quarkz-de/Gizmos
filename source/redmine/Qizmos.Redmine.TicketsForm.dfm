@@ -1,8 +1,8 @@
-object wRedmineUserForm: TwRedmineUserForm
+object wRedmineTicketsForm: TwRedmineTicketsForm
   Left = 0
   Top = 0
   BorderStyle = bsNone
-  Caption = 'Benutzer'
+  Caption = 'Tickets'
   ClientHeight = 480
   ClientWidth = 640
   Color = clBtnFace
@@ -14,87 +14,6 @@ object wRedmineUserForm: TwRedmineUserForm
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   TextHeight = 15
-  object txIdLabel: TLabel
-    Left = 12
-    Top = 60
-    Width = 11
-    Height = 15
-    Caption = 'ID'
-  end
-  object txId: TLabel
-    Left = 96
-    Top = 60
-    Width = 19
-    Height = 15
-    Caption = 'txId'
-  end
-  object txLoginLabel: TLabel
-    Left = 14
-    Top = 88
-    Width = 30
-    Height = 15
-    Caption = 'Login'
-  end
-  object txLogin: TLabel
-    Left = 96
-    Top = 88
-    Width = 39
-    Height = 15
-    Caption = 'txLogin'
-  end
-  object txVornameLabel: TLabel
-    Left = 14
-    Top = 116
-    Width = 47
-    Height = 15
-    Caption = 'Vorname'
-  end
-  object txFirstname: TLabel
-    Left = 96
-    Top = 116
-    Width = 61
-    Height = 15
-    Caption = 'txFirstname'
-  end
-  object txLastnameLabel: TLabel
-    Left = 14
-    Top = 144
-    Width = 58
-    Height = 15
-    Caption = 'Nachname'
-  end
-  object txLastname: TLabel
-    Left = 97
-    Top = 144
-    Width = 60
-    Height = 15
-    Caption = 'txLastname'
-  end
-  object txMailLabel: TLabel
-    Left = 14
-    Top = 172
-    Width = 23
-    Height = 15
-    Caption = 'Mail'
-  end
-  object txMail: TLabel
-    Left = 97
-    Top = 172
-    Width = 32
-    Height = 15
-    Caption = 'txMail'
-  end
-  object imMyPage: TVirtualImage
-    Left = 14
-    Top = 204
-    Width = 16
-    Height = 16
-    ImageCollection = dmCommon.icSvgIcons
-    ImageWidth = 0
-    ImageHeight = 0
-    ImageIndex = 32
-    ImageName = '032_External_Link'
-  end
   object pnHeader: TQzPanel
     Left = 0
     Top = 0
@@ -110,9 +29,9 @@ object wRedmineUserForm: TwRedmineUserForm
     object txCaption: TLabel
       Left = 64
       Top = 8
-      Width = 196
+      Width = 73
       Height = 32
-      Caption = 'Redmine Benutzer'
+      Caption = 'Tickets'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -24
@@ -128,8 +47,8 @@ object wRedmineUserForm: TwRedmineUserForm
       ImageCollection = dmCommon.icSvgIcons
       ImageWidth = 0
       ImageHeight = 0
-      ImageIndex = 30
-      ImageName = '030_User'
+      ImageIndex = 31
+      ImageName = '031_Ticket'
     end
     object btRefresh: TSpeedButton
       Left = 600
@@ -143,14 +62,41 @@ object wRedmineUserForm: TwRedmineUserForm
       OnClick = btRefreshClick
     end
   end
-  object txMyPage: TLinkLabel
-    Left = 36
-    Top = 204
-    Width = 65
-    Height = 19
-    Caption = 'Meine Seite'
+  object vtTickets: TVirtualStringTree
+    Left = 0
+    Top = 49
+    Width = 640
+    Height = 431
+    Align = alClient
+    Colors.BorderColor = 15987699
+    Colors.DisabledColor = clGray
+    Colors.DropMarkColor = 15385233
+    Colors.DropTargetColor = 15385233
+    Colors.DropTargetBorderColor = 15385233
+    Colors.FocusedSelectionColor = 15385233
+    Colors.FocusedSelectionBorderColor = 15385233
+    Colors.GridLineColor = 15987699
+    Colors.HeaderHotColor = clBlack
+    Colors.HotColor = clBlack
+    Colors.SelectionRectangleBlendColor = 15385233
+    Colors.SelectionRectangleBorderColor = 15385233
+    Colors.SelectionTextColor = clBlack
+    Colors.TreeLineColor = 9471874
+    Colors.UnfocusedColor = clGray
+    Colors.UnfocusedSelectionColor = clWhite
+    Colors.UnfocusedSelectionBorderColor = clWhite
+    Header.AutoSizeIndex = -1
+    Header.MainColumn = -1
+    Images = vilTreeIcons
     TabOrder = 1
-    OnLinkClick = txMyPageLinkClick
+    OnDblClick = vtTicketsDblClick
+    Touch.InteractiveGestures = [igPan, igPressAndTap]
+    Touch.InteractiveGestureOptions = [igoPanSingleFingerHorizontal, igoPanSingleFingerVertical, igoPanInertia, igoPanGutter, igoParentPassthrough]
+    ExplicitLeft = 12
+    ExplicitTop = 68
+    ExplicitWidth = 533
+    ExplicitHeight = 289
+    Columns = <>
   end
   object vilLargeIcons: TVirtualImageList
     AutoFill = True
@@ -330,5 +276,11 @@ object wRedmineUserForm: TwRedmineUserForm
     Height = 32
     Left = 308
     Top = 76
+  end
+  object vilTreeIcons: TVirtualImageList
+    Images = <>
+    ImageCollection = dmCommon.icSvgIcons
+    Left = 408
+    Top = 72
   end
 end

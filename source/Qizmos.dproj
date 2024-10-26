@@ -194,6 +194,11 @@
             <Form>wRedmineUserForm</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="redmine\Qizmos.Redmine.TicketsForm.pas">
+            <Form>wRedmineTicketsForm</Form>
+        </DCCReference>
+        <DCCReference Include="redmine\Qizmos.Redmine.Classes.pas"/>
+        <DCCReference Include="redmine\Qizmos.Redmine.TicketsVisualizer.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

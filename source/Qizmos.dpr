@@ -39,7 +39,10 @@ uses
   Qizmos.Notes.Visualizers in 'notes\Qizmos.Notes.Visualizers.pas',
   Qizmos.Redmine.Form in 'redmine\Qizmos.Redmine.Form.pas' {wRedmineForm},
   Qizmos.Redmine.Api in 'redmine\Qizmos.Redmine.Api.pas',
-  Qizmos.Redmine.UserForm in 'redmine\Qizmos.Redmine.UserForm.pas' {wRedmineUserForm};
+  Qizmos.Redmine.UserForm in 'redmine\Qizmos.Redmine.UserForm.pas' {wRedmineUserForm},
+  Qizmos.Redmine.TicketsForm in 'redmine\Qizmos.Redmine.TicketsForm.pas' {wRedmineTicketsForm},
+  Qizmos.Redmine.Classes in 'redmine\Qizmos.Redmine.Classes.pas',
+  Qizmos.Redmine.TicketsVisualizer in 'redmine\Qizmos.Redmine.TicketsVisualizer.pas';
 
 {$R *.res}
 
