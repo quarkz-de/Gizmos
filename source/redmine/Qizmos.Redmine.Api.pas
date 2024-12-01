@@ -3,7 +3,7 @@ unit Qizmos.Redmine.Api;
 interface
 
 uses
-  System.SysUtils, System.JSON,
+  System.SysUtils, System.Classes, System.JSON, System.Generics.Collections,
   REST.Client,
   Qizmos.Redmine.Classes;
 
@@ -16,6 +16,8 @@ type
   public
     constructor Create(const AApiUrl: String);
     destructor Destroy; override;
+    procedure Execute; overload;
+    procedure Execute(const AParameters: TDictionary<string, string>); overload;
     property Client: TRESTClient read FClient;
     property Request: TRESTRequest read FRequest;
     property Response: TRESTResponse read FResponse;
@@ -25,10 +27,14 @@ type
   private
     class function BuildApiUrl(const ARelativeURL: String): String;
     class function GetBaseUrl: String;
+    class function LoadParentIssues(const AIssueList: TRedmineTicketList): String;
+    class function LoadIssues(const AIssueList: TRedmineTicketList;
+      const AProjects: TRedmineProjects; const AEndPoint: String): Boolean;
   public
     class function LoadUserData(const AUser: TRedmineUser): Boolean;
     class function GetMyPageUrl: String;
-    class function GetMyIssues(const AIssueList: TRedmineTicketList): Boolean;
+    class function GetMyIssues(const AIssueList: TRedmineTicketList;
+      const AProjects: TRedmineProjects): Boolean;
     class function GetIssueUrl(const AIssueNumber: Integer): String;
   end;
 
@@ -36,6 +42,13 @@ implementation
 
 uses
   Qizmos.Core.Settings;
+
+type
+  TRedmineApiSettings = class
+  public
+    class function HasApiKey: Boolean;
+    class function GetApiKey: String;
+  end;
 
 { TRedmineApi }
 
@@ -59,139 +72,26 @@ begin
 end;
 
 class function TRedmineApi.GetMyIssues(
-  const AIssueList: TRedmineTicketList): Boolean;
+  const AIssueList: TRedmineTicketList;
+  const AProjects: TRedmineProjects): Boolean;
 const
   SMyIssues = 'issues.json?assigned_to_id=me';
+  SIssues = 'issues.json?issue_id=%s';
 var
-  Client: TRedmineRestClient;
-  JsonValue, JsonIssue: TJSONValue;
-  JsonArray: TJSONArray;
-  Issue: TRedmineTicket;
-  ParentID: Integer;
+  IdList: String;
 begin
-(*
-{
-	"issues": [
-		{
-			"id": 2,
-			"project": {
-				"id": 1,
-				"name": "Qizmos"
-			},
-			"tracker": {
-				"id": 1,
-				"name": "Fehler"
-			},
-			"status": {
-				"id": 1,
-				"name": "Neu",
-				"is_closed": false
-			},
-			"priority": {
-				"id": 2,
-				"name": "Normal"
-			},
-			"author": {
-				"id": 5,
-				"name": "Reiner Lämmle"
-			},
-			"assigned_to": {
-				"id": 5,
-				"name": "Reiner Lämmle"
-			},
-			"parent": {
-				"id": 1
-			},
-			"subject": "Unterticket zu #1",
-			"description": "",
-			"start_date": "2024-10-26",
-			"due_date": null,
-			"done_ratio": 0,
-			"is_private": false,
-			"estimated_hours": null,
-			"total_estimated_hours": null,
-			"spent_hours": 0.0,
-			"total_spent_hours": 0.0,
-			"created_on": "2024-10-26T09:26:04Z",
-			"updated_on": "2024-10-26T09:26:43Z",
-			"closed_on": null
-		},
-		{
-			"id": 1,
-			"project": {
-				"id": 1,
-				"name": "Qizmos"
-			},
-			"tracker": {
-				"id": 2,
-				"name": "Feature"
-			},
-			"status": {
-				"id": 1,
-				"name": "Neu",
-				"is_closed": false
-			},
-			"priority": {
-				"id": 2,
-				"name": "Normal"
-			},
-			"author": {
-				"id": 5,
-				"name": "Reiner Lämmle"
-			},
-			"assigned_to": {
-				"id": 5,
-				"name": "Reiner Lämmle"
-			},
-			"subject": "Redmine-Client in Qizmos einbauen",
-			"description": "",
-			"start_date": "2024-10-26",
-			"due_date": null,
-			"done_ratio": 0,
-			"is_private": false,
-			"estimated_hours": null,
-			"total_estimated_hours": 0.0,
-			"spent_hours": 0.0,
-			"total_spent_hours": 0.0,
-			"created_on": "2024-10-04T08:18:14Z",
-			"updated_on": "2024-10-26T09:26:04Z",
-			"closed_on": null
-		}
-	],
-	"total_count": 2,
-	"offset": 0,
-	"limit": 25
-}
-*)
   AIssueList.Clear;
+  Result := false;
+  if not TRedmineApiSettings.HasApiKey then
+    Exit;
 
-// todo: while total_count = limit do inc(offset)
+  Result := LoadIssues(AIssueList, AProjects, SMyIssues);
 
-  Client := TRedmineRestClient.Create(BuildApiUrl(SMyIssues));
-  try
-    Client.Request.Execute;
-    Result := Client.Response.Status.Success;
-    if Result then
-      begin
-        JsonValue := Client.Response.JSONValue;
-        JsonArray := JSonValue.GetValue<TJSONArray>('issues');
-        for JsonIssue in JsonArray do
-          begin
-            Issue := TRedmineTicket.Create;
-            Issue.ID := JsonIssue.GetValue<Integer>('id');
-            Issue.Subject := JsonIssue.GetValue<String>('subject');
-            if JsonIssue.TryGetValue<Integer>('parent.id', ParentID) then
-              Issue.ParentID := ParentID
-            else
-              Issue.ParentID := 0;
-            Issue.Created := JsonIssue.GetValue<TDateTime>('created_on');
-            Issue.Updated := JsonIssue.GetValue<TDateTime>('updated_on');
-            AIssueList.Add(Issue);
-          end;
-      end;
-  finally
-    Client.Free;
-  end;
+  if Result then
+    begin
+      IdList := LoadParentIssues(AIssueList);
+      LoadIssues(AIssueList, AProjects, Format(SIssues, [IdList]));
+    end;
 end;
 
 class function TRedmineApi.GetMyPageUrl: String;
@@ -199,6 +99,133 @@ const
   SMyPage = 'my/page';
 begin
   Result := BuildApiUrl(SMyPage);
+end;
+
+class function TRedmineApi.LoadIssues(const AIssueList: TRedmineTicketList;
+  const AProjects: TRedmineProjects; const AEndPoint: String): Boolean;
+const
+  SOffset = 'offset';
+  SLimit = 'limit';
+  ChunkSize = 25;
+var
+  Client: TRedmineRestClient;
+  JsonValue, JsonIssue: TJSONValue;
+  JsonArray: TJSONArray;
+  ExistingTickets: TDictionary<Integer, TRedmineTicket>;
+  Issue: TRedmineTicket;
+  ParentID, IssueID: Integer;
+  Parameters: TDictionary<string, string>;
+  Offset, Limit, IssueCount: Integer;
+  ValidChunk: Boolean;
+  NameValue: String;
+begin
+  Parameters := TDictionary<string, string>.Create;
+  Offset := 0;
+  Limit := ChunkSize;
+
+  ExistingTickets := TDictionary<Integer, TRedmineTicket>.Create;
+  for Issue in AIssueList do
+    ExistingTickets.Add(Issue.ID, Issue);
+
+  Client := TRedmineRestClient.Create(BuildApiUrl(AEndPoint));
+  try
+    Parameters.AddOrSetValue(SOffset, IntToStr(Offset));
+    Parameters.AddOrSetValue(SLimit, IntToStr(Limit));
+    Client.Execute(Parameters);
+    Result := Client.Response.Status.Success;
+    ValidChunk := Result;
+    while ValidChunk do
+      begin
+        JsonValue := Client.Response.JSONValue;
+        if JSonValue.TryGetValue<TJSONArray>('issues', JsonArray) then
+          begin
+            IssueCount := 0;
+            for JsonIssue in JsonArray do
+              begin
+                IssueID := JsonIssue.GetValue<Integer>('id');
+                if not ExistingTickets.TryGetValue(IssueID, Issue) then
+                  begin
+                    Issue := TRedmineTicket.Create;
+                    Issue.ID := IssueID;
+                    AIssueList.Add(Issue);
+                  end;
+                Issue.Subject := JsonIssue.GetValue<String>('subject');
+                if JsonIssue.TryGetValue<Integer>('parent.id', ParentID) then
+                  Issue.ParentID := ParentID
+                else
+                  Issue.ParentID := 0;
+                Issue.Created := JsonIssue.GetValue<TDateTime>('created_on');
+                Issue.Updated := JsonIssue.GetValue<TDateTime>('updated_on');
+                Issue.ProjectID := JsonIssue.GetValue<Integer>('project.id');
+                if JsonIssue.TryGetValue<String>('project.name', NameValue) then
+                  AProjects.AddOrSetValue(Issue.ProjectID, NameValue);
+                Inc(IssueCount);
+              end;
+            if IssueCount = ChunkSize then
+              begin
+                Offset := Offset + ChunkSize;
+                Parameters.AddOrSetValue(SOffset, IntToStr(Offset));
+                Client.Execute(Parameters);
+              end
+            else
+              ValidChunk := false;
+          end
+        else
+          ValidChunk := false;
+      end;
+  finally
+    Client.Free;
+    Parameters.Free;
+    ExistingTickets.Free;
+  end;
+end;
+
+class function TRedmineApi.LoadParentIssues(
+  const AIssueList: TRedmineTicketList): String;
+var
+  IssueDict: TDictionary<Integer, TRedmineTicket>;
+  AdditionalIssues: TList<TRedmineTicket>;
+  Issue, ChildIssue, ParentIssue: TRedmineTicket;
+  IDs: TStringList;
+begin
+  IssueDict := TDictionary<Integer, TRedmineTicket>.Create;
+  AdditionalIssues := TList<TRedmineTicket>.Create;
+
+  for Issue in AIssueList do
+    IssueDict.Add(Issue.ID, Issue);
+
+  for Issue in AIssueList do
+    begin
+      ChildIssue := Issue;
+      while Assigned(ChildIssue) and (ChildIssue.ParentID > 0) do
+        begin
+          if IssueDict.TryGetValue(Issue.ParentID, ParentIssue) then
+            begin
+              Issue.Parent := ParentIssue;
+            end
+          else
+            begin
+              ParentIssue := TRedmineTicket.Create;
+              ParentIssue.ID := Issue.ParentID;
+              Issue.Parent := ParentIssue;
+              AdditionalIssues.Add(ParentIssue);
+              IssueDict.Add(ParentIssue.ID, ParentIssue);
+            end;
+          ChildIssue := ParentIssue;
+        end;
+    end;
+
+  IDs := TStringList.Create;
+  for Issue in AdditionalIssues do
+    begin
+      IDs.Add(Issue.ID.ToString);
+      AIssueList.Add(Issue);
+    end;
+  Result := IDs.CommaText;
+  IDs.Free;
+
+  AdditionalIssues.Free;
+  IssueDict.Free;
 end;
 
 class function TRedmineApi.LoadUserData(const AUser: TRedmineUser): Boolean;
@@ -209,9 +236,13 @@ var
   JsonValue: TJSONValue;
 begin
   AUser.Clear;
+  Result := false;
+  if not TRedmineApiSettings.HasApiKey then
+    Exit;
+
   Client := TRedmineRestClient.Create(BuildApiUrl(SCurrentUser));
   try
-    Client.Request.Execute;
+    Client.Execute;
     Result := Client.Response.Status.Success;
     if Result then
       begin
@@ -235,8 +266,8 @@ begin
   FRequest := TRESTRequest.Create(nil);
   FResponse := TRESTResponse.Create(nil);
 
-  FClient.SetHTTPHeader('X-Redmine-API-Key', ApplicationSettings.Redmine.ApiKey);
-  FClient.AddParameter('key', ApplicationSettings.Redmine.ApiKey);
+  FClient.SetHTTPHeader('X-Redmine-API-Key', TRedmineApiSettings.GetApiKey);
+  FClient.AddParameter('key', TRedmineApiSettings.GetApiKey);
   FClient.ContentType := 'application/json';
   FRequest.Client := FClient;
   FRequest.Response := FResponse;
@@ -248,6 +279,38 @@ begin
   FResponse.Free;
   FClient.Free;
   inherited;
+end;
+
+procedure TRedmineRestClient.Execute(
+  const AParameters: TDictionary<string, string>);
+var
+  Param: TPair<string, string>;
+begin
+  for Param in AParameters do
+    begin
+      if Request.Params.ContainsParameter(Param.Key) then
+        Request.Params.ParameterByName(Param.Key).Value := Param.Value
+      else
+        Request.AddParameter(Param.Key, Param.Value);
+    end;
+  Request.Execute;
+end;
+
+procedure TRedmineRestClient.Execute;
+begin
+  Request.Execute;
+end;
+
+{ TRedmineApiSettings }
+
+class function TRedmineApiSettings.GetApiKey: String;
+begin
+  Result := ApplicationSettings.Redmine.ApiKey;
+end;
+
+class function TRedmineApiSettings.HasApiKey: Boolean;
+begin
+  Result := not ApplicationSettings.Redmine.ApiKey.IsEmpty;
 end;
 
 end.

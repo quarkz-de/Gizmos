@@ -28,6 +28,7 @@ type
     procedure vtTicketsDblClick(Sender: TObject);
   private
     FTickets: TRedmineTicketList;
+    FProjects: TRedmineProjects;
     FTicketsVisualizer: ITicketListVisualizer;
     procedure LoadTickets;
     procedure LoadSelectedTicketInBrowser;
@@ -57,15 +58,18 @@ end;
 procedure TwRedmineTicketsForm.FormCreate(Sender: TObject);
 begin
   FTickets := TRedmineTicketList.Create;
+  FProjects := TRedmineProjects.Create;;
   FTicketsVisualizer := GlobalContainer.Resolve<ITicketListVisualizer>;
   FTicketsVisualizer.SetVirtualTree(vtTickets);
   FTicketsVisualizer.SetTickets(FTickets);
+  FTicketsVisualizer.SetProjects(FProjects);
   LoadTickets;
 end;
 
 procedure TwRedmineTicketsForm.FormDestroy(Sender: TObject);
 begin
   FTickets.Free;
+  FProjects.Free;
 end;
 
 function TwRedmineTicketsForm.GetFormId: TQzManagedFormId;
@@ -88,9 +92,13 @@ begin
 end;
 
 procedure TwRedmineTicketsForm.LoadTickets;
+var
+  LastSelectedTicketId: Integer;
 begin
-  TRedmineApi.GetMyIssues(FTickets);
-  FTicketsVisualizer.UpdateContent;
+  LastSelectedTicketId := FTicketsVisualizer.GetSelectedTicketID;
+  FTicketsVisualizer.ClearContent;
+  TRedmineApi.GetMyIssues(FTickets, FProjects);
+  FTicketsVisualizer.UpdateContent(LastSelectedTicketId);
 end;
 
 procedure TwRedmineTicketsForm.vtTicketsDblClick(Sender: TObject);

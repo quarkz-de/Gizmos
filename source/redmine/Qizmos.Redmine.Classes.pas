@@ -28,17 +28,23 @@ type
     FID: Integer;
     FSubject: String;
     FParentID: Integer;
+    FParent: TRedmineTicket;
     FCreated: TDateTime;
     FUpdated: TDateTime;
+    FProjectID: Integer;
   public
     property ID: Integer read FID write FID;
     property Subject: String read FSubject write FSubject;
     property ParentID: Integer read FParentID write FParentID;
+    property Parent: TRedmineTicket read FParent write FParent;
     property Created: TDateTime read FCreated write FCreated;
     property Updated: TDateTime read FUpdated write FUpdated;
+    property ProjectID: Integer read FProjectID write FProjectID;
   end;
 
   TRedmineTicketList = TObjectList<TRedmineTicket>;
+
+  TRedmineProjects = TDictionary<Integer, String>;
 
 implementation
 

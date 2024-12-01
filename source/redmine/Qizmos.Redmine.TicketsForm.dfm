@@ -92,10 +92,6 @@ object wRedmineTicketsForm: TwRedmineTicketsForm
     OnDblClick = vtTicketsDblClick
     Touch.InteractiveGestures = [igPan, igPressAndTap]
     Touch.InteractiveGestureOptions = [igoPanSingleFingerHorizontal, igoPanSingleFingerVertical, igoPanInertia, igoPanGutter, igoParentPassthrough]
-    ExplicitLeft = 12
-    ExplicitTop = 68
-    ExplicitWidth = 533
-    ExplicitHeight = 289
     Columns = <>
   end
   object vilLargeIcons: TVirtualImageList
@@ -270,6 +266,11 @@ object wRedmineTicketsForm: TwRedmineTicketsForm
         CollectionIndex = 33
         CollectionName = '033_Refresh'
         Name = '033_Refresh'
+      end
+      item
+        CollectionIndex = 34
+        CollectionName = '034_Project'
+        Name = '034_Project'
       end>
     ImageCollection = dmCommon.icSvgIcons
     Width = 32
@@ -278,7 +279,17 @@ object wRedmineTicketsForm: TwRedmineTicketsForm
     Top = 76
   end
   object vilTreeIcons: TVirtualImageList
-    Images = <>
+    Images = <
+      item
+        CollectionIndex = 31
+        CollectionName = '031_Ticket'
+        Name = '031_Ticket'
+      end
+      item
+        CollectionIndex = 34
+        CollectionName = '034_Project'
+        Name = '034_Project'
+      end>
     ImageCollection = dmCommon.icSvgIcons
     Left = 408
     Top = 72
