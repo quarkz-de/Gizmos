@@ -31,15 +31,6 @@
 [submodule "submodules/delphi-markdown"]
 	path = submodules/delphi-markdown
 	url = https://github.com/grahamegrieve/delphi-markdown.git
-[submodule "submodules/MustangpeakCommonLib"]
-	path = submodules/MustangpeakCommonLib
-	url = https://github.com/TurboPack/MustangpeakCommonLib.git
-[submodule "submodules/MustangpeakVirtualshellTools"]
-	path = submodules/MustangpeakVirtualshellTools
-	url = https://github.com/TurboPack/MustangpeakVirtualshellTools.git
-[submodule "submodules/MustangpeakEasyListview"]
-	path = submodules/MustangpeakEasyListview
-	url = https://github.com/TurboPack/MustangpeakEasyListview.git
 [submodule "submodules/SVGIconImageList"]
 	path = submodules/SVGIconImageList
 	url = https://github.com/EtheaDev/SVGIconImageList.git
