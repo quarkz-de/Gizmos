@@ -1,8 +1,8 @@
 object dmCommon: TdmCommon
   OnCreate = DataModuleCreate
   OnDestroy = DataModuleDestroy
-  Height = 178
-  Width = 294
+  Height = 150
+  Width = 289
   object icLogo: TImageCollection
     Images = <
       item
@@ -806,5 +806,9 @@ object dmCommon: TdmCommon
     FixedColor = clCaptionText
     Left = 24
     Top = 20
+  end
+  object ncNotificationCenter: TNotificationCenter
+    Left = 152
+    Top = 24
   end
 end

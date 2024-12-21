@@ -292,6 +292,31 @@ object wMainForm: TwMainForm
         CollectionIndex = 29
         CollectionName = '029_Redmine'
         Name = '029_Redmine'
+      end
+      item
+        CollectionIndex = 30
+        CollectionName = '030_User'
+        Name = '030_User'
+      end
+      item
+        CollectionIndex = 31
+        CollectionName = '031_Ticket'
+        Name = '031_Ticket'
+      end
+      item
+        CollectionIndex = 32
+        CollectionName = '032_External_Link'
+        Name = '032_External_Link'
+      end
+      item
+        CollectionIndex = 33
+        CollectionName = '033_Refresh'
+        Name = '033_Refresh'
+      end
+      item
+        CollectionIndex = 34
+        CollectionName = '034_Project'
+        Name = '034_Project'
       end>
     ImageCollection = dmCommon.icSvgIcons
     Width = 32
@@ -451,6 +476,31 @@ object wMainForm: TwMainForm
         CollectionIndex = 29
         CollectionName = '029_Redmine'
         Name = '029_Redmine'
+      end
+      item
+        CollectionIndex = 30
+        CollectionName = '030_User'
+        Name = '030_User'
+      end
+      item
+        CollectionIndex = 31
+        CollectionName = '031_Ticket'
+        Name = '031_Ticket'
+      end
+      item
+        CollectionIndex = 32
+        CollectionName = '032_External_Link'
+        Name = '032_External_Link'
+      end
+      item
+        CollectionIndex = 33
+        CollectionName = '033_Refresh'
+        Name = '033_Refresh'
+      end
+      item
+        CollectionIndex = 34
+        CollectionName = '034_Project'
+        Name = '034_Project'
       end>
     ImageCollection = dmCommon.icSvgIcons
     Left = 256

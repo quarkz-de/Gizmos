@@ -572,7 +572,6 @@ object wEMailViewer: TwEMailViewer
     Align = alTop
     BorderWidth = 1
     TabOrder = 0
-    ExplicitWidth = 608
     DesignSize = (
       612
       101)
@@ -606,7 +605,6 @@ object wEMailViewer: TwEMailViewer
       ReadOnly = True
       TabOrder = 0
       Text = 'edSender'
-      ExplicitWidth = 485
     end
     object edRecipient: TEdit
       Left = 108
@@ -617,7 +615,6 @@ object wEMailViewer: TwEMailViewer
       ReadOnly = True
       TabOrder = 1
       Text = 'edRecipient'
-      ExplicitWidth = 485
     end
     object edSubject: TEdit
       Left = 108
@@ -628,7 +625,6 @@ object wEMailViewer: TwEMailViewer
       ReadOnly = True
       TabOrder = 2
       Text = 'edSubject'
-      ExplicitWidth = 485
     end
   end
   object pcMail: TPageControl
@@ -641,8 +637,6 @@ object wEMailViewer: TwEMailViewer
     ActivePage = tsBody
     Align = alClient
     TabOrder = 1
-    ExplicitWidth = 602
-    ExplicitHeight = 327
     object tsBody: TTabSheet
       Caption = 'Nachricht'
       object edBody: TMemo
@@ -656,8 +650,35 @@ object wEMailViewer: TwEMailViewer
           'edBody')
         ReadOnly = True
         TabOrder = 0
-        ExplicitWidth = 594
-        ExplicitHeight = 297
+      end
+    end
+    object tsHtml: TTabSheet
+      Caption = 'Nachricht'
+      ImageIndex = 2
+      object hvBody: THtmlViewer
+        Left = 0
+        Top = 0
+        Width = 598
+        Height = 298
+        BorderStyle = htNone
+        DefFontName = 'Segoe UI'
+        DefFontSize = 10
+        DefHotSpotColor = clHighlight
+        DefOverLinkColor = clHighlight
+        DefPreFontName = 'Consolas'
+        DefVisitedLinkColor = clHighlight
+        HistoryMaxCount = 0
+        NoSelect = False
+        PrintMarginBottom = 2.000000000000000000
+        PrintMarginLeft = 2.000000000000000000
+        PrintMarginRight = 2.000000000000000000
+        PrintMarginTop = 2.000000000000000000
+        PrintScale = 1.000000000000000000
+        Text = ''
+        Align = alClient
+        TabOrder = 0
+        Touch.InteractiveGestures = [igPan]
+        Touch.InteractiveGestureOptions = [igoPanSingleFingerHorizontal, igoPanSingleFingerVertical, igoPanInertia]
       end
     end
     object tsHeader: TTabSheet
