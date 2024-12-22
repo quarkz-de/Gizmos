@@ -344,7 +344,12 @@ begin
       else
         ParentNode := ProjectNode;
 
-      if not TicketNodes.TryGetValue(Ticket.ID, Node) then
+      if TicketNodes.TryGetValue(Ticket.ID, Node) then
+        begin
+          if (Ticket.ParentID > 0) and TicketNodes.TryGetValue(Ticket.ParentID, ParentNode) then
+            FTree.NodeParent[Node] := ParentNode;
+        end
+      else
         begin
           Node := FTree.AddChild(ParentNode);
           Data := FTree.GetNodeData(Node);

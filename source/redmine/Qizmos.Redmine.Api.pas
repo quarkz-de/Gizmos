@@ -85,12 +85,20 @@ begin
   if not TRedmineApiSettings.HasApiKey then
     Exit;
 
-  Result := LoadIssues(AIssueList, AProjects, SMyIssues);
+  try
+    Result := LoadIssues(AIssueList, AProjects, SMyIssues);
+  except
+    Result := false;
+  end;
 
   if Result then
     begin
       IdList := LoadParentIssues(AIssueList);
-      LoadIssues(AIssueList, AProjects, Format(SIssues, [IdList]));
+      while not IdList.IsEmpty do
+        begin
+          LoadIssues(AIssueList, AProjects, Format(SIssues, [IdList]));
+          IdList := LoadParentIssues(AIssueList);
+        end;
     end;
 end;
 
@@ -188,39 +196,28 @@ var
   Issue, ChildIssue, ParentIssue: TRedmineTicket;
   IDs: TStringList;
 begin
-  IssueDict := TDictionary<Integer, TRedmineTicket>.Create;
   AdditionalIssues := TList<TRedmineTicket>.Create;
+  IssueDict := TDictionary<Integer, TRedmineTicket>.Create;
 
   for Issue in AIssueList do
     IssueDict.Add(Issue.ID, Issue);
 
   for Issue in AIssueList do
     begin
-      ChildIssue := Issue;
-      while Assigned(ChildIssue) and (ChildIssue.ParentID > 0) do
+      if (Issue.ParentID > 0) and not IssueDict.ContainsKey(Issue.ParentID) then
         begin
-          if IssueDict.TryGetValue(Issue.ParentID, ParentIssue) then
-            begin
-              Issue.Parent := ParentIssue;
-            end
-          else
-            begin
-              ParentIssue := TRedmineTicket.Create;
-              ParentIssue.ID := Issue.ParentID;
-              Issue.Parent := ParentIssue;
-              AdditionalIssues.Add(ParentIssue);
-              IssueDict.Add(ParentIssue.ID, ParentIssue);
-            end;
-          ChildIssue := ParentIssue;
+          ParentIssue := TRedmineTicket.Create;
+          ParentIssue.ID := Issue.ParentID;
+          Issue.Parent := ParentIssue;
+          AdditionalIssues.Add(ParentIssue);
+          IssueDict.Add(ParentIssue.ID, ParentIssue);
+          AIssueList.Add(ParentIssue);
         end;
     end;
 
   IDs := TStringList.Create;
   for Issue in AdditionalIssues do
-    begin
-      IDs.Add(Issue.ID.ToString);
-      AIssueList.Add(Issue);
-    end;
+    IDs.Add(Issue.ID.ToString);
   Result := IDs.CommaText;
   IDs.Free;
 
