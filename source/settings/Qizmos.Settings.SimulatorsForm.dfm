@@ -32,7 +32,7 @@ object wSettingsSimulatorsForm: TwSettingsSimulatorsForm
     object txSmtpBlackhole: TLabel
       Left = 8
       Top = 10
-      Width = 84
+      Width = 85
       Height = 15
       Caption = 'SMTP Blackhole'
     end
@@ -77,7 +77,7 @@ object wSettingsSimulatorsForm: TwSettingsSimulatorsForm
   object pnHttpBlackhole: TQzPanel
     AlignWithMargins = True
     Left = 12
-    Top = 102
+    Top = 144
     Width = 616
     Height = 36
     Margins.Left = 12
@@ -90,10 +90,11 @@ object wSettingsSimulatorsForm: TwSettingsSimulatorsForm
     Color = clBtnHighlight
     ParentBackground = False
     TabOrder = 2
+    ExplicitTop = 102
     object txHttpBlackhole: TLabel
       Left = 8
       Top = 10
-      Width = 82
+      Width = 84
       Height = 15
       Caption = 'HTTP Blackhole'
     end
@@ -101,7 +102,7 @@ object wSettingsSimulatorsForm: TwSettingsSimulatorsForm
   object pnHttpActiveOnStartup: TQzPanel
     AlignWithMargins = True
     Left = 12
-    Top = 144
+    Top = 186
     Width = 616
     Height = 36
     Margins.Left = 12
@@ -112,6 +113,7 @@ object wSettingsSimulatorsForm: TwSettingsSimulatorsForm
     Align = alTop
     BorderWidth = 1
     TabOrder = 3
+    ExplicitTop = 144
     DesignSize = (
       616
       36)
@@ -137,7 +139,7 @@ object wSettingsSimulatorsForm: TwSettingsSimulatorsForm
   object pnHttpPort: TQzPanel
     AlignWithMargins = True
     Left = 12
-    Top = 186
+    Top = 228
     Width = 616
     Height = 36
     Margins.Left = 12
@@ -148,6 +150,7 @@ object wSettingsSimulatorsForm: TwSettingsSimulatorsForm
     Align = alTop
     BorderWidth = 1
     TabOrder = 4
+    ExplicitTop = 186
     DesignSize = (
       616
       36)
@@ -174,7 +177,7 @@ object wSettingsSimulatorsForm: TwSettingsSimulatorsForm
   object pnHttpResultText: TQzPanel
     AlignWithMargins = True
     Left = 12
-    Top = 270
+    Top = 312
     Width = 616
     Height = 36
     Margins.Left = 12
@@ -185,6 +188,7 @@ object wSettingsSimulatorsForm: TwSettingsSimulatorsForm
     Align = alTop
     BorderWidth = 1
     TabOrder = 6
+    ExplicitTop = 270
     DesignSize = (
       616
       36)
@@ -209,7 +213,7 @@ object wSettingsSimulatorsForm: TwSettingsSimulatorsForm
   object pnHttpResultCode: TQzPanel
     AlignWithMargins = True
     Left = 12
-    Top = 228
+    Top = 270
     Width = 616
     Height = 36
     Margins.Left = 12
@@ -220,6 +224,7 @@ object wSettingsSimulatorsForm: TwSettingsSimulatorsForm
     Align = alTop
     BorderWidth = 1
     TabOrder = 5
+    ExplicitTop = 228
     DesignSize = (
       616
       36)
@@ -241,6 +246,45 @@ object wSettingsSimulatorsForm: TwSettingsSimulatorsForm
       MaxValue = 9999.000000000000000000
       TabOrder = 0
       OnChange = edHttpResultCodeChange
+    end
+  end
+  object pnSmtpPresentNotification: TQzPanel
+    AlignWithMargins = True
+    Left = 12
+    Top = 96
+    Width = 616
+    Height = 36
+    Margins.Left = 12
+    Margins.Top = 6
+    Margins.Right = 12
+    Margins.Bottom = 0
+    Edges = [qeBottom]
+    Align = alTop
+    BorderWidth = 1
+    ParentBackground = False
+    TabOrder = 7
+    ExplicitLeft = 16
+    ExplicitTop = 58
+    DesignSize = (
+      616
+      36)
+    object txSmtpPresentNotification: TLabel
+      Left = 8
+      Top = 9
+      Width = 216
+      Height = 15
+      Caption = 'Benachrichtigen bei Eingang von E-Mails'
+    end
+    object tsSmtpPresentNotification: TToggleSwitch
+      Left = 552
+      Top = 8
+      Width = 50
+      Height = 20
+      Anchors = [akTop, akRight]
+      ShowStateCaption = False
+      TabOrder = 0
+      ThumbWidth = 20
+      OnClick = tsSmtpPresentNotificationClick
     end
   end
 end

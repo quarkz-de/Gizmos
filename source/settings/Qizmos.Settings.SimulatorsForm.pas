@@ -31,12 +31,16 @@ type
     edHttpPort: TNumberBox;
     edHttpResultCode: TNumberBox;
     edHttpResultText: TEdit;
+    pnSmtpPresentNotification: TQzPanel;
+    txSmtpPresentNotification: TLabel;
+    tsSmtpPresentNotification: TToggleSwitch;
     procedure edHttpPortExit(Sender: TObject);
     procedure edHttpResultCodeChange(Sender: TObject);
     procedure edHttpResultTextChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure tsHttpActiveOnStartupClick(Sender: TObject);
     procedure tsSmtpActiveOnStartupClick(Sender: TObject);
+    procedure tsSmtpPresentNotificationClick(Sender: TObject);
   private
     procedure LoadValues;
   protected
@@ -96,6 +100,7 @@ end;
 procedure TwSettingsSimulatorsForm.LoadValues;
 begin
   tsSmtpActiveOnStartup.State := SwitchStates[ApplicationSettings.SmtpServer.ActiveOnStartup];
+  tsSmtpPresentNotification.State := SwitchStates[ApplicationSettings.SmtpServer.PresentNotification];
   tsHttpActiveOnStartup.State := SwitchStates[ApplicationSettings.HttpServer.ActiveOnStartup];
   edHttpPort.Value := ApplicationSettings.HttpServer.Port;
   edHttpResultCode.Value := ApplicationSettings.HttpServer.ResultCode;
@@ -110,6 +115,12 @@ end;
 procedure TwSettingsSimulatorsForm.tsSmtpActiveOnStartupClick(Sender: TObject);
 begin
   ApplicationSettings.SmtpServer.ActiveOnStartup := tsSmtpActiveOnStartup.State = tssOn;
+end;
+
+procedure TwSettingsSimulatorsForm.tsSmtpPresentNotificationClick(
+  Sender: TObject);
+begin
+  ApplicationSettings.SmtpServer.PresentNotification := tsSmtpPresentNotification.State = tssOn;
 end;
 
 end.

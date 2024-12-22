@@ -14,11 +14,13 @@ type
   TSmtpServerSettings = class(TPersistent)
   private
     FActiveOnStartup: Boolean;
+    FPresentNotification: Boolean;
   public
     constructor Create;
     procedure Assign(Source: TPersistent); override;
   published
     property ActiveOnStartup: Boolean read FActiveOnStartup write FActiveOnStartup;
+    property PresentNotification: Boolean read FPresentNotification write FPresentNotification;
   end;
 
   THttpServerSettings = class(TPersistent)

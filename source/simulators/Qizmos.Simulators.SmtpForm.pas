@@ -138,10 +138,12 @@ begin
   Msg := FMessages[FMessages.Count - 1];
   FMessagesVisualizer.AddMessage(FMessages.Count - 1);
   acClearMessages.Enabled := true;
-  dmCommon.PresentNotification(
-    Format('E-Mail "%s"', [Msg.Subject]),
-    Format('Sender: %s', [Msg.Sender.Address])
-    );
+
+  if ApplicationSettings.SmtpServer.PresentNotification then
+    dmCommon.PresentNotification(
+      Format('E-Mail "%s"', [Msg.Subject]),
+      Format('Sender: %s', [Msg.Sender.Address])
+      );
 end;
 
 procedure TwSimulatorsSmtpForm.FormCreate(Sender: TObject);
