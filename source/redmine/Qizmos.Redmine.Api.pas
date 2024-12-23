@@ -204,14 +204,19 @@ begin
 
   for Issue in AIssueList do
     begin
-      if (Issue.ParentID > 0) and not IssueDict.ContainsKey(Issue.ParentID) then
+      if (Issue.ParentID > 0) then
         begin
-          ParentIssue := TRedmineTicket.Create;
-          ParentIssue.ID := Issue.ParentID;
-          Issue.Parent := ParentIssue;
-          AdditionalIssues.Add(ParentIssue);
-          IssueDict.Add(ParentIssue.ID, ParentIssue);
-          AIssueList.Add(ParentIssue);
+          if IssueDict.TryGetValue(Issue.ParentID, ParentIssue) then
+            Issue.Parent := ParentIssue
+          else
+            begin
+              ParentIssue := TRedmineTicket.Create;
+              ParentIssue.ID := Issue.ParentID;
+              Issue.Parent := ParentIssue;
+              AdditionalIssues.Add(ParentIssue);
+              IssueDict.Add(ParentIssue.ID, ParentIssue);
+              AIssueList.Add(ParentIssue);
+            end;
         end;
     end;
 
