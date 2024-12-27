@@ -78,7 +78,7 @@ const
   cTextHtml = 'text/html';
 var
   IdText: TIdText;
-  IdAttachment: TIdAttachment;
+  //IdAttachment: TIdAttachment;
   HtmlPart: Boolean;
 begin
   edSender.Text := AMessage.Sender.Address;
@@ -110,7 +110,7 @@ begin
           end;
         mptAttachment:
           begin
-            IdAttachment := TIdAttachment(AMessage.MessageParts[I]);
+            // IdAttachment := TIdAttachment(AMessage.MessageParts[I]);
             // IdAttachment.Name
             // IdAttachment.Filename
           end;

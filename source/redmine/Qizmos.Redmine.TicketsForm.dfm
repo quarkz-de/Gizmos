@@ -64,9 +64,9 @@ object wRedmineTicketsForm: TwRedmineTicketsForm
   end
   object vtTickets: TVirtualStringTree
     Left = 0
-    Top = 49
+    Top = 82
     Width = 640
-    Height = 431
+    Height = 398
     Align = alClient
     Colors.BorderColor = 15987699
     Colors.DisabledColor = clGray
@@ -93,6 +93,28 @@ object wRedmineTicketsForm: TwRedmineTicketsForm
     Touch.InteractiveGestures = [igPan, igPressAndTap]
     Touch.InteractiveGestureOptions = [igoPanSingleFingerHorizontal, igoPanSingleFingerVertical, igoPanInertia, igoPanGutter, igoParentPassthrough]
     Columns = <>
+  end
+  object tsProjects: TTabSet
+    Left = 0
+    Top = 49
+    Width = 640
+    Height = 33
+    Align = alTop
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -12
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    Images = vilTreeIcons
+    SoftTop = True
+    Style = tsIDETabs
+    TabHeight = 30
+    TabPosition = tpTop
+    OnChange = tsProjectsChange
+    OnGetImageIndex = tsProjectsGetImageIndex
+    OnMouseDown = tsProjectsMouseDown
+    OnMouseMove = tsProjectsMouseMove
+    OnMouseUp = tsProjectsMouseUp
   end
   object vilLargeIcons: TVirtualImageList
     AutoFill = True

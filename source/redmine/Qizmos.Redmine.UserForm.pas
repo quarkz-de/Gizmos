@@ -9,7 +9,8 @@ uses
   Vcl.VirtualImage, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.Buttons,
   Vcl.ImgList, Vcl.VirtualImageList,
   Qodelib.ManagedForms, Qodelib.Panels,
-  Qizmos.Core.Forms, Qizmos.Redmine.Api, Qizmos.Redmine.Classes;
+  Qizmos.Core.Forms, Qizmos.Core.Settings, Qizmos.Redmine.Api,
+  Qizmos.Redmine.Classes;
 
 type
   TwRedmineUserForm = class(TManagedForm)
@@ -42,6 +43,7 @@ type
     function GetImageIndex: Integer; override;
     procedure LoadValues;
     procedure UpdateValues;
+    procedure ClearValues;
     property RedmineUser: TRedmineUser read FRedmineUser;
   end;
 
@@ -62,10 +64,22 @@ begin
   LoadValues;
 end;
 
+procedure TwRedmineUserForm.ClearValues;
+begin
+  txId.Caption := '';
+  txLogin.Caption := '';
+  txFirstname.Caption := '';
+  txLastname.Caption := '';
+  txMail.Caption := '';
+end;
+
 procedure TwRedmineUserForm.FormCreate(Sender: TObject);
 begin
   FRedmineUser := TRedmineUser.Create;
-  LoadValues;
+  if ApplicationSettings.Redmine.ActiveOnStartup then
+    LoadValues
+  else
+    ClearValues;
   txMyPage.Caption := Format('<a href="%s">Meine Seite</a>', [TRedmineApi.GetMyPageUrl]);
 end;
 

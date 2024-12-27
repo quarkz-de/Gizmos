@@ -17,26 +17,17 @@ type
     function GetSelectedTicket: TRedmineTicket;
     function GetSelectedTicketID: Integer;
     function IsSelected: Boolean;
-    procedure UpdateContent(const ASelectTicketId: Integer);
+    procedure UpdateContent(const ASelectProjectId, ASelectedTicketId: Integer);
     procedure ClearContent;
   end;
 
 implementation
 
 type
-  TRedmineItemKind = (rikProject, rikTicket);
-
   TRedmineItem = record
     ID: Integer;
     Name: String;
-    case Kind: TRedmineItemKind of
-      rikProject:
-        (
-        );
-      rikTicket:
-        (
-          Ticket: TRedmineTicket;
-        );
+    Ticket: TRedmineTicket;
   end;
   PRedmineItem = ^TRedmineItem;
 
@@ -75,7 +66,7 @@ type
     function GetSelectedTicket: TRedmineTicket;
     function GetSelectedTicketID: Integer;
     function IsSelected: Boolean;
-    procedure UpdateContent(const ASelectTicketId: Integer);
+    procedure UpdateContent(const ASelectProjectId, ASelectedTicketId: Integer);
     procedure ClearContent;
   end;
 
@@ -108,10 +99,7 @@ begin
     colId:
       Result := CompareValue(Data1.ID, Data2.ID);
     colUpdated:
-      if (Data1.Kind = rikTicket) and (Data2.Kind = rikTicket) then
-        Result := CompareDateTime(Data1.Ticket.Updated, Data2.Ticket.Updated)
-      else
-        Result := 0;
+      Result := CompareDateTime(Data1.Ticket.Updated, Data2.Ticket.Updated)
   end;
 end;
 
@@ -125,7 +113,7 @@ begin
 
   Column := FTree.Header.Columns.Add;
   Column.Text := '#';
-  Column.Width := 100;
+  Column.Width := 140;
 
   Column := FTree.Header.Columns.Add;
   Column.Text := 'Thema';
@@ -165,21 +153,9 @@ end;
 procedure TTicketListVisualizer.GetImageIndex(Sender: TBaseVirtualTree;
   Node: PVirtualNode; Kind: TVTImageKind; Column: TColumnIndex;
   var Ghosted: Boolean; var ImageIndex: TImageIndex);
-var
-  Data: PRedmineItem;
 begin
   if (Column = colId) and (Kind in [ikNormal, ikSelected]) then
-    begin
-      Data := FTree.GetNodeData(Node);
-      case Data.Kind of
-        rikProject:
-          ImageIndex := 1;
-        rikTicket:
-          ImageIndex := 0;
-        else
-          ImageIndex := -1;
-      end;
-    end
+    ImageIndex := 0
   else
     ImageIndex := -1;
 end;
@@ -198,8 +174,7 @@ begin
   if FTree.FocusedNode <> nil then
     begin
       Data := FTree.GetNodeData(FTree.FocusedNode);
-      if Data.Kind = rikTicket then
-        Result := Data.Ticket;
+      Result := Data.Ticket;
     end;
 end;
 
@@ -221,30 +196,11 @@ begin
 
   case Column of
     colId:
-        case Data.Kind of
-          rikProject:
-            CellText := Data.Name;
-          rikTicket:
-            CellText := '#' + Data.ID.ToString;
-          else
-            CellText := '';
-        end;
+      CellText := '#' + Data.ID.ToString;
     colSubject:
-        case Data.Kind of
-          rikTicket:
-            CellText := Data.Name;
-          else
-            CellText := '';
-        end;
+      CellText := Data.Name;
     colUpdated:
-      begin
-        case Data.Kind of
-          rikTicket:
-            CellText := Data.Ticket.Updated.ToString;
-          else
-            CellText := '';
-        end;
-      end;
+      CellText := Data.Ticket.Updated.ToString;
   end;
 end;
 
@@ -297,7 +253,7 @@ begin
   FTree.SortTree(FTree.Header.SortColumn, FTree.Header.SortDirection, false);
 end;
 
-procedure TTicketListVisualizer.UpdateContent(const ASelectTicketId: Integer);
+procedure TTicketListVisualizer.UpdateContent(const ASelectProjectId, ASelectedTicketId: Integer);
 var
   Node, ParentNode, ProjectNode, NodeToSelect: PVirtualNode;
   Data: PRedmineItem;
@@ -311,58 +267,50 @@ begin
   FTree.BeginUpdate;
   FTree.Clear;
 
+  ProjectNode := nil;
+
   for Ticket in FTickets do
     begin
-      if not ProjectNodes.TryGetValue(Ticket.ProjectID, ProjectNode) then
+      if Ticket.ProjectID = ASelectProjectId then
         begin
-          ProjectNode := FTree.AddChild(nil);
-          ProjectNodes.Add(Ticket.ProjectID, ProjectNode);
-          Data := FTree.GetNodeData(ProjectNode);
-          Data.ID := Ticket.ProjectID;
-          Data.Kind := rikProject;
-          var ProjectName := 'unbekanntes Projekt';
-          if FProjects.TryGetValue(Ticket.ProjectID, ProjectName) then
-            Data.Name := ProjectName;
-        end;
-
-      if Ticket.ParentID > 0 then
-        begin
-          if not TicketNodes.TryGetValue(Ticket.ParentID, ParentNode) then
+          if Ticket.ParentID > 0 then
             begin
-              Node := FTree.AddChild(ProjectNode);
-              Data := FTree.GetNodeData(Node);
-              Data.ID := Ticket.ParentID;
-              Data.Kind := rikTicket;
-              Data.Name := Ticket.Parent.Subject;
-              Data.Ticket := Ticket.Parent;
-              if Ticket.ParentID = ASelectTicketId then
-                NodeToSelect := Node;
-              ParentNode := Node;
-              TicketNodes.Add(Ticket.ParentID, ParentNode);
-            end;
-        end
-      else
-        ParentNode := ProjectNode;
+              if not TicketNodes.TryGetValue(Ticket.ParentID, ParentNode) then
+                begin
+                  Node := FTree.AddChild(ProjectNode);
+                  Data := FTree.GetNodeData(Node);
+                  Data.ID := Ticket.ParentID;
+                  Data.Name := Ticket.Parent.Subject;
+                  Data.Ticket := Ticket.Parent;
+                  ParentNode := Node;
+                  if Ticket.Parent.ID = ASelectedTicketId then
+                    NodeToSelect := Node;
+                  TicketNodes.Add(Ticket.ParentID, ParentNode);
+                end;
+            end
+          else
+            ParentNode := ProjectNode;
 
-      if TicketNodes.TryGetValue(Ticket.ID, Node) then
-        begin
-          if (Ticket.ParentID > 0) and TicketNodes.TryGetValue(Ticket.ParentID, ParentNode) then
-            FTree.NodeParent[Node] := ParentNode;
-        end
-      else
-        begin
-          Node := FTree.AddChild(ParentNode);
-          Data := FTree.GetNodeData(Node);
-          Data.ID := Ticket.ID;
-          Data.Kind := rikTicket;
-          Data.Name := Ticket.Subject;
-          Data.Ticket := Ticket;
-          if Ticket.ID = ASelectTicketId then
-            NodeToSelect := Node;
+          if TicketNodes.TryGetValue(Ticket.ID, Node) then
+            begin
+              if (Ticket.ParentID > 0) and TicketNodes.TryGetValue(Ticket.ParentID, ParentNode) then
+                FTree.NodeParent[Node] := ParentNode;
+            end
+          else
+            begin
+              Node := FTree.AddChild(ParentNode);
+              Data := FTree.GetNodeData(Node);
+              Data.ID := Ticket.ID;
+              Data.Name := Ticket.Subject;
+              Data.Ticket := Ticket;
+              if Ticket.ID = ASelectedTicketId then
+                NodeToSelect := Node;
+            end;
         end;
     end;
 
   SortTree;
+
   if Assigned(NodeToSelect) then
     begin
       FTree.FocusedNode := NodeToSelect;

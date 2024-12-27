@@ -193,7 +193,7 @@ class function TRedmineApi.LoadParentIssues(
 var
   IssueDict: TDictionary<Integer, TRedmineTicket>;
   AdditionalIssues: TList<TRedmineTicket>;
-  Issue, ChildIssue, ParentIssue: TRedmineTicket;
+  Issue, ParentIssue: TRedmineTicket;
   IDs: TStringList;
 begin
   AdditionalIssues := TList<TRedmineTicket>.Create;
