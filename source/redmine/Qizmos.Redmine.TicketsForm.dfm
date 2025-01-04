@@ -23,9 +23,6 @@ object wRedmineTicketsForm: TwRedmineTicketsForm
     Align = alTop
     BorderWidth = 1
     TabOrder = 0
-    DesignSize = (
-      640
-      49)
     object txCaption: TLabel
       Left = 64
       Top = 8
@@ -51,15 +48,33 @@ object wRedmineTicketsForm: TwRedmineTicketsForm
       ImageName = '031_Ticket'
     end
     object btRefresh: TSpeedButton
-      Left = 600
+      AlignWithMargins = True
+      Left = 601
       Top = 7
       Width = 32
-      Height = 32
-      Anchors = [akTop, akRight]
+      Height = 34
+      Margins.Left = 7
+      Margins.Top = 7
+      Margins.Right = 7
+      Margins.Bottom = 7
+      Align = alRight
       ImageIndex = 33
       ImageName = '033_Refresh'
       Images = vilLargeIcons
       OnClick = btRefreshClick
+      ExplicitLeft = 600
+      ExplicitHeight = 32
+    end
+    object aiRefresh: TActivityIndicator
+      AlignWithMargins = True
+      Left = 555
+      Top = 7
+      Margins.Left = 7
+      Margins.Top = 7
+      Margins.Right = 7
+      Margins.Bottom = 7
+      Align = alRight
+      IndicatorType = aitRefresh
     end
   end
   object vtTickets: TVirtualStringTree
@@ -89,6 +104,7 @@ object wRedmineTicketsForm: TwRedmineTicketsForm
     Header.MainColumn = -1
     Images = vilTreeIcons
     TabOrder = 1
+    TreeOptions.MiscOptions = [toAcceptOLEDrop, toFullRepaintOnResize, toInitOnSave, toWheelPanning, toEditOnClick]
     OnDblClick = vtTicketsDblClick
     Touch.InteractiveGestures = [igPan, igPressAndTap]
     Touch.InteractiveGestureOptions = [igoPanSingleFingerHorizontal, igoPanSingleFingerVertical, igoPanInertia, igoPanGutter, igoParentPassthrough]
@@ -315,5 +331,10 @@ object wRedmineTicketsForm: TwRedmineTicketsForm
     ImageCollection = dmCommon.icSvgIcons
     Left = 408
     Top = 72
+  end
+  object tiRefresh: TTimer
+    OnTimer = tiRefreshTimer
+    Left = 496
+    Top = 76
   end
 end

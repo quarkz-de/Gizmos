@@ -3,7 +3,7 @@
         <ProjectGuid>{5AEC2623-3BA8-4A02-B615-4AA637DD2E5F}</ProjectGuid>
         <MainSource>Qizmos.dpr</MainSource>
         <Base>True</Base>
-        <Config Condition="'$(Config)'==''">Release</Config>
+        <Config Condition="'$(Config)'==''">Debug</Config>
         <TargetedPlatforms>3</TargetedPlatforms>
         <AppType>Application</AppType>
         <FrameworkType>VCL</FrameworkType>

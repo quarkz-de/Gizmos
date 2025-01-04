@@ -12,19 +12,21 @@ uses
 
 type
   TwSettingsRedmineForm = class(TManagedForm)
-    pnSmtpBlackhole: TQzPanel;
-    txSmtpBlackhole: TLabel;
+    pnServer: TQzPanel;
+    txServer: TLabel;
     pnActiveOnStartup: TQzPanel;
     txActiveOnStartup: TLabel;
     tsActiveOnStartup: TToggleSwitch;
-    pnHttpBlackhole: TQzPanel;
-    txHttpBlackhole: TLabel;
+    pnUser: TQzPanel;
+    txUser: TLabel;
     pnHostname: TQzPanel;
     txHostname: TLabel;
     pnApiKey: TQzPanel;
     txApiKey: TLabel;
     edApiKey: TEdit;
     edHostname: TEdit;
+    pnRefresh: TQzPanel;
+    txRefresh: TLabel;
     procedure edApiKeyChange(Sender: TObject);
     procedure edHostnameChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);

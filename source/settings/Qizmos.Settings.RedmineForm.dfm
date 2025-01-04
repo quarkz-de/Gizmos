@@ -13,7 +13,7 @@ object wSettingsRedmineForm: TwSettingsRedmineForm
   Font.Style = []
   OnCreate = FormCreate
   TextHeight = 15
-  object pnSmtpBlackhole: TQzPanel
+  object pnServer: TQzPanel
     AlignWithMargins = True
     Left = 12
     Top = 12
@@ -29,7 +29,7 @@ object wSettingsRedmineForm: TwSettingsRedmineForm
     Color = clBtnHighlight
     ParentBackground = False
     TabOrder = 0
-    object txSmtpBlackhole: TLabel
+    object txServer: TLabel
       Left = 8
       Top = 10
       Width = 32
@@ -40,7 +40,7 @@ object wSettingsRedmineForm: TwSettingsRedmineForm
   object pnActiveOnStartup: TQzPanel
     AlignWithMargins = True
     Left = 12
-    Top = 54
+    Top = 234
     Width = 616
     Height = 36
     Margins.Left = 12
@@ -52,6 +52,8 @@ object wSettingsRedmineForm: TwSettingsRedmineForm
     BorderWidth = 1
     ParentBackground = False
     TabOrder = 1
+    ExplicitLeft = 24
+    ExplicitTop = 286
     DesignSize = (
       616
       36)
@@ -74,10 +76,10 @@ object wSettingsRedmineForm: TwSettingsRedmineForm
       OnClick = tsActiveOnStartupClick
     end
   end
-  object pnHttpBlackhole: TQzPanel
+  object pnUser: TQzPanel
     AlignWithMargins = True
     Left = 12
-    Top = 144
+    Top = 102
     Width = 616
     Height = 36
     Margins.Left = 12
@@ -90,8 +92,8 @@ object wSettingsRedmineForm: TwSettingsRedmineForm
     Color = clBtnHighlight
     ParentBackground = False
     TabOrder = 2
-    ExplicitTop = 102
-    object txHttpBlackhole: TLabel
+    ExplicitTop = 144
+    object txUser: TLabel
       Left = 8
       Top = 10
       Width = 46
@@ -102,7 +104,7 @@ object wSettingsRedmineForm: TwSettingsRedmineForm
   object pnHostname: TQzPanel
     AlignWithMargins = True
     Left = 12
-    Top = 96
+    Top = 54
     Width = 616
     Height = 36
     Margins.Left = 12
@@ -113,8 +115,7 @@ object wSettingsRedmineForm: TwSettingsRedmineForm
     Align = alTop
     BorderWidth = 1
     TabOrder = 3
-    ExplicitLeft = 17
-    ExplicitTop = 80
+    ExplicitTop = 96
     DesignSize = (
       616
       36)
@@ -139,7 +140,7 @@ object wSettingsRedmineForm: TwSettingsRedmineForm
   object pnApiKey: TQzPanel
     AlignWithMargins = True
     Left = 12
-    Top = 186
+    Top = 144
     Width = 616
     Height = 36
     Margins.Left = 12
@@ -150,7 +151,7 @@ object wSettingsRedmineForm: TwSettingsRedmineForm
     Align = alTop
     BorderWidth = 1
     TabOrder = 4
-    ExplicitTop = 270
+    ExplicitTop = 186
     DesignSize = (
       616
       36)
@@ -170,6 +171,32 @@ object wSettingsRedmineForm: TwSettingsRedmineForm
       TabOrder = 0
       Text = 'edApiKey'
       OnChange = edApiKeyChange
+    end
+  end
+  object pnRefresh: TQzPanel
+    AlignWithMargins = True
+    Left = 12
+    Top = 192
+    Width = 616
+    Height = 36
+    Margins.Left = 12
+    Margins.Top = 12
+    Margins.Right = 12
+    Margins.Bottom = 0
+    Edges = []
+    Align = alTop
+    BorderWidth = 1
+    Color = clBtnHighlight
+    ParentBackground = False
+    TabOrder = 5
+    ExplicitLeft = 17
+    ExplicitTop = 320
+    object txRefresh: TLabel
+      Left = 8
+      Top = 10
+      Width = 37
+      Height = 15
+      Caption = 'Tickets'
     end
   end
 end

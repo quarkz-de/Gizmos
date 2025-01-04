@@ -3,7 +3,7 @@ unit Qizmos.Core.Settings;
 interface
 
 uses
-  System.SysUtils, System.Classes,
+  System.SysUtils, System.Classes, System.Generics.Collections,
   Winapi.Windows, Win.Registry,
   Vcl.Forms, Vcl.Themes;
 
@@ -62,15 +62,19 @@ type
     FActiveOnStartup: Boolean;
     FHost: String;
     FApiKey: String;
+    FTicketListColumnWidths: TOrderedDictionary<String, Integer>;
     procedure SetHost(AValue: String);
     procedure SetApiKey(AValue: String);
   public
     constructor Create;
+    destructor Destroy; override;
     procedure Assign(Source: TPersistent); override;
   published
     property ActiveOnStartup: Boolean read FActiveOnStartup write FActiveOnStartup;
     property Host: String read FHost write SetHost;
     property ApiKey: String read FApiKey write SetApiKey;
+    property TicketListColumnWidths: TOrderedDictionary<String, Integer>
+      read FTicketListColumnWidths write FTicketListColumnWidths;
   end;
 
   TApplicationFormPosition = class(TPersistent)
@@ -472,6 +476,7 @@ procedure TRedmineSettings.Assign(Source: TPersistent);
 begin
   if Source is TRedmineSettings then
     begin
+      ActiveOnStartup := TRedmineSettings(Source).ActiveOnStartup;
       Host := TRedmineSettings(Source).Host;
       ApiKey := TRedmineSettings(Source).ApiKey;
     end
@@ -482,9 +487,16 @@ end;
 constructor TRedmineSettings.Create;
 begin
   inherited Create;
+  FTicketListColumnWidths := TOrderedDictionary<String, Integer>.Create;
   FActiveOnStartup := false;
   FHost := '';
   FApiKey := '';
+end;
+
+destructor TRedmineSettings.Destroy;
+begin
+  FTicketListColumnWidths.Free;
+  inherited;
 end;
 
 procedure TRedmineSettings.SetApiKey(AValue: String);

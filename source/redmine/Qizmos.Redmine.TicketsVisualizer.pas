@@ -3,7 +3,8 @@ unit Qizmos.Redmine.TicketsVisualizer;
 interface
 
 uses
-  System.SysUtils, System.DateUtils, System.Math, System.Generics.Collections,
+  System.SysUtils, System.Types, System.UITypes, System.DateUtils,
+  System.Math, System.Generics.Collections,
   Spring.Container,
   VirtualTrees, VirtualTrees.Header, VirtualTrees.Types,
   Qizmos.Redmine.Classes;
@@ -25,8 +26,6 @@ implementation
 
 type
   TRedmineItem = record
-    ID: Integer;
-    Name: String;
     Ticket: TRedmineTicket;
   end;
   PRedmineItem = ^TRedmineItem;
@@ -37,8 +36,11 @@ type
       DefaultTreeHeaderHeight = 28;
       DefaultTreeRowHeight = 26;
       colId = 0;
-      colSubject = 1;
-      colUpdated = 2;
+      colTracker = 1;
+      colStatus = 2;
+      colSubject = 3;
+      colAssignedTo = 4;
+      colUpdated = 5;
   private
     FTree: TVirtualStringTree;
     FTickets: TRedmineTicketList;
@@ -59,6 +61,9 @@ type
     procedure CompareNodes(Sender: TBaseVirtualTree; Node1, Node2: PVirtualNode;
       Column: TColumnIndex; var Result: Integer);
     procedure HeaderClick(Sender: TVTHeader; HitInfo: TVTHeaderHitInfo);
+    procedure BeforeItemErase(Sender: TBaseVirtualTree; TargetCanvas: TCanvas;
+      Node: PVirtualNode; ItemRect: TRect; var ItemColor: TColor;
+      var EraseAction: TItemEraseAction);
   public
     procedure SetVirtualTree(const ATree: TVirtualStringTree);
     procedure SetTickets(const ATickets: TRedmineTicketList);
@@ -80,6 +85,18 @@ begin
   FTree.OnGetImageIndex := GetImageIndex;
   FTree.OnCompareNodes := CompareNodes;
   FTree.OnHeaderClick := HeaderClick;
+  FTree.OnBeforeItemErase := BeforeItemErase;
+end;
+
+procedure TTicketListVisualizer.BeforeItemErase(Sender: TBaseVirtualTree;
+  TargetCanvas: TCanvas; Node: PVirtualNode; ItemRect: TRect;
+  var ItemColor: TColor; var EraseAction: TItemEraseAction);
+begin
+  if Sender.AbsoluteIndex(Node) mod 2 = 0 then
+    ItemColor := TColors.SysWindow
+  else
+    ItemColor := TColors.SysBtnFace;
+  EraseAction := eaColor;
 end;
 
 procedure TTicketListVisualizer.ClearContent;
@@ -97,7 +114,15 @@ begin
 
   case Column of
     colId:
-      Result := CompareValue(Data1.ID, Data2.ID);
+      Result := CompareValue(Data1.Ticket.ID, Data2.Ticket.ID);
+    colTracker:
+      Result := CompareText(Data1.Ticket.Tracker, Data2.Ticket.Tracker);
+    colStatus:
+      Result := CompareText(Data1.Ticket.Status, Data2.Ticket.Status);
+    colSubject:
+      Result := CompareText(Data1.Ticket.Subject, Data2.Ticket.Subject);
+    colAssignedTo:
+      Result := CompareText(Data1.Ticket.AssignedTo, Data2.Ticket.AssignedTo);
     colUpdated:
       Result := CompareDateTime(Data1.Ticket.Updated, Data2.Ticket.Updated)
   end;
@@ -107,25 +132,37 @@ procedure TTicketListVisualizer.CreateColumns;
 var
   Column: TVirtualTreeColumn;
 begin
-  FTree.Header.Columns.Clear;
-
   FTree.Header.Columns.BeginUpdate;
+
+  FTree.Header.Columns.Clear;
 
   Column := FTree.Header.Columns.Add;
   Column.Text := '#';
   Column.Width := 140;
 
   Column := FTree.Header.Columns.Add;
+  Column.Text := 'Tracker';
+  Column.Width := 100;
+
+  Column := FTree.Header.Columns.Add;
+  Column.Text := 'Status';
+  Column.Width := 100;
+
+  Column := FTree.Header.Columns.Add;
   Column.Text := 'Thema';
   Column.Width := 300;
+
+  Column := FTree.Header.Columns.Add;
+  Column.Text := 'Zugewiesen an';
+  Column.Width := 200;
 
   Column := FTree.Header.Columns.Add;
   Column.Text := 'Aktualisiert';
   Column.Width := 200;
 
-  FTree.Header.AutoSizeIndex := colSubject;
-
   FTree.Header.Columns.EndUpdate;
+
+  FTree.Header.SortColumn := colId;
 end;
 
 procedure TTicketListVisualizer.DecorateTree;
@@ -196,9 +233,15 @@ begin
 
   case Column of
     colId:
-      CellText := '#' + Data.ID.ToString;
+      CellText := '#' + Data.Ticket.ID.ToString;
+    colTracker:
+      CellText := Data.Ticket.Tracker;
+    colStatus:
+      CellText := Data.Ticket.Status;
     colSubject:
-      CellText := Data.Name;
+      CellText := Data.Ticket.Subject;
+    colAssignedTo:
+      CellText := Data.Ticket.AssignedTo;
     colUpdated:
       CellText := Data.Ticket.Updated.ToString;
   end;
@@ -279,8 +322,6 @@ begin
                 begin
                   Node := FTree.AddChild(ProjectNode);
                   Data := FTree.GetNodeData(Node);
-                  Data.ID := Ticket.ParentID;
-                  Data.Name := Ticket.Parent.Subject;
                   Data.Ticket := Ticket.Parent;
                   ParentNode := Node;
                   if Ticket.Parent.ID = ASelectedTicketId then
@@ -300,8 +341,6 @@ begin
             begin
               Node := FTree.AddChild(ParentNode);
               Data := FTree.GetNodeData(Node);
-              Data.ID := Ticket.ID;
-              Data.Name := Ticket.Subject;
               Data.Ticket := Ticket;
               if Ticket.ID = ASelectedTicketId then
                 NodeToSelect := Node;

@@ -32,6 +32,9 @@ type
     FCreated: TDateTime;
     FUpdated: TDateTime;
     FProjectID: Integer;
+    FAssignedTo: String;
+    FTracker: String;
+    FStatus: String;
   public
     property ID: Integer read FID write FID;
     property Subject: String read FSubject write FSubject;
@@ -40,6 +43,9 @@ type
     property Created: TDateTime read FCreated write FCreated;
     property Updated: TDateTime read FUpdated write FUpdated;
     property ProjectID: Integer read FProjectID write FProjectID;
+    property AssignedTo: String read FAssignedTo write FAssignedTo;
+    property Tracker: String read FTracker write FTracker;
+    property Status: String read FStatus write FStatus;
   end;
 
   TRedmineTicketList = TObjectList<TRedmineTicket>;

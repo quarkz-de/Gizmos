@@ -24,9 +24,12 @@ type
     vtTickets: TVirtualStringTree;
     vilTreeIcons: TVirtualImageList;
     tsProjects: TTabSet;
+    tiRefresh: TTimer;
+    aiRefresh: TActivityIndicator;
     procedure btRefreshClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure tiRefreshTimer(Sender: TObject);
     procedure tsProjectsChange(Sender: TObject; NewTab: Integer;
       var AllowChange: Boolean);
     procedure tsProjectsGetImageIndex(Sender: TObject; TabIndex: Integer;
@@ -45,12 +48,14 @@ type
     FTabSetDragging: Boolean;
     FTabSetDragIndex: Integer;
     FTabSetUpdating: Boolean;
+    FLastUpdate: DWORD;
     procedure LoadTickets;
     procedure LoadSelectedTicketInBrowser;
-    procedure FontChanged; override;
   protected
     function GetFormId: TQzManagedFormId; override;
     function GetImageIndex: Integer; override;
+    procedure ThemeChanged; override;
+    procedure FontChanged; override;
   end;
 
 var
@@ -79,6 +84,8 @@ begin
 end;
 
 procedure TwRedmineTicketsForm.FormCreate(Sender: TObject);
+var
+  ColWidth: Integer;
 begin
   FontChanged;
   FTickets := TRedmineTicketList.Create;
@@ -88,12 +95,23 @@ begin
   FTicketsVisualizer.SetTickets(FTickets);
   FTicketsVisualizer.SetProjects(FProjects);
 
+  for var I := 0 to vtTickets.Header.Columns.Count - 1 do
+    if ApplicationSettings.Redmine.TicketListColumnWidths.TryGetValue(IntToStr(I), ColWidth) then
+      vtTickets.Header.Columns[I].Width := ColWidth;
+
   if ApplicationSettings.Redmine.ActiveOnStartup then
-    LoadTickets;
+    begin
+      LoadTickets;
+      tiRefresh.Enabled := true;
+    end;
 end;
 
 procedure TwRedmineTicketsForm.FormDestroy(Sender: TObject);
 begin
+  for var I := 0 to vtTickets.Header.Columns.Count - 1 do
+    ApplicationSettings.Redmine.TicketListColumnWidths.AddOrSetValue(IntToStr(I), vtTickets.Header.Columns[I].Width);
+  ApplicationSettings.Redmine.TicketListColumnWidths.SortByKeys;
+
   FTickets.Free;
   FProjects.Free;
 end;
@@ -122,40 +140,70 @@ var
   LastSelectedProjectID, LastSelectedTicketID, TabIndex, NewTabIndex: Integer;
   Project: TPair<Integer, String>;
 begin
-  NewTabIndex := 0;
+  FLastUpdate := GetTickCount;
 
-  if tsProjects.TabIndex < 0 then
-    begin
-      LastSelectedProjectID := 0;
-      LastSelectedTicketID := 0;
-    end
-  else
-    begin
-      LastSelectedProjectID := Integer(tsProjects.Tabs.Objects[tsProjects.TabIndex]);
-      LastSelectedTicketID := FTicketsVisualizer.GetSelectedTicketID;
-    end;
+  tsProjects.Enabled := false;
+  vtTickets.Enabled := false;
+  aiRefresh.Visible := true;
+  aiRefresh.Animate := true;
+  btRefresh.Visible := false;
 
-  FTicketsVisualizer.ClearContent;
-  TRedmineApi.GetMyIssues(FTickets, FProjects);
+  try
+    NewTabIndex := 0;
 
-  FTabSetUpdating := true;
+    if tsProjects.TabIndex < 0 then
+      begin
+        LastSelectedProjectID := 0;
+        LastSelectedTicketID := 0;
+      end
+    else
+      begin
+        LastSelectedProjectID := Integer(tsProjects.Tabs.Objects[tsProjects.TabIndex]);
+        LastSelectedTicketID := FTicketsVisualizer.GetSelectedTicketID;
+      end;
 
-  tsProjects.Tabs.Clear;
-  for Project in FProjects do
-    begin
-      TabIndex := tsProjects.Tabs.AddObject(Project.Value, TObject(Project.Key));
-      if Project.Key = LastSelectedProjectID then
-        NewTabIndex := TabIndex;
-    end;
+    FTicketsVisualizer.ClearContent;
+    TRedmineApi.GetMyIssues(FTickets, FProjects);
 
-  if tsProjects.Tabs.Count > 0 then
-    begin
-      tsProjects.TabIndex := NewTabIndex;
-      LastSelectedProjectID := Integer(tsProjects.Tabs.Objects[NewTabIndex]);
-      FTicketsVisualizer.UpdateContent(LastSelectedProjectID, LastSelectedTicketId);
-    end;
+    FTabSetUpdating := true;
 
-  FTabSetUpdating := false;
+    tsProjects.Tabs.Clear;
+    for Project in FProjects do
+      begin
+        TabIndex := tsProjects.Tabs.AddObject(Project.Value, TObject(Project.Key));
+        if Project.Key = LastSelectedProjectID then
+          NewTabIndex := TabIndex;
+      end;
+
+    if tsProjects.Tabs.Count > 0 then
+      begin
+        tsProjects.TabIndex := NewTabIndex;
+        LastSelectedProjectID := Integer(tsProjects.Tabs.Objects[NewTabIndex]);
+        FTicketsVisualizer.UpdateContent(LastSelectedProjectID, LastSelectedTicketId);
+      end;
+
+    FTabSetUpdating := false;
+  finally
+    tsProjects.Enabled := true;
+    vtTickets.Enabled := true;
+    aiRefresh.Animate := false;
+    aiRefresh.Visible := false;
+    btRefresh.Visible := true;
+  end;
+end;
+
+procedure TwRedmineTicketsForm.ThemeChanged;
+begin
+  vilLargeIcons.UpdateImageList;
+  vilTreeIcons.UpdateImageList;
+end;
+
+procedure TwRedmineTicketsForm.tiRefreshTimer(Sender: TObject);
+const
+  TicketUpdateInterval = 1;  // Minuten
+begin
+  if GetTickCount > FLastUpdate + 60000 * TicketUpdateInterval then
+    LoadTickets;
 end;
 
 procedure TwRedmineTicketsForm.tsProjectsChange(Sender: TObject;
@@ -166,7 +214,7 @@ begin
   if FTabSetUpdating then
     exit;
 
-  LastSelectedTicketId := 0;  // Content ist bereits leer!   FTicketsVisualizer.GetSelectedTicketID;
+  LastSelectedTicketId := 0;
   ProjectID := Integer(tsProjects.Tabs.Objects[NewTab]);
   FTicketsVisualizer.UpdateContent(ProjectID, LastSelectedTicketId);
 end;

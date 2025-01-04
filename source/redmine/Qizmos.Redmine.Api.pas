@@ -165,6 +165,12 @@ begin
                 Issue.Created := JsonIssue.GetValue<TDateTime>('created_on');
                 Issue.Updated := JsonIssue.GetValue<TDateTime>('updated_on');
                 Issue.ProjectID := JsonIssue.GetValue<Integer>('project.id');
+                if JsonIssue.TryGetValue<String>('tracker.name', NameValue) then
+                  Issue.Tracker := NameValue;
+                if JsonIssue.TryGetValue<String>('status.name', NameValue) then
+                  Issue.Status := NameValue;
+                if JsonIssue.TryGetValue<String>('assigned_to.name', NameValue) then
+                  Issue.AssignedTo := NameValue;
                 if JsonIssue.TryGetValue<String>('project.name', NameValue) then
                   AProjects.AddOrSetValue(Issue.ProjectID, NameValue);
                 Inc(IssueCount);
