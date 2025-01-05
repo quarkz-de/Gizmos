@@ -76,6 +76,24 @@ object wRedmineTicketsForm: TwRedmineTicketsForm
       Align = alRight
       IndicatorType = aitRefresh
     end
+    object tsActive: TToggleSwitch
+      AlignWithMargins = True
+      Left = 465
+      Top = 7
+      Width = 76
+      Height = 34
+      Margins.Left = 7
+      Margins.Top = 7
+      Margins.Right = 7
+      Margins.Bottom = 7
+      Align = alRight
+      TabOrder = 1
+      ThumbWidth = 20
+      OnClick = tsActiveClick
+      ExplicitLeft = 460
+      ExplicitTop = 12
+      ExplicitHeight = 20
+    end
   end
   object vtTickets: TVirtualStringTree
     Left = 0
@@ -333,6 +351,7 @@ object wRedmineTicketsForm: TwRedmineTicketsForm
     Top = 72
   end
   object tiRefresh: TTimer
+    Enabled = False
     OnTimer = tiRefreshTimer
     Left = 496
     Top = 76

@@ -26,10 +26,12 @@ type
     tsProjects: TTabSet;
     tiRefresh: TTimer;
     aiRefresh: TActivityIndicator;
+    tsActive: TToggleSwitch;
     procedure btRefreshClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure tiRefreshTimer(Sender: TObject);
+    procedure tsActiveClick(Sender: TObject);
     procedure tsProjectsChange(Sender: TObject; NewTab: Integer;
       var AllowChange: Boolean);
     procedure tsProjectsGetImageIndex(Sender: TObject; TabIndex: Integer;
@@ -94,10 +96,7 @@ begin
   FTicketsVisualizer.SetProjects(FProjects);
 
   if ApplicationSettings.Redmine.ActiveOnStartup then
-    begin
-      LoadTickets;
-      tiRefresh.Enabled := true;
-    end;
+    tsActive.State := tssOn;
 end;
 
 procedure TwRedmineTicketsForm.FormDestroy(Sender: TObject);
@@ -189,11 +188,24 @@ begin
 end;
 
 procedure TwRedmineTicketsForm.tiRefreshTimer(Sender: TObject);
-const
-  TicketUpdateInterval = 1;  // Minuten
 begin
-  if GetTickCount > FLastUpdate + 60000 * TicketUpdateInterval then
+  if GetTickCount > FLastUpdate + 60000 * ApplicationSettings.Redmine.TicketListRefreshInterval then
     LoadTickets;
+end;
+
+procedure TwRedmineTicketsForm.tsActiveClick(Sender: TObject);
+begin
+  case tsActive.State of
+    tssOn:
+      begin
+        LoadTickets;
+        tiRefresh.Enabled := true;
+      end;
+    tssOff:
+      begin
+        tiRefresh.Enabled := false;
+      end;
+  end;
 end;
 
 procedure TwRedmineTicketsForm.tsProjectsChange(Sender: TObject;

@@ -71,16 +71,16 @@ begin
   txFirstname.Caption := '';
   txLastname.Caption := '';
   txMail.Caption := '';
+  txMyPage.Caption := 'Meine Seite';
 end;
 
 procedure TwRedmineUserForm.FormCreate(Sender: TObject);
 begin
   FRedmineUser := TRedmineUser.Create;
-  if ApplicationSettings.Redmine.ActiveOnStartup then
-    LoadValues
+  if ApplicationSettings.Redmine.Host.IsEmpty or ApplicationSettings.Redmine.ApiKey.IsEmpty then
+    ClearValues
   else
-    ClearValues;
-  txMyPage.Caption := Format('<a href="%s">Meine Seite</a>', [TRedmineApi.GetMyPageUrl]);
+    LoadValues;
 end;
 
 procedure TwRedmineUserForm.FormDestroy(Sender: TObject);
@@ -118,6 +118,7 @@ begin
   txFirstname.Caption := RedmineUser.Firstname;
   txLastname.Caption := RedmineUser.Lastname;
   txMail.Caption := RedmineUser.Mail;
+  txMyPage.Caption := Format('<a href="%s">Meine Seite</a>', [TRedmineApi.GetMyPageUrl]);
 end;
 
 end.

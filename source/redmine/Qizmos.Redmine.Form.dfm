@@ -210,6 +210,11 @@ object wRedmineForm: TwRedmineForm
         CollectionIndex = 33
         CollectionName = '033_Refresh'
         Name = '033_Refresh'
+      end
+      item
+        CollectionIndex = 34
+        CollectionName = '034_Project'
+        Name = '034_Project'
       end>
     ImageCollection = dmCommon.icSvgIcons
     Width = 24

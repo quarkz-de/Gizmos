@@ -27,9 +27,13 @@ type
     edHostname: TEdit;
     pnRefresh: TQzPanel;
     txRefresh: TLabel;
+    pnTicketListRefreshInterval: TQzPanel;
+    txTicketListRefreshInterval: TLabel;
+    tbTicketListRefreshInterval: TTrackBar;
     procedure edApiKeyChange(Sender: TObject);
     procedure edHostnameChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure tbTicketListRefreshIntervalChange(Sender: TObject);
     procedure tsActiveOnStartupClick(Sender: TObject);
   private
     procedure LoadValues;
@@ -87,6 +91,13 @@ begin
   tsActiveOnStartup.State := SwitchStates[ApplicationSettings.Redmine.ActiveOnStartup];
   edHostname.Text := ApplicationSettings.Redmine.Host;
   edApiKey.Text := ApplicationSettings.Redmine.ApiKey;
+  tbTicketListRefreshInterval.Position := ApplicationSettings.Redmine.TicketListRefreshInterval;
+end;
+
+procedure TwSettingsRedmineForm.tbTicketListRefreshIntervalChange(Sender:
+    TObject);
+begin
+  ApplicationSettings.Redmine.TicketListRefreshInterval := tbTicketListRefreshInterval.Position;
 end;
 
 procedure TwSettingsRedmineForm.tsActiveOnStartupClick(Sender: TObject);

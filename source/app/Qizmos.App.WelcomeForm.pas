@@ -94,7 +94,7 @@ begin
     biSimulatorsHttp:
       GlobalEventBus.Post(TEventFactory.NewModuleChangeEvent(mfMainSimulators, mfSimulatorsHttp));
     biRedmine:
-      GlobalEventBus.Post(TEventFactory.NewModuleChangeEvent(mfMainRedmine, mfRedmineUser));
+      GlobalEventBus.Post(TEventFactory.NewModuleChangeEvent(mfMainRedmine, mfRedmineTickets));
   end;
 
   clModules.ItemIndex := -1;

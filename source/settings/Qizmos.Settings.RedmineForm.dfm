@@ -52,17 +52,15 @@ object wSettingsRedmineForm: TwSettingsRedmineForm
     BorderWidth = 1
     ParentBackground = False
     TabOrder = 1
-    ExplicitLeft = 24
-    ExplicitTop = 286
     DesignSize = (
       616
       36)
     object txActiveOnStartup: TLabel
       Left = 8
       Top = 9
-      Width = 127
+      Width = 153
       Height = 15
-      Caption = 'Bei Programmstart aktiv'
+      Caption = 'Automatische Aktualisierung'
     end
     object tsActiveOnStartup: TToggleSwitch
       Left = 552
@@ -92,7 +90,6 @@ object wSettingsRedmineForm: TwSettingsRedmineForm
     Color = clBtnHighlight
     ParentBackground = False
     TabOrder = 2
-    ExplicitTop = 144
     object txUser: TLabel
       Left = 8
       Top = 10
@@ -115,7 +112,6 @@ object wSettingsRedmineForm: TwSettingsRedmineForm
     Align = alTop
     BorderWidth = 1
     TabOrder = 3
-    ExplicitTop = 96
     DesignSize = (
       616
       36)
@@ -151,7 +147,6 @@ object wSettingsRedmineForm: TwSettingsRedmineForm
     Align = alTop
     BorderWidth = 1
     TabOrder = 4
-    ExplicitTop = 186
     DesignSize = (
       616
       36)
@@ -189,14 +184,51 @@ object wSettingsRedmineForm: TwSettingsRedmineForm
     Color = clBtnHighlight
     ParentBackground = False
     TabOrder = 5
-    ExplicitLeft = 17
-    ExplicitTop = 320
     object txRefresh: TLabel
       Left = 8
       Top = 10
       Width = 37
       Height = 15
       Caption = 'Tickets'
+    end
+  end
+  object pnTicketListRefreshInterval: TQzPanel
+    AlignWithMargins = True
+    Left = 12
+    Top = 276
+    Width = 616
+    Height = 36
+    Margins.Left = 12
+    Margins.Top = 6
+    Margins.Right = 12
+    Margins.Bottom = 0
+    Edges = [qeBottom]
+    Align = alTop
+    BorderWidth = 1
+    TabOrder = 6
+    ExplicitLeft = 17
+    ExplicitTop = 324
+    DesignSize = (
+      616
+      36)
+    object txTicketListRefreshInterval: TLabel
+      Left = 8
+      Top = 9
+      Width = 226
+      Height = 15
+      Caption = 'Aktualisierungs-Intervall (1 bis 10 Minuten)'
+    end
+    object tbTicketListRefreshInterval: TTrackBar
+      Left = 452
+      Top = 5
+      Width = 150
+      Height = 28
+      Anchors = [akTop, akRight]
+      Min = 1
+      PageSize = 1
+      Position = 1
+      TabOrder = 0
+      OnChange = tbTicketListRefreshIntervalChange
     end
   end
 end

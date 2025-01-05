@@ -64,6 +64,7 @@ type
     FApiKey: String;
     FTicketListColumnWidths: TDictionary<String, Integer>;
     FTicketListColumnPositions: TDictionary<String, Integer>;
+    FTicketListRefreshInterval: Integer;
     procedure SetHost(AValue: String);
     procedure SetApiKey(AValue: String);
   public
@@ -78,6 +79,8 @@ type
       read FTicketListColumnWidths write FTicketListColumnWidths;
     property TicketListColumnPositions: TDictionary<String, Integer>
       read FTicketListColumnPositions write FTicketListColumnPositions;
+    property TicketListRefreshInterval: Integer read FTicketListRefreshInterval
+      write FTicketListRefreshInterval;
   end;
 
   TApplicationFormPosition = class(TPersistent)
@@ -495,6 +498,7 @@ begin
   FActiveOnStartup := false;
   FHost := '';
   FApiKey := '';
+  FTicketListRefreshInterval := 5;
 end;
 
 destructor TRedmineSettings.Destroy;

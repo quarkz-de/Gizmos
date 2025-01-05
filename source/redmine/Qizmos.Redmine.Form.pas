@@ -39,7 +39,7 @@ uses
 
 procedure TwRedmineForm.FormCreate(Sender: TObject);
 begin
-  ManagedForms.ShowForm(mfRedmineUser);
+  ManagedForms.ShowForm(mfRedmineTickets);
 end;
 
 function TwRedmineForm.GetFormId: TQzManagedFormId;

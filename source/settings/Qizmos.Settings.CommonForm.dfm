@@ -170,7 +170,7 @@ object wSettingsCommonForm: TwSettingsCommonForm
     object txMinimizeToTray: TLabel
       Left = 8
       Top = 9
-      Width = 192
+      Width = 193
       Height = 15
       Caption = 'In den Infobereich (Tray) minimieren'
     end

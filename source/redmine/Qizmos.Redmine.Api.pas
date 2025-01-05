@@ -25,6 +25,7 @@ type
 
   TRedmineApi = class
   private
+    class function IsActive: Boolean;
     class function BuildApiUrl(const ARelativeURL: String): String;
     class function GetBaseUrl: String;
     class function LoadParentIssues(const AIssueList: TRedmineTicketList): String;
@@ -48,6 +49,8 @@ type
   public
     class function HasApiKey: Boolean;
     class function GetApiKey: String;
+    class function HasHost: Boolean;
+    class function GetHost: String;
   end;
 
 { TRedmineApi }
@@ -59,7 +62,7 @@ end;
 
 class function TRedmineApi.GetBaseUrl: String;
 begin
-  Result := ApplicationSettings.Redmine.Host;
+  Result := TRedmineApiSettings.GetHost;
   if Result.EndsWith('/') then
     Delete(Result, Length(Result), 1);
 end;
@@ -82,7 +85,7 @@ var
 begin
   AIssueList.Clear;
   Result := false;
-  if not TRedmineApiSettings.HasApiKey then
+  if not IsActive then
     Exit;
 
   try
@@ -107,6 +110,11 @@ const
   SMyPage = 'my/page';
 begin
   Result := BuildApiUrl(SMyPage);
+end;
+
+class function TRedmineApi.IsActive: Boolean;
+begin
+  Result := TRedmineApiSettings.HasApiKey and TRedmineApiSettings.HasHost;
 end;
 
 class function TRedmineApi.LoadIssues(const AIssueList: TRedmineTicketList;
@@ -245,7 +253,7 @@ var
 begin
   AUser.Clear;
   Result := false;
-  if not TRedmineApiSettings.HasApiKey then
+  if not IsActive then
     Exit;
 
   Client := TRedmineRestClient.Create(BuildApiUrl(SCurrentUser));
@@ -316,9 +324,19 @@ begin
   Result := ApplicationSettings.Redmine.ApiKey;
 end;
 
+class function TRedmineApiSettings.GetHost: String;
+begin
+  Result := ApplicationSettings.Redmine.Host;
+end;
+
 class function TRedmineApiSettings.HasApiKey: Boolean;
 begin
   Result := not ApplicationSettings.Redmine.ApiKey.IsEmpty;
+end;
+
+class function TRedmineApiSettings.HasHost: Boolean;
+begin
+  Result := not ApplicationSettings.Redmine.Host.IsEmpty;
 end;
 
 end.
