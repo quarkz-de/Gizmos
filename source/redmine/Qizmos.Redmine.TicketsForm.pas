@@ -84,8 +84,6 @@ begin
 end;
 
 procedure TwRedmineTicketsForm.FormCreate(Sender: TObject);
-var
-  ColWidth: Integer;
 begin
   FontChanged;
   FTickets := TRedmineTicketList.Create;
@@ -94,10 +92,6 @@ begin
   FTicketsVisualizer.SetVirtualTree(vtTickets);
   FTicketsVisualizer.SetTickets(FTickets);
   FTicketsVisualizer.SetProjects(FProjects);
-
-  for var I := 0 to vtTickets.Header.Columns.Count - 1 do
-    if ApplicationSettings.Redmine.TicketListColumnWidths.TryGetValue(IntToStr(I), ColWidth) then
-      vtTickets.Header.Columns[I].Width := ColWidth;
 
   if ApplicationSettings.Redmine.ActiveOnStartup then
     begin
@@ -108,10 +102,6 @@ end;
 
 procedure TwRedmineTicketsForm.FormDestroy(Sender: TObject);
 begin
-  for var I := 0 to vtTickets.Header.Columns.Count - 1 do
-    ApplicationSettings.Redmine.TicketListColumnWidths.AddOrSetValue(IntToStr(I), vtTickets.Header.Columns[I].Width);
-  ApplicationSettings.Redmine.TicketListColumnWidths.SortByKeys;
-
   FTickets.Free;
   FProjects.Free;
 end;

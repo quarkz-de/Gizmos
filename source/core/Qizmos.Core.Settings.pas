@@ -62,7 +62,8 @@ type
     FActiveOnStartup: Boolean;
     FHost: String;
     FApiKey: String;
-    FTicketListColumnWidths: TOrderedDictionary<String, Integer>;
+    FTicketListColumnWidths: TDictionary<String, Integer>;
+    FTicketListColumnPositions: TDictionary<String, Integer>;
     procedure SetHost(AValue: String);
     procedure SetApiKey(AValue: String);
   public
@@ -73,8 +74,10 @@ type
     property ActiveOnStartup: Boolean read FActiveOnStartup write FActiveOnStartup;
     property Host: String read FHost write SetHost;
     property ApiKey: String read FApiKey write SetApiKey;
-    property TicketListColumnWidths: TOrderedDictionary<String, Integer>
+    property TicketListColumnWidths: TDictionary<String, Integer>
       read FTicketListColumnWidths write FTicketListColumnWidths;
+    property TicketListColumnPositions: TDictionary<String, Integer>
+      read FTicketListColumnPositions write FTicketListColumnPositions;
   end;
 
   TApplicationFormPosition = class(TPersistent)
@@ -487,7 +490,8 @@ end;
 constructor TRedmineSettings.Create;
 begin
   inherited Create;
-  FTicketListColumnWidths := TOrderedDictionary<String, Integer>.Create;
+  FTicketListColumnWidths := TDictionary<String, Integer>.Create;
+  FTicketListColumnPositions := TDictionary<String, Integer>.Create;
   FActiveOnStartup := false;
   FHost := '';
   FApiKey := '';
@@ -496,6 +500,7 @@ end;
 destructor TRedmineSettings.Destroy;
 begin
   FTicketListColumnWidths.Free;
+  FTicketListColumnPositions.Free;
   inherited;
 end;
 

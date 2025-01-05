@@ -24,6 +24,9 @@ type
 
 implementation
 
+uses
+  Qizmos.Core.Settings;
+
 type
   TRedmineItem = record
     Ticket: TRedmineTicket;
@@ -41,6 +44,9 @@ type
       colSubject = 3;
       colAssignedTo = 4;
       colUpdated = 5;
+      colMin = colId;
+      colMax = colUpdated;
+      ColumnNames: array[colMin..colMax] of String = ('Id', 'Tracker', 'Status', 'Subject', 'AssignedTo', 'Updated');
   private
     FTree: TVirtualStringTree;
     FTickets: TRedmineTicketList;
@@ -49,6 +55,8 @@ type
     procedure DecorateTree;
     procedure CreateColumns;
     procedure SortTree;
+    procedure LoadSettings;
+    procedure SaveSettings;
   protected
     procedure GetNodeDataSize(Sender: TBaseVirtualTree; var NodeDataSize:
       Integer);
@@ -64,6 +72,8 @@ type
     procedure BeforeItemErase(Sender: TBaseVirtualTree; TargetCanvas: TCanvas;
       Node: PVirtualNode; ItemRect: TRect; var ItemColor: TColor;
       var EraseAction: TItemEraseAction);
+    procedure ColumnResize(Sender: TVTHeader; Column: TColumnIndex);
+    procedure HeaderDragged(Sender: TVTHeader; Column: TColumnIndex; OldPosition: Integer);
   public
     procedure SetVirtualTree(const ATree: TVirtualStringTree);
     procedure SetTickets(const ATickets: TRedmineTicketList);
@@ -86,6 +96,8 @@ begin
   FTree.OnCompareNodes := CompareNodes;
   FTree.OnHeaderClick := HeaderClick;
   FTree.OnBeforeItemErase := BeforeItemErase;
+  FTree.OnColumnResize := ColumnResize;
+  FTree.OnHeaderDragged := HeaderDragged;
 end;
 
 procedure TTicketListVisualizer.BeforeItemErase(Sender: TBaseVirtualTree;
@@ -102,6 +114,12 @@ end;
 procedure TTicketListVisualizer.ClearContent;
 begin
   FTree.Clear;
+end;
+
+procedure TTicketListVisualizer.ColumnResize(Sender: TVTHeader;
+  Column: TColumnIndex);
+begin
+  SaveSettings;
 end;
 
 procedure TTicketListVisualizer.CompareNodes(Sender: TBaseVirtualTree; Node1,
@@ -266,9 +284,41 @@ begin
     end;
 end;
 
+procedure TTicketListVisualizer.HeaderDragged(Sender: TVTHeader;
+  Column: TColumnIndex; OldPosition: Integer);
+begin
+  SaveSettings;
+end;
+
 function TTicketListVisualizer.IsSelected: Boolean;
 begin
   Result := FTree.FocusedNode <> nil;
+end;
+
+procedure TTicketListVisualizer.LoadSettings;
+var
+  I, IntValue: Integer;
+begin
+  for I := colMin to colMax do
+    begin
+      if ApplicationSettings.Redmine.TicketListColumnWidths.TryGetValue(ColumnNames[I], IntValue) then
+        FTree.Header.Columns[I].Width := IntValue;
+      if ApplicationSettings.Redmine.TicketListColumnPositions.TryGetValue(ColumnNames[I], IntValue) then
+        FTree.Header.Columns[I].Position := IntValue;
+    end;
+end;
+
+procedure TTicketListVisualizer.SaveSettings;
+var
+  I: Integer;
+begin
+  for I := colMin to colMax do
+    begin
+      ApplicationSettings.Redmine.TicketListColumnWidths.AddOrSetValue(
+        ColumnNames[I], FTree.Header.Columns[I].Width);
+      ApplicationSettings.Redmine.TicketListColumnPositions.AddOrSetValue(
+        ColumnNames[I], FTree.Header.Columns[I].Position);
+    end;
 end;
 
 procedure TTicketListVisualizer.SetProjects(const AProjects: TRedmineProjects);
@@ -289,6 +339,7 @@ begin
   AttachTree;
   DecorateTree;
   CreateColumns;
+  LoadSettings;
 end;
 
 procedure TTicketListVisualizer.SortTree;
