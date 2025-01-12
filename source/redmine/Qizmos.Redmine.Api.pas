@@ -250,6 +250,7 @@ const
 var
   Client: TRedmineRestClient;
   JsonValue: TJSONValue;
+  StringValue: String;
 begin
   AUser.Clear;
   Result := false;
@@ -267,7 +268,10 @@ begin
         AUser.Login := JsonValue.GetValue<String>('user.login');
         AUser.Firstname := JsonValue.GetValue<String>('user.firstname');
         AUser.Lastname := JsonValue.GetValue<String>('user.lastname');
-        AUser.Mail := JsonValue.GetValue<String>('user.mail');
+        if JsonValue.TryGetValue<String>('user.mail', StringValue) then
+          AUser.Mail := StringValue
+        else
+          AUser.Mail := '-';
       end;
   finally
     Client.Free;

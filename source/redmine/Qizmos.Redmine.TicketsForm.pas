@@ -5,10 +5,10 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, Winapi.ShellAPI,
   System.SysUtils, System.Variants, System.Classes, System.ImageList,
-  System.Generics.Collections, System.Types,
+  System.Generics.Collections, System.Types, System.Actions,
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.WinXCtrls,
   Vcl.VirtualImage, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.Buttons, Vcl.Tabs,
-  Vcl.ImgList, Vcl.VirtualImageList,
+  Vcl.ImgList, Vcl.VirtualImageList, Vcl.ActnList, Vcl.Menus,
   VirtualTrees,
   Qodelib.ManagedForms, Qodelib.Panels,
   Qizmos.Core.Forms, Qizmos.Core.Settings,
@@ -27,7 +27,22 @@ type
     tiRefresh: TTimer;
     aiRefresh: TActivityIndicator;
     tsActive: TToggleSwitch;
+    alActions: TActionList;
+    pmTickets: TPopupMenu;
+    acCollapseAll: TAction;
+    acExpandAll: TAction;
+    acRefresh: TAction;
+    Aktualisieren1: TMenuItem;
+    N1: TMenuItem;
+    Alleausklappen1: TMenuItem;
+    Alleeinklappen1: TMenuItem;
+    pnToolbar: TQzPanel;
+    edFind: TSearchBox;
+    procedure acCollapseAllExecute(Sender: TObject);
+    procedure acExpandAllExecute(Sender: TObject);
+    procedure acRefreshExecute(Sender: TObject);
     procedure btRefreshClick(Sender: TObject);
+    procedure edFindInvokeSearch(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure tiRefreshTimer(Sender: TObject);
@@ -58,6 +73,8 @@ type
     function GetImageIndex: Integer; override;
     procedure ThemeChanged; override;
     procedure FontChanged; override;
+  public
+    procedure KeyDownEvent(var Key: Word; Shift: TShiftState); override;
   end;
 
 var
@@ -73,9 +90,29 @@ uses
 
 { TwRedmineTicketsForm }
 
-procedure TwRedmineTicketsForm.btRefreshClick(Sender: TObject);
+procedure TwRedmineTicketsForm.acCollapseAllExecute(Sender: TObject);
+begin
+  vtTickets.FullCollapse;
+end;
+
+procedure TwRedmineTicketsForm.acExpandAllExecute(Sender: TObject);
+begin
+  vtTickets.FullExpand;
+end;
+
+procedure TwRedmineTicketsForm.acRefreshExecute(Sender: TObject);
 begin
   LoadTickets;
+end;
+
+procedure TwRedmineTicketsForm.btRefreshClick(Sender: TObject);
+begin
+  acRefresh.Execute;
+end;
+
+procedure TwRedmineTicketsForm.edFindInvokeSearch(Sender: TObject);
+begin
+  FTicketsVisualizer.FilterTickets(StrToIntDef(edFind.Text, 0));
 end;
 
 procedure TwRedmineTicketsForm.FontChanged;
@@ -113,6 +150,20 @@ end;
 function TwRedmineTicketsForm.GetImageIndex: Integer;
 begin
   Result := iiRedmineTickets;
+end;
+
+procedure TwRedmineTicketsForm.KeyDownEvent(var Key: Word; Shift: TShiftState);
+begin
+  case Key of
+    VK_F5:
+      if Shift = [] then
+        begin
+          acRefresh.Execute;
+          Key := 0;
+        end;
+  end;
+
+  inherited;
 end;
 
 procedure TwRedmineTicketsForm.LoadSelectedTicketInBrowser;
@@ -189,7 +240,7 @@ end;
 
 procedure TwRedmineTicketsForm.tiRefreshTimer(Sender: TObject);
 begin
-  if GetTickCount > FLastUpdate + 60000 * ApplicationSettings.Redmine.TicketListRefreshInterval then
+  if GetTickCount > FLastUpdate + 60000 * DWORD(ApplicationSettings.Redmine.TicketListRefreshInterval) then
     LoadTickets;
 end;
 

@@ -53,6 +53,7 @@ object wRedmineTicketsForm: TwRedmineTicketsForm
       Top = 7
       Width = 32
       Height = 34
+      Hint = 'Ticketliste manuell aktualisieren'
       Margins.Left = 7
       Margins.Top = 7
       Margins.Right = 7
@@ -82,6 +83,7 @@ object wRedmineTicketsForm: TwRedmineTicketsForm
       Top = 7
       Width = 76
       Height = 34
+      Hint = 'automatische Aktualisierung ein-/ausschalten'
       Margins.Left = 7
       Margins.Top = 7
       Margins.Right = 7
@@ -90,16 +92,14 @@ object wRedmineTicketsForm: TwRedmineTicketsForm
       TabOrder = 1
       ThumbWidth = 20
       OnClick = tsActiveClick
-      ExplicitLeft = 460
-      ExplicitTop = 12
       ExplicitHeight = 20
     end
   end
   object vtTickets: TVirtualStringTree
     Left = 0
-    Top = 82
+    Top = 117
     Width = 640
-    Height = 398
+    Height = 363
     Align = alClient
     Colors.BorderColor = 15987699
     Colors.DisabledColor = clGray
@@ -121,6 +121,7 @@ object wRedmineTicketsForm: TwRedmineTicketsForm
     Header.AutoSizeIndex = -1
     Header.MainColumn = -1
     Images = vilTreeIcons
+    PopupMenu = pmTickets
     TabOrder = 1
     TreeOptions.MiscOptions = [toAcceptOLEDrop, toFullRepaintOnResize, toInitOnSave, toWheelPanning, toEditOnClick]
     OnDblClick = vtTicketsDblClick
@@ -149,6 +150,27 @@ object wRedmineTicketsForm: TwRedmineTicketsForm
     OnMouseDown = tsProjectsMouseDown
     OnMouseMove = tsProjectsMouseMove
     OnMouseUp = tsProjectsMouseUp
+  end
+  object pnToolbar: TQzPanel
+    Left = 0
+    Top = 82
+    Width = 640
+    Height = 35
+    Edges = [qeTop]
+    Align = alTop
+    BorderWidth = 1
+    TabOrder = 3
+    object edFind: TSearchBox
+      Left = 12
+      Top = 6
+      Width = 121
+      Height = 23
+      Hint = 'Einschr'#228'nken auf Haupt-Ticket'
+      NumbersOnly = True
+      TabOrder = 0
+      TextHint = 'Ticket #'
+      OnInvokeSearch = edFindInvokeSearch
+    end
   end
   object vilLargeIcons: TVirtualImageList
     AutoFill = True
@@ -327,12 +349,22 @@ object wRedmineTicketsForm: TwRedmineTicketsForm
         CollectionIndex = 34
         CollectionName = '034_Project'
         Name = '034_Project'
+      end
+      item
+        CollectionIndex = 35
+        CollectionName = '035_Chevron_Right'
+        Name = '035_Chevron_Right'
+      end
+      item
+        CollectionIndex = 36
+        CollectionName = '036_Close'
+        Name = '036_Close'
       end>
     ImageCollection = dmCommon.icSvgIcons
     Width = 32
     Height = 32
-    Left = 308
-    Top = 76
+    Left = 332
+    Top = 72
   end
   object vilTreeIcons: TVirtualImageList
     Images = <
@@ -342,9 +374,14 @@ object wRedmineTicketsForm: TwRedmineTicketsForm
         Name = '031_Ticket'
       end
       item
-        CollectionIndex = 34
-        CollectionName = '034_Project'
-        Name = '034_Project'
+        CollectionIndex = 9
+        CollectionName = '009_Expand'
+        Name = '009_Expand'
+      end
+      item
+        CollectionIndex = 35
+        CollectionName = '035_Chevron_Right'
+        Name = '035_Chevron_Right'
       end>
     ImageCollection = dmCommon.icSvgIcons
     Left = 408
@@ -355,5 +392,38 @@ object wRedmineTicketsForm: TwRedmineTicketsForm
     OnTimer = tiRefreshTimer
     Left = 496
     Top = 76
+  end
+  object alActions: TActionList
+    Left = 412
+    Top = 196
+    object acCollapseAll: TAction
+      Caption = 'Alle &einklappen'
+      OnExecute = acCollapseAllExecute
+    end
+    object acExpandAll: TAction
+      Caption = 'Alle aus&klappen'
+      OnExecute = acExpandAllExecute
+    end
+    object acRefresh: TAction
+      Caption = '&Aktualisieren'
+      ImageIndex = 33
+      OnExecute = acRefreshExecute
+    end
+  end
+  object pmTickets: TPopupMenu
+    Left = 480
+    Top = 196
+    object Aktualisieren1: TMenuItem
+      Action = acRefresh
+    end
+    object N1: TMenuItem
+      Caption = '-'
+    end
+    object Alleausklappen1: TMenuItem
+      Action = acExpandAll
+    end
+    object Alleeinklappen1: TMenuItem
+      Action = acCollapseAll
+    end
   end
 end

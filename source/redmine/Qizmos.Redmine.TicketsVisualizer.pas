@@ -20,6 +20,7 @@ type
     function IsSelected: Boolean;
     procedure UpdateContent(const ASelectProjectId, ASelectedTicketId: Integer);
     procedure ClearContent;
+    procedure FilterTickets(const ATicketID: Integer);
   end;
 
 implementation
@@ -60,7 +61,6 @@ type
   protected
     procedure GetNodeDataSize(Sender: TBaseVirtualTree; var NodeDataSize:
       Integer);
-    procedure FreeNode(Sender: TBaseVirtualTree; Node: PVirtualNode);
     procedure GetText(Sender: TBaseVirtualTree; Node: PVirtualNode;
       Column: TColumnIndex; TextType: TVSTTextType; var CellText: string);
     procedure GetImageIndex(Sender: TBaseVirtualTree; Node:
@@ -83,6 +83,7 @@ type
     function IsSelected: Boolean;
     procedure UpdateContent(const ASelectProjectId, ASelectedTicketId: Integer);
     procedure ClearContent;
+    procedure FilterTickets(const ATicketID: Integer);
   end;
 
 { TTicketListVisualizer }
@@ -90,7 +91,6 @@ type
 procedure TTicketListVisualizer.AttachTree;
 begin
   FTree.OnGetNodeDataSize := GetNodeDataSize;
-  FTree.OnFreeNode := FreeNode;
   FTree.OnGetText := GetText;
   FTree.OnGetImageIndex := GetImageIndex;
   FTree.OnCompareNodes := CompareNodes;
@@ -196,13 +196,23 @@ begin
   FTree.DefaultText := '';
 end;
 
-procedure TTicketListVisualizer.FreeNode(Sender: TBaseVirtualTree;
-  Node: PVirtualNode);
+procedure TTicketListVisualizer.FilterTickets(const ATicketID: Integer);
 var
+  Node: PVirtualNode;
   Data: PRedmineItem;
 begin
-  Data := FTree.GetNodeData(Node);
-  Finalize(Data^);
+  FTree.BeginUpdate;
+  try
+    Node := FTree.GetFirst;
+    while Assigned(Node) do
+      begin
+        Data := FTree.GetNodeData(Node);
+        FTree.IsVisible[Node] := (ATicketID = 0) or (Data.Ticket.ID = ATicketID);
+        Node := FTree.GetNextSibling(Node);
+      end;
+  finally
+    FTree.EndUpdate;
+  end
 end;
 
 procedure TTicketListVisualizer.GetImageIndex(Sender: TBaseVirtualTree;
@@ -268,20 +278,17 @@ end;
 procedure TTicketListVisualizer.HeaderClick(Sender: TVTHeader;
   HitInfo: TVTHeaderHitInfo);
 begin
-  if HitInfo.Column in [colId, colUpdated] then
+  if Sender.SortColumn = HitInfo.Column then
     begin
-      if Sender.SortColumn = HitInfo.Column then
-        begin
-          if Sender.SortDirection = sdAscending then
-            Sender.SortDirection := sdDescending
-          else
-            Sender.SortDirection := sdAscending;
-        end
+      if Sender.SortDirection = sdAscending then
+        Sender.SortDirection := sdDescending
       else
-        Sender.SortColumn := HitInfo.Column;
+        Sender.SortDirection := sdAscending;
+    end
+  else
+    Sender.SortColumn := HitInfo.Column;
 
-      SortTree;
-    end;
+  SortTree;
 end;
 
 procedure TTicketListVisualizer.HeaderDragged(Sender: TVTHeader;
@@ -393,6 +400,7 @@ begin
               Node := FTree.AddChild(ParentNode);
               Data := FTree.GetNodeData(Node);
               Data.Ticket := Ticket;
+              TicketNodes.Add(Ticket.ID, Node);
               if Ticket.ID = ASelectedTicketId then
                 NodeToSelect := Node;
             end;
