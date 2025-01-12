@@ -3,6 +3,7 @@ unit Qizmos.Core.Forms;
 interface
 
 uses
+  System.Classes,
   Vcl.Forms,
   Qodelib.ManagedForms, Qodelib.NavigationView,
   Qizmos.Core.Types;
@@ -16,6 +17,7 @@ type
     procedure ActiveFormChanged(ActiveForm: TQzManagedForm); override;
   public
     procedure AfterConstruction; override;
+    procedure KeyDownEvent(var Key: Word; Shift: TShiftState); virtual;
     property ButtonItem: TQzNavigationButtonItem read FButtonItem write FButtonItem;
   end;
 
@@ -79,6 +81,12 @@ begin
   inherited;
   Font.Name := DefaultFontName; // Settings?
   Font.Size := ApplicationSettings.FontSize;
+end;
+
+procedure TManagedForm.KeyDownEvent(var Key: Word; Shift: TShiftState);
+begin
+  if Assigned(ManagedForms.ActiveForm) and (ManagedForms.ActiveForm is TManagedForm) then
+    TManagedForm(ManagedForms.ActiveForm).KeyDownEvent(Key, Shift);
 end;
 
 { TNavigationViewFormHelper }

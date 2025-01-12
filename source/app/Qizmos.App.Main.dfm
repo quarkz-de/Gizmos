@@ -17,10 +17,13 @@ object wMainForm: TwMainForm
   Font.Name = 'Segoe UI'
   Font.Style = []
   GlassFrame.Top = 31
+  KeyPreview = True
   ParentBiDiMode = False
+  ShowHint = True
   StyleElements = [seFont, seClient]
   OnCreate = FormCreate
   OnDestroy = FormDestroy
+  OnKeyDown = FormKeyDown
   TextHeight = 21
   object pnHeader: TQzPanel
     Left = 0
@@ -79,6 +82,7 @@ object wMainForm: TwMainForm
       Top = 7
       Width = 32
       Height = 32
+      Hint = 'Umschalten zwischen hellem und dunklem Theme'
       Anchors = [akTop, akRight]
       ImageIndex = 27
       ImageName = '027_Light_Dark_Style'
@@ -317,6 +321,16 @@ object wMainForm: TwMainForm
         CollectionIndex = 34
         CollectionName = '034_Project'
         Name = '034_Project'
+      end
+      item
+        CollectionIndex = 35
+        CollectionName = '035_Chevron_Right'
+        Name = '035_Chevron_Right'
+      end
+      item
+        CollectionIndex = 36
+        CollectionName = '036_Close'
+        Name = '036_Close'
       end>
     ImageCollection = dmCommon.icSvgIcons
     Width = 32
@@ -501,6 +515,16 @@ object wMainForm: TwMainForm
         CollectionIndex = 34
         CollectionName = '034_Project'
         Name = '034_Project'
+      end
+      item
+        CollectionIndex = 35
+        CollectionName = '035_Chevron_Right'
+        Name = '035_Chevron_Right'
+      end
+      item
+        CollectionIndex = 36
+        CollectionName = '036_Close'
+        Name = '036_Close'
       end>
     ImageCollection = dmCommon.icSvgIcons
     Left = 256

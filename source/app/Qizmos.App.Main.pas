@@ -33,6 +33,7 @@ type
     procedure btBurgerButtonClick(Sender: TObject);
     procedure btSwitchStyleClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure nvFooterButtonClicked(Sender: TObject; Index: Integer);
     procedure nvHeaderButtonClicked(Sender: TObject; Index: Integer);
     procedure svSplitViewClosed(Sender: TObject);
@@ -155,6 +156,12 @@ end;
 procedure TwMainForm.FormDestroy(Sender: TObject);
 begin
   ApplicationSettings.FormPosition.SavePosition(self);
+end;
+
+procedure TwMainForm.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  KeyDownEvent(Key, Shift);
 end;
 
 function TwMainForm.GetFormId: TQzManagedFormId;
